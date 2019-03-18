@@ -78,4 +78,3 @@ COMMIT;
 
 ### Eres libre de usar el Código en Tus Proyectos
 ### Proposito del Repositorio: Inacap Apoquindo
-### Autor: Eduardo Lynch Araya
