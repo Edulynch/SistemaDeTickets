@@ -76,16 +76,16 @@ COMMIT;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 ```
 
-# Modulos Funcionales
-## Generador de Codigos para Ticket (OT-0000000XXX)
+## Modulos Funcionales
+### Generador de Codigos para Ticket (OT-0000000XXX)
 
-# Modulos NO Funcionales
-## - Login de Usuarios
-## - Registro de Usuarios
-## - Registro de Tickets
-## - Perfil de Usuario
-## - Bandeja de Tickets por Grupo
-## - Bandeja de Tickets por Usuario
+## Modulos NO Funcionales
+### - Login de Usuarios
+### - Registro de Usuarios
+### - Registro de Tickets
+### - Perfil de Usuario
+### - Bandeja de Tickets por Grupo
+### - Bandeja de Tickets por Usuario
 
 ### Eres libre de usar el Código en Tus Proyectos
 ### Proposito del Repositorio: Inacap Apoquindo
