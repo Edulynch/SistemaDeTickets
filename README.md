@@ -1,6 +1,4 @@
 # SistemaDeTickets
-SistemaDeTickets
-
 ## Script
 ### Base de Datos MYSQL
 
