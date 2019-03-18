@@ -1,6 +1,8 @@
 # SistemaDeTickets
-## Script
-### Base de Datos MYSQL
+## Instrucciones:
+### Para que el Proyecto funcione, debemos crear la Base de Datos: "tickets".
+### Luego debemos restaurar el siguiente script.
+## Base de Datos MYSQL
 
 ```sql
 -- phpMyAdmin SQL Dump
