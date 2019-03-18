@@ -1,4 +1,13 @@
 # SistemaDeTickets
+
+## Index/Login
+![1](https://user-images.githubusercontent.com/7959627/54503654-f75dcc00-490e-11e9-8d9b-f9d012aabb5e.PNG)
+## Registro
+![2](https://user-images.githubusercontent.com/7959627/54503661-f9278f80-490e-11e9-8cda-26b7a616a5c1.PNG)
+## Formulario
+![3](https://user-images.githubusercontent.com/7959627/54503667-f9c02600-490e-11e9-9ee9-14208efd6ec5.PNG)
+
+
 ## Instrucciones:
 ### Para que el Proyecto funcione, debemos crear la Base de Datos: "tickets".
 ### Luego debemos restaurar el siguiente script.
