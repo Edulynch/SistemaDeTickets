@@ -25,12 +25,12 @@
         <!--<a href="#" id="forgot_pswd">Registrate ¡Click Aquí!</a>-->
         <hr>
         <!-- <p>Don't have an account!</p>  -->
-        <button onclick="location.href='registro.php';" class="btn btn-primary btn-block" type="button"><i
+        <!-- <button onclick="location.href='registro.php';" class="btn btn-primary btn-block" type="button"><i
                     class="fas fa-user-plus"></i> Registrate
-        </button>
+        </button> -->
     </form>
 
-    <br>
+    <!-- <br> -->
 
 </div>
 
