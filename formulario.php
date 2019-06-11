@@ -14,10 +14,10 @@ $link = Conectarse('ticket');
 //    echo $row['id_ticket'] . "<br>";
 //}
 
-$query = "INSERT INTO `ticket` (`id_ticket`, `fecha_creado`, `fecha_actualizado`) VALUES (NULL, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);";
+// $query = "INSERT INTO `ticket` (`id_ticket`, `fecha_creado`, `fecha_actualizado`) VALUES (NULL, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);";
 
 //Crea un Numero de Ticket Distinto cada vez que se actualiza
-$result = mysqli_query($link, $query);
+// $result = mysqli_query($link, $query);
 
 //MAXIMO TICKET Y LPAD
 $squery = "SELECT MAX(id_ticket) id_ticket FROM `ticket` LIMIT 1;";
