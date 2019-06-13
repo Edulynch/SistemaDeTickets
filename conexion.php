@@ -16,7 +16,7 @@ $contrasena = "";
 $baseDeDatos = "tickets";
 
 // Nombre de la tabla a trabajar
-//$tabla = "personas";
+// $tabla = "personas";
 
 //Activar para mostrar mensajes
 $debug = 0;
@@ -45,7 +45,6 @@ function Conectarse($tabla)
             echo "Obtuvimos la base de datos $baseDeDatos sin problema.<br>";
         }
     }
+
     return $link;
 }
-
-?>
