@@ -1,0 +1,31 @@
+/* Agrandar input Registor de Usuario */
+
+.input-md {
+    width: 305px;
+    max-width: 100%;
+}
+
+
+/* Redondear input de Registro de Usuario */
+
+input[type=email],
+input[type=url],
+input[type=search],
+input[type=tel],
+input[type=color],
+input[type=text],
+input[type=password],
+input[type=datetime],
+input[type=datetime-local],
+input[type=date],
+input[type=month],
+input[type=time],
+input[type=week],
+input[type=number],
+textarea {
+    border-radius: 5px !important;
+    border-top-left-radius: 5px !important;
+    border-top-right-radius: 5px !important;
+    border-bottom-right-radius: 5px !important;
+    border-bottom-left-radius: 5px !important;
+}
