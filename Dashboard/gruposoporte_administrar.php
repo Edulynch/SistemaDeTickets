@@ -87,7 +87,7 @@
 
 						<ul class="submenu">
 							<li class="">
-								<a href="registrar_usuarios.php">
+								<a href="usuarios_registrar.php">
 									<i class="menu-icon fa fa-plus"></i>
 									Registrar
 								</a>
@@ -96,7 +96,7 @@
 
 						<ul class="submenu">
 							<li class="">
-								<a href="administrar_usuarios.php">
+								<a href="usuarios_administrar.php">
 									<i class="menu-icon fa fa-cog"></i>
 									Administrar
 								</a>
@@ -118,7 +118,7 @@
 
 						<ul class="submenu">
 							<li class="">
-								<a href="registrar_usuarios.php">
+								<a href="gruposoporte_registrar.php">
 									<i class="menu-icon fa fa-plus"></i>
 									Registrar
 								</a>
@@ -127,7 +127,7 @@
 
 						<ul class="submenu">
 							<li class="">
-								<a href="administrar_usuarios.php">
+								<a href="gruposoporte_administrar.php">
 									<i class="menu-icon fa fa-cog"></i>
 									Administrar
 								</a>

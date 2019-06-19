@@ -1,3 +1,11 @@
+<?php
+
+// if (!isset($_COOKIE['user_id']) || count($_COOKIE) == 0) {
+// 	header("Location: http://softicket.cl");
+// }
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -96,7 +104,7 @@
 
 					<ul class="submenu">
 						<li class="">
-							<a href="registrar_usuarios.php">
+							<a href="usuarios_registrar.php">
 								<i class="menu-icon fa fa-plus"></i>
 								Registrar
 							</a>
@@ -105,13 +113,15 @@
 
 					<ul class="submenu">
 						<li class="">
-							<a href="administrar_usuarios.php">
+							<a href="usuarios_administrar.php">
 								<i class="menu-icon fa fa-cog"></i>
 								Administrar
 							</a>
 						</li>
 					</ul>
 				</li>
+
+				<b class="arrow"></b>
 
 				<b class="arrow"></b>
 
@@ -127,7 +137,7 @@
 
 					<ul class="submenu">
 						<li class="">
-							<a href="registrar_usuarios.php">
+							<a href="gruposoporte_registrar.php">
 								<i class="menu-icon fa fa-plus"></i>
 								Registrar
 							</a>
@@ -136,7 +146,7 @@
 
 					<ul class="submenu">
 						<li class="">
-							<a href="administrar_usuarios.php">
+							<a href="gruposoporte_administrar.php">
 								<i class="menu-icon fa fa-cog"></i>
 								Administrar
 							</a>
@@ -179,7 +189,7 @@
 							Dashboard
 							<small>
 								<i class="ace-icon fa fa-angle-double-right"></i>
-								Registrar Usuarios
+								Registrar Grupo Soporte
 							</small>
 						</h1>
 					</div><!-- /.page-header -->
@@ -194,98 +204,95 @@
 							<div class="widget-box">
 								<div class="widget-header">
 									<h4 class="widget-title lighter smaller">
-										<i class="ace-icon fa fa-user-plus blue"></i>
-										Registrar Usuario
+										<i class="ace-icon fa fa-plus blue"></i>
+										Registrar Grupo Soporte
 									</h4>
 								</div>
 
 								<div class="container">
 
-									<form method="post" action=".">
+									<form method="post" action="#">
 
-										<div id="div_id_username" class="form-group required">
-											<label for="id_username" class="control-label col-md-3 requiredField"> Username<span class="asteriskField">*</span> </label>
+										<div class="form-group required">
+											<label for="id_nombre" class="control-label col-md-3 requiredField"> Nombre Completo<span>*</span> </label>
 											<div class="controls col-md-9">
-												<input class="input-md textinput textInput form-control" id="id_username" maxlength="30" name="username" placeholder="Choose your username" style="margin-bottom: 10px" type="text" />
+												<input class="input-md form-control" maxlength="50" id="id_nombre" name="id_nombre" style="margin-bottom: 10px" type="text" />
 											</div>
 										</div>
 
-										<div id="div_id_email" class="form-group required">
-											<label for="id_email" class="control-label col-md-3  requiredField"> E-mail<span class="asteriskField">*</span> </label>
+										<div class="form-group required">
+											<label for="id_empresa" class="control-label col-md-3 requiredField"> Empresa<span>*</span> </label>
 											<div class="controls col-md-9">
-												<input class="input-md emailinput form-control" id="id_email" name="email" placeholder="Your current email address" style="margin-bottom: 10px" type="email" />
+												<input class="input-md form-control" maxlength="50" id="id_empresa" name="id_empresa" style="margin-bottom: 10px" type="text" />
 											</div>
 										</div>
 
-										<br />
+										<div class="form-group required">
+											<label for="id_web_empresa" class="control-label col-md-3 requiredField"> Web Empresa<span>*</span> </label>
+											<div class="controls col-md-9">
+												<input class="input-md form-control" maxlength="50" id="id_web_empresa" name="id_web_empresa" style="margin-bottom: 10px" type="text" />
+											</div>
+										</div>
 
-										<div id="div_id_password1" class="form-group required">
-											<label for="id_password1" class="control-label col-md-3  requiredField">Password<span class="asteriskField">*</span> </label>
-											<div class="controls col-md-9 ">
-												<input class="input-md textinput textInput form-control" id="id_password1" name="password1" placeholder="Create a password" style="margin-bottom: 10px" type="password" />
+										<div class="form-group required">
+											<label for="id_direccion" class="control-label col-md-3 requiredField"> Dirección<span>*</span> </label>
+											<div class="controls col-md-9">
+												<input class="input-md form-control" maxlength="50" id="id_direccion" name="id_direccion" style="margin-bottom: 10px" type="text" />
 											</div>
 										</div>
-										<div id="div_id_password2" class="form-group required">
-											<label for="id_password2" class="control-label col-md-3  requiredField"> Re:password<span class="asteriskField">*</span> </label>
-											<div class="controls col-md-9 ">
-												<input class="input-md textinput textInput form-control" id="id_password2" name="password2" placeholder="Confirm your password" style="margin-bottom: 10px" type="password" />
+
+										<div class="form-group required">
+											<label for="id_telefono" class="control-label col-md-3 requiredField"> Telefono<span>*</span> </label>
+											<div class="controls col-md-9">
+												<input class="input-md form-control" maxlength="15" id="id_telefono" name="id_telefono" style="margin-bottom: 10px" type="text" />
 											</div>
 										</div>
-										<div id="div_id_name" class="form-group required">
-											<label for="id_name" class="control-label col-md-3  requiredField"> full name<span class="asteriskField">*</span> </label>
-											<div class="controls col-md-9 ">
-												<input class="input-md textinput textInput form-control" id="id_name" name="name" placeholder="Your Frist name and Last name" style="margin-bottom: 10px" type="text" />
+
+										<div class="form-group required">
+											<label for="id_cargo" class="control-label col-md-3 requiredField"> Cargo<span>*</span> </label>
+											<div class="controls col-md-9">
+												<input class="input-md form-control" maxlength="15" id="id_cargo" name="id_cargo" style="margin-bottom: 10px" type="text" />
 											</div>
 										</div>
-										<div id="div_id_gender" class="form-group required">
-											<label for="id_gender" class="control-label col-md-3  requiredField"> Gender<span class="asteriskField">*</span> </label>
+
+										<div class="form-group required">
+											<label for="id_email" class="control-label col-md-3  requiredField"> Correo Electronico<span>*</span> </label>
+											<div class="controls col-md-9">
+												<input class="input-md form-control" maxlength="255" id="id_email" name="email" style="margin-bottom: 10px" type="email" />
+											</div>
+										</div>
+
+										<div class="form-group required">
+											<label for="id_password1" class="control-label col-md-3  requiredField">Contraseña<span>*</span> </label>
+											<div class="controls col-md-9 ">
+												<input class="input-md form-control" maxlength="255" id="id_password1" name="password1" style="margin-bottom: 10px" type="password" />
+											</div>
+										</div>
+
+										<div class="form-group required">
+											<label for="id_password2" class="control-label col-md-3  requiredField">Repetir Contraseña<span>*</span> </label>
+											<div class="controls col-md-9 ">
+												<input class="input-md form-control" maxlength="255" id="id_password2" name="id_password2" style="margin-bottom: 10px" type="password" />
+											</div>
+										</div>
+
+										<div class="form-group required">
+											<label for="id_privilegio" class="control-label col-md-3 requiredField"> Tipo de Privilegio<span>*</span> </label>
 											<div class="controls col-md-9 " style="margin-bottom: 10px">
-												<label class="radio-inline"> <input type="radio" name="gender" id="id_gender_1" value="M" style="margin-bottom: 10px">Male</label>
-												<label class="radio-inline"> <input type="radio" name="gender" id="id_gender_2" value="F" style="margin-bottom: 10px">Female </label>
+												<label class="radio-inline"> <input type="radio" name="id_privilegio" id="id_privilegio" value="1" style="margin-bottom: 10px">Administrador</label>
+												<label class="radio-inline"> <input type="radio" name="id_privilegio" id="id_privilegio" value="2" style="margin-bottom: 10px">Tecnico </label>
+												<label class="radio-inline"> <input type="radio" name="id_privilegio" id="id_privilegio" value="3" style="margin-bottom: 10px">Usuario </label>
 											</div>
 										</div>
-										<div id="div_id_company" class="form-group required">
-											<label for="id_company" class="control-label col-md-3  requiredField"> company name<span class="asteriskField">*</span> </label>
-											<div class="controls col-md-9 ">
-												<input class="input-md textinput textInput form-control" id="id_company" name="company" placeholder="your company name" style="margin-bottom: 10px" type="text" />
-											</div>
-										</div>
-										<div id="div_id_catagory" class="form-group required">
-											<label for="id_catagory" class="control-label col-md-3  requiredField"> catagory<span class="asteriskField">*</span> </label>
-											<div class="controls col-md-9 ">
-												<input class="input-md textinput textInput form-control" id="id_catagory" name="catagory" placeholder="skills catagory" style="margin-bottom: 10px" type="text" />
-											</div>
-										</div>
-										<div id="div_id_number" class="form-group required">
-											<label for="id_number" class="control-label col-md-3  requiredField"> contact number<span class="asteriskField">*</span> </label>
-											<div class="controls col-md-9 ">
-												<input class="input-md textinput textInput form-control" id="id_number" name="number" placeholder="provide your number" style="margin-bottom: 10px" type="text" />
-											</div>
-										</div>
-										<div id="div_id_location" class="form-group required">
-											<label for="id_location" class="control-label col-md-3  requiredField"> Your Location<span class="asteriskField">*</span> </label>
-											<div class="controls col-md-9 ">
-												<input class="input-md textinput textInput form-control" id="id_location" name="location" placeholder="Your Pincode and City" style="margin-bottom: 10px" type="text" />
-											</div>
-										</div>
-										<div class="form-group">
-											<div class="controls col-md-offset-3 col-md-9 ">
-												<div id="div_id_terms" class="checkbox required">
-													<label for="id_terms" class=" requiredField">
-														<input class="input-ms checkboxinput" id="id_terms" name="terms" style="margin-bottom: 10px" type="checkbox" />
-														Agree with the terms and conditions
-													</label>
-												</div>
 
-											</div>
-										</div>
 										<div class="form-group">
 											<div class="aab controls col-md-3 "></div>
 											<div class="controls col-md-9 ">
-												<input type="submit" name="Signup" value="Signup" class="btn btn-primary btn btn-info" id="submit-id-signup" />
-												or <input type="button" name="Signup" value="Sign Up with Facebook" class="btn btn btn-primary" id="button-id-signup" />
+												<input type="reset" value="Limpiar" class="btn btn-success" id="submit-id-signup" style="margin-bottom: 10px;margin-top: 10px" />
+												<input type="submit" value="Enviar" class="btn btn-primary" id="button-id-signup" style="margin-bottom: 10px;margin-top: 10px" />
 											</div>
 										</div>
+
 									</form>
 								</div>
 							</div>
