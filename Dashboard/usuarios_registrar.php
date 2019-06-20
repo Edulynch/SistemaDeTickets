@@ -9,6 +9,8 @@ include_once '../conexion.php';
 
 $link = Conectarse('ticket');
 
+$registrado = false;
+
 if (isset($_SERVER['REQUEST_METHOD']) && $_SERVER['REQUEST_METHOD'] === 'POST') {
 
 	$user_cargo = limpiar($_POST['user_cargo']);
@@ -21,54 +23,53 @@ if (isset($_SERVER['REQUEST_METHOD']) && $_SERVER['REQUEST_METHOD'] === 'POST') 
 	$user_web_empresa = limpiar($_POST['user_web_empresa']);
 	$user_priv_id = limpiar($_POST['user_priv_id']);
 
-	$query = "INSERT INTO tickets.usuarios 
-	(
-	  user_id,
-	  user_cargo,
-	  user_correo,
-	  user_direccion,
-	  user_empresa,
-	  user_nombre,
-	  user_password,
-	  user_telefono,
-	  user_web_empresa,
-	  priv_id
-	) 
-	VALUES
-	(
-	NULL, 
-	'$user_cargo', 
-	'$user_correo',
-	'$user_direccion',
-	'$user_empresa',
-	'$user_nombre',
-	'$user_password',
-	'$user_telefono',
-	'$user_web_empresa',
-	'$user_priv_id'
-	);";
+	$query_correo = "SELECT user_correo
+	FROM tickets.usuarios
+	WHERE user_correo = '$user_correo';";
 
-	$ticket = mysqli_query($link, $query);
+	$ticketcorreo = mysqli_query($link, $query_correo);
+
+	$row = $ticketcorreo->fetch_assoc();
+
+	if (empty($row['user_correo']) || $row['user_correo'] == "") {
+
+		$query = "INSERT INTO tickets.usuarios 
+		(
+		user_id,
+		user_cargo,
+		user_correo,
+		user_direccion,
+		user_empresa,
+		user_nombre,
+		user_password,
+		user_telefono,
+		user_web_empresa,
+		priv_id
+		) 
+		VALUES
+		(
+		NULL, 
+		'$user_cargo', 
+		'$user_correo',
+		'$user_direccion',
+		'$user_empresa',
+		'$user_nombre',
+		'$user_password',
+		'$user_telefono',
+		'$user_web_empresa',
+		'$user_priv_id'
+		);";
+
+		$ticket = mysqli_query($link, $query);
+
+		$registrado = true;
+
+	} else {
+		echo '<script language="javascript">';
+		echo 'alert("El correo ya existe, no se realizará el registro.")';
+		echo '</script>';
+	}
 }
-
-
-
-
-// $row = mysqli_fetch_array($ticket, MYSQLI_NUM);
-//$row = $ticket->fetch_assoc();
-
-//echo $row[0];
-
-//sin lpad
-// $lpad_query = "SELECT LPAD($row[0], 10, '0') id_ticket;";
-
-// $lpad_ticket = mysqli_query($link, $lpad_query);
-
-// $lpad_row = mysqli_fetch_array($lpad_ticket, MYSQLI_NUM);
-
-//Con LPAD
-//echo $lpad_row[0];
-// $lpad_ticket_result = $lpad_row[0];
 
 ?>
 
@@ -346,6 +347,18 @@ if (isset($_SERVER['REQUEST_METHOD']) && $_SERVER['REQUEST_METHOD'] === 'POST') 
 												<label class="radio-inline"> <input type="radio" name="user_priv_id" id="user_priv_id" value="3" style="margin-bottom: 10px">Usuario </label>
 											</div>
 										</div>
+
+										<?php
+										if ($registrado == true) {
+
+											echo '<div class="form-group">';
+											echo '<label for="gsoporte_descripcion" class="control-label col-md-3 "></label>';
+											echo '<div class="controls col-md-9">';
+											echo '<label class="text-success"> Se registro correctamente. !</label>';
+											echo '</div>';
+											echo '</div>';
+										}
+										?>
 
 										<div class="form-group">
 											<div class="aab controls col-md-3 "></div>
@@ -700,24 +713,8 @@ if (isset($_SERVER['REQUEST_METHOD']) && $_SERVER['REQUEST_METHOD'] === 'POST') 
 	<script src="https://jqueryvalidation.org/files/lib/jquery.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.16.0/jquery.validate.min.js"></script>
 
-	
-	<script>
-		$("#myform").validate({
-			onsubmit: false
-		});
+	<script src="js/usuarios_registrar.js"></script>
 
-		$("#user_form").validate({
-			rules: {
-				// simple rule, converted to {required:true}
-				user_nombre: "required",
-				// compound rule
-				user_correo: {
-					required: true,
-					email: true
-				}
-			}
-		});
-	</script>
 
 
 </body>

@@ -4,7 +4,58 @@
 // 	header("Location: http://softicket.cl");
 // }
 
+include_once '../config.php';
+include_once '../conexion.php';
 
+$link = Conectarse('ticket');
+
+// // Dropdown tecnicos
+// $query_tecnicos = "SELECT *
+// FROM tickets.usuarios
+// where priv_id = 2;";
+
+// $ticket_tenicos = mysqli_query($link, $query_tecnicos);
+
+$registrado = false;
+
+if (isset($_SERVER['REQUEST_METHOD']) && $_SERVER['REQUEST_METHOD'] === 'POST') {
+
+	$gsoporte_titulo = limpiar($_POST['gsoporte_titulo']);
+	$gsoporte_descripcion = limpiar($_POST['gsoporte_descripcion']);
+	// $gsoporte_user_id = limpiar($_POST['gsoporte_user_id']);
+
+	// $query_correo = "SELECT gsoporte_titulo
+	// FROM tickets.usuarios
+	// WHERE gsoporte_titulo = '$gsoporte_titulo';";
+
+	// $ticketcorreo = mysqli_query($link, $query_correo);
+
+	// $row = $ticketcorreo->fetch_assoc();
+
+	if (empty($row['gsoporte_titulo']) || $row['gsoporte_titulo'] == "") {
+
+		$query = "INSERT INTO tickets.gruposoporte 
+		(
+		gsoporte_id,
+		gsoporte_titulo,
+		gsoporte_descripcion
+		) 
+		VALUES
+		(
+		NULL, 
+		'$gsoporte_titulo',
+		'$gsoporte_descripcion'
+		);";
+
+		$ticket = mysqli_query($link, $query);
+
+		$registrado = true;
+	} else {
+		echo '<script language="javascript">';
+		echo 'alert("El Grupo de Soporte ya existe, no se realizará el registro.")';
+		echo '</script>';
+	}
+}
 
 ?>
 
@@ -67,7 +118,7 @@
 			} catch (e) {}
 		</script>
 
-		<div id="sidebar" class="sidebar                  responsive                    ace-save-state">
+		<div id="sidebar" class="sidebar responsive ace-save-state">
 			<script type="text/javascript">
 				try {
 					ace.settings.loadState('sidebar')
@@ -122,8 +173,6 @@
 						</li>
 					</ul>
 				</li>
-
-				<b class="arrow"></b>
 
 				<b class="arrow"></b>
 
@@ -191,7 +240,7 @@
 							Dashboard
 							<small>
 								<i class="ace-icon fa fa-angle-double-right"></i>
-								Registrar Grupo Soporte
+								Registrar Grupo de Soporte
 							</small>
 						</h1>
 					</div><!-- /.page-header -->
@@ -207,87 +256,55 @@
 								<div class="widget-header">
 									<h4 class="widget-title lighter smaller">
 										<i class="ace-icon fa fa-plus blue"></i>
-										Registrar Grupo Soporte
+										Registrar Grupo de Soporte
 									</h4>
 								</div>
 
 								<div class="container">
 
-									<form method="post" action="#">
+									<form method="post" id="gsoporte_form" action="gruposoporte_registrar.php">
 
-										<div class="form-group required">
-											<label for="id_nombre" class="control-label col-md-3 requiredField"> Nombre Completo<span>*</span> </label>
+										<div class="form-group">
+											<label for="gsoporte_titulo" class="control-label col-md-3"> Titulo del Grupo<span>*</span> </label>
 											<div class="controls col-md-9">
-												<input class="input-md form-control" maxlength="50" id="id_nombre" name="id_nombre" style="margin-bottom: 10px" type="text" />
+												<input class="input-md form-control" maxlength="50" id="gsoporte_titulo" name="gsoporte_titulo" style="margin-bottom: 10px" type="text" />
 											</div>
 										</div>
 
-										<div class="form-group required">
-											<label for="id_empresa" class="control-label col-md-3 requiredField"> Empresa<span>*</span> </label>
+										<div class="form-group">
+											<label for="gsoporte_descripcion" class="control-label col-md-3 "> Descripción del Grupo<span>*</span> </label>
 											<div class="controls col-md-9">
-												<input class="input-md form-control" maxlength="50" id="id_empresa" name="id_empresa" style="margin-bottom: 10px" type="text" />
+												<textarea class="input-md form-control" id="gsoporte_descripcion" name="gsoporte_descripcion" style="margin-bottom: 10px" type="text" cols="30" rows="3"></textarea>
 											</div>
 										</div>
 
-										<div class="form-group required">
-											<label for="id_web_empresa" class="control-label col-md-3 requiredField"> Web Empresa<span>*</span> </label>
+										<?php
+										if ($registrado == true) {
+
+											echo '<div class="form-group">';
+											echo '<label for="gsoporte_descripcion" class="control-label col-md-3 "></label>';
+											echo '<div class="controls col-md-9">';
+											echo '<label class="text-success"> Se registro correctamente. !</label>';
+											echo '</div>';
+											echo '</div>';
+										}
+										?>
+
+										<!-- <div class="form-group">
+											<label for="gsoporte_user_id" class="control-label col-md-3 "> Usuario del Grupo<span>*</span> </label>
 											<div class="controls col-md-9">
-												<input class="input-md form-control" maxlength="50" id="id_web_empresa" name="id_web_empresa" style="margin-bottom: 10px" type="text" />
-											</div>
-										</div>
+												<select class="form-control dropdown input-md btn btn-primary dropdown-toggle">
 
-										<div class="form-group required">
-											<label for="id_direccion" class="control-label col-md-3 requiredField"> Dirección<span>*</span> </label>
-											<div class="controls col-md-9">
-												<input class="input-md form-control" maxlength="50" id="id_direccion" name="id_direccion" style="margin-bottom: 10px" type="text" />
-											</div>
-										</div>
+													<?php
+													// while ($lista_tecnicos = mysqli_fetch_assoc($ticket_tenicos)) {
+													// 	echo "<option value=" . $lista_tecnicos['user_id'] . ">" . $lista_tecnicos['user_nombre'] . "</option>";
+													// }
+													?>
+												</select>
 
-										<div class="form-group required">
-											<label for="id_telefono" class="control-label col-md-3 requiredField"> Telefono<span>*</span> </label>
-											<div class="controls col-md-9">
-												<input class="input-md form-control" maxlength="15" id="id_telefono" name="id_telefono" style="margin-bottom: 10px" type="text" />
-											</div>
-										</div>
-
-										<div class="form-group required">
-											<label for="id_cargo" class="control-label col-md-3 requiredField"> Cargo<span>*</span> </label>
-											<div class="controls col-md-9">
-												<input class="input-md form-control" maxlength="15" id="id_cargo" name="id_cargo" style="margin-bottom: 10px" type="text" />
-											</div>
-										</div>
-
-										<div class="form-group required">
-											<label for="id_email" class="control-label col-md-3  requiredField"> Correo Electronico<span>*</span> </label>
-											<div class="controls col-md-9">
-												<input class="input-md form-control" maxlength="255" id="id_email" name="email" style="margin-bottom: 10px" type="email" />
-											</div>
-										</div>
-
-										<div class="form-group required">
-											<label for="id_password1" class="control-label col-md-3  requiredField">Contraseña<span>*</span> </label>
-											<div class="controls col-md-9 ">
-												<input class="input-md form-control" maxlength="255" id="id_password1" name="password1" style="margin-bottom: 10px" type="password" />
-											</div>
-										</div>
-
-										<div class="form-group required">
-											<label for="id_password2" class="control-label col-md-3  requiredField">Repetir Contraseña<span>*</span> </label>
-											<div class="controls col-md-9 ">
-												<input class="input-md form-control" maxlength="255" id="id_password2" name="id_password2" style="margin-bottom: 10px" type="password" />
-											</div>
-										</div>
-
-										<div class="form-group required">
-											<label for="id_privilegio" class="control-label col-md-3 requiredField"> Tipo de Privilegio<span>*</span> </label>
-											<div class="controls col-md-9 " style="margin-bottom: 10px">
-												<label class="radio-inline"> <input type="radio" name="id_privilegio" id="id_privilegio" value="1" style="margin-bottom: 10px">Administrador</label>
-												<br/>
-												<label class="radio-inline"> <input type="radio" name="id_privilegio" id="id_privilegio" value="2" style="margin-bottom: 10px">Tecnico </label>
-												<br/>
-												<label class="radio-inline"> <input type="radio" name="id_privilegio" id="id_privilegio" value="3" style="margin-bottom: 10px">Usuario </label>
 											</div>
 
+										</div> -->
 										<div class="form-group">
 											<div class="aab controls col-md-3 "></div>
 											<div class="controls col-md-9 ">
@@ -376,7 +393,7 @@
 	<script src="assets/js/ace.min.js"></script>
 
 	<!-- inline scripts related to this page -->
-	<script type="text/javascript">
+	<!-- <script type="text/javascript">
 		jQuery(function($) {
 			$('.easy-pie-chart.percentage').each(function() {
 				var $box = $(this).closest('.infobox');
@@ -636,7 +653,15 @@
 			});
 
 		})
-	</script>
+	</script> -->
+
+	<script src="https://jqueryvalidation.org/files/lib/jquery.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.16.0/jquery.validate.min.js"></script>
+
+	<script src="js/gsoporte_registrar.js"></script>
+
+
+
 </body>
 
 </html>

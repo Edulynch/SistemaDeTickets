@@ -67,3 +67,24 @@ FROM
     tickets.usuarios u
         INNER JOIN
     tickets.privilegios p ON u.priv_id = p.priv_id;
+
+CREATE TABLE tickets.gruposoporte (
+gsoporte_id INT NOT NULL AUTO_INCREMENT,
+gsoporte_titulo VARCHAR(50),
+gsoporte_descripcion VARCHAR(50),
+user_id INT,
+PRIMARY KEY (gsoporte_id)
+);
+
+DROP TABLE tickets.ticket;
+
+CREATE TABLE tickets.ticket (
+  ticket_id INT UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT,
+  ticket_titulo VARCHAR(100),
+  user_id INT,
+  gsoporte_id INT,
+  ticket_descripcion VARCHAR(255),
+  ticket_fecha_creacion datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  ticket_fecha_actualizado datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (ticket_id)
+);
