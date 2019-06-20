@@ -4,7 +4,7 @@ if (isset($_COOKIE['user_id']) && count($_COOKIE) != 0) {
     if ($_COOKIE['priv_id'] == 1) {
         header("Location: http://softicket.cl/Dashboard");
     } else {
-        header("Location: http://softicket.cl/perfil/datos.php?id=" . $_COOKIE['user_id']);
+        header("Location: http://softicket.cl/perfil");
     }
 }
 
@@ -83,7 +83,7 @@ if (
         if ($row["priv_id"] == 1) {
             header("Location: http://softicket.cl/dashboard");
         } else {
-            header("Location: http://softicket.cl/perfil/datos.php?id=" . $row["user_id"]);
+            header("Location: http://softicket.cl/perfil");
         }
     } else {
         setcookie("user_id", "", time() - 3600);

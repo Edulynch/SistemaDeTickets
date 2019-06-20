@@ -7,7 +7,8 @@ if (!isset($_COOKIE['user_id']) || count($_COOKIE) == 0) {
 // include_once 'config.php';
 include_once '../conexion.php';
 
-$id = $_GET['id'];
+// $id = $_GET['id'];
+$id = $_COOKIE['user_id'];
 
 $link = Conectarse('usuarios');
 
