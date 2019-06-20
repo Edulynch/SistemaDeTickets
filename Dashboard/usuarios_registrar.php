@@ -4,6 +4,72 @@
 // 	header("Location: http://softicket.cl");
 // }
 
+include_once '../config.php';
+include_once '../conexion.php';
+
+$link = Conectarse('ticket');
+
+if (isset($_SERVER['REQUEST_METHOD']) && $_SERVER['REQUEST_METHOD'] === 'POST') {
+
+	$user_cargo = limpiar($_POST['user_cargo']);
+	$user_correo = limpiar($_POST['user_correo']);
+	$user_direccion = limpiar($_POST['user_direccion']);
+	$user_empresa = limpiar($_POST['user_empresa']);
+	$user_nombre = limpiar($_POST['user_nombre']);
+	$user_password = limpiar($_POST['user_password']);
+	$user_telefono = limpiar($_POST['user_telefono']);
+	$user_web_empresa = limpiar($_POST['user_web_empresa']);
+	$user_priv_id = limpiar($_POST['user_priv_id']);
+
+	$query = "INSERT INTO tickets.usuarios 
+	(
+	  user_id,
+	  user_cargo,
+	  user_correo,
+	  user_direccion,
+	  user_empresa,
+	  user_nombre,
+	  user_password,
+	  user_telefono,
+	  user_web_empresa,
+	  priv_id
+	) 
+	VALUES
+	(
+	NULL, 
+	'$user_cargo', 
+	'$user_correo',
+	'$user_direccion',
+	'$user_empresa',
+	'$user_nombre',
+	'$user_password',
+	'$user_telefono',
+	'$user_web_empresa',
+	'$user_priv_id'
+	);";
+
+	$ticket = mysqli_query($link, $query);
+}
+
+
+
+
+// $row = mysqli_fetch_array($ticket, MYSQLI_NUM);
+//$row = $ticket->fetch_assoc();
+
+//echo $row[0];
+
+//sin lpad
+// $lpad_query = "SELECT LPAD($row[0], 10, '0') id_ticket;";
+
+// $lpad_ticket = mysqli_query($link, $lpad_query);
+
+// $lpad_row = mysqli_fetch_array($lpad_ticket, MYSQLI_NUM);
+
+//Con LPAD
+//echo $lpad_row[0];
+// $lpad_ticket_result = $lpad_row[0];
+
 ?>
 
 <!DOCTYPE html>
@@ -54,6 +120,22 @@
 
 	<link rel="stylesheet" href="css/dashboard_registrar_usuario.css" />
 
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.16.0/jquery.validate.min.js"></script>
+
+	<script>
+		$("#user_form").validate({
+			rules: {
+				// simple rule, converted to {required:true}
+				user_nombre: "required",
+				// compound rule
+				user_correo: {
+					required: true,
+					email: true
+				}
+			}
+		});
+	</script>
+
 </head>
 
 <body class="no-skin">
@@ -75,7 +157,7 @@
 
 			<ul class="nav nav-list">
 				<li class="active">
-					<a href="Dashboard.html">
+					<a href="index.php">
 						<i class="menu-icon fa fa-tachometer"></i>
 						<span class="menu-text"> Dashboard </span>
 					</a>
@@ -93,64 +175,64 @@
 					<b class="arrow"></b>
 				</li>
 				<li class="">
-						<a href="#" class="dropdown-toggle">
-							<i class="menu-icon fa fa-user"></i>
-							<span class="menu-text"> Usuarios </span>
+					<a href="#" class="dropdown-toggle">
+						<i class="menu-icon fa fa-user"></i>
+						<span class="menu-text"> Usuarios </span>
 
-							<b class="arrow fa fa-angle-down"></b>
-						</a>
-
-						<b class="arrow"></b>
-
-						<ul class="submenu">
-							<li class="">
-								<a href="usuarios_registrar.php">
-									<i class="menu-icon fa fa-plus"></i>
-									Registrar
-								</a>
-							</li>
-						</ul>
-
-						<ul class="submenu">
-							<li class="">
-								<a href="usuarios_administrar.php">
-									<i class="menu-icon fa fa-cog"></i>
-									Administrar
-								</a>
-							</li>
-						</ul>
-					</li>
+						<b class="arrow fa fa-angle-down"></b>
+					</a>
 
 					<b class="arrow"></b>
 
-					<li class="">
-						<a href="#" class="dropdown-toggle">
-							<i class="menu-icon fa fa-folder"></i>
-							<span class="menu-text"> Grupos Soporte </span>
+					<ul class="submenu">
+						<li class="">
+							<a href="usuarios_registrar.php">
+								<i class="menu-icon fa fa-plus"></i>
+								Registrar
+							</a>
+						</li>
+					</ul>
 
-							<b class="arrow fa fa-angle-down"></b>
-						</a>
+					<ul class="submenu">
+						<li class="">
+							<a href="usuarios_administrar.php">
+								<i class="menu-icon fa fa-cog"></i>
+								Administrar
+							</a>
+						</li>
+					</ul>
+				</li>
 
-						<b class="arrow"></b>
+				<b class="arrow"></b>
 
-						<ul class="submenu">
-							<li class="">
-								<a href="gruposoporte_registrar.php">
-									<i class="menu-icon fa fa-plus"></i>
-									Registrar
-								</a>
-							</li>
-						</ul>
+				<li class="">
+					<a href="#" class="dropdown-toggle">
+						<i class="menu-icon fa fa-folder"></i>
+						<span class="menu-text"> Grupos Soporte </span>
 
-						<ul class="submenu">
-							<li class="">
-								<a href="gruposoporte_administrar.php">
-									<i class="menu-icon fa fa-cog"></i>
-									Administrar
-								</a>
-							</li>
-						</ul>
-					</li>
+						<b class="arrow fa fa-angle-down"></b>
+					</a>
+
+					<b class="arrow"></b>
+
+					<ul class="submenu">
+						<li class="">
+							<a href="gruposoporte_registrar.php">
+								<i class="menu-icon fa fa-plus"></i>
+								Registrar
+							</a>
+						</li>
+					</ul>
+
+					<ul class="submenu">
+						<li class="">
+							<a href="gruposoporte_administrar.php">
+								<i class="menu-icon fa fa-cog"></i>
+								Administrar
+							</a>
+						</li>
+					</ul>
+				</li>
 
 				<b class="arrow"></b>
 				</li>
@@ -209,77 +291,72 @@
 
 								<div class="container">
 
-									<form method="post" action="#">
+									<form method="post" id="user_form" action="usuarios_registrar.php">
 
-										<div class="form-group required">
-											<label for="id_nombre" class="control-label col-md-3 requiredField"> Nombre Completo<span>*</span> </label>
+										<div class="form-group">
+											<label for="user_nombre" class="control-label col-md-3"> Nombre Completo<span>*</span> </label>
 											<div class="controls col-md-9">
-												<input class="input-md form-control" maxlength="50" id="id_nombre" name="id_nombre" style="margin-bottom: 10px" type="text" />
+												<input class="input-md form-control" required maxlength="50" id="user_nombre" name="user_nombre" style="margin-bottom: 10px" type="text" />
 											</div>
 										</div>
 
-										<div class="form-group required">
-											<label for="id_empresa" class="control-label col-md-3 requiredField"> Empresa<span>*</span> </label>
+										<div class="form-group">
+											<label for="user_empresa" class="control-label col-md-3 "> Empresa<span>*</span> </label>
 											<div class="controls col-md-9">
-												<input class="input-md form-control" maxlength="50" id="id_empresa" name="id_empresa" style="margin-bottom: 10px" type="text" />
+												<input class="input-md form-control" maxlength="50" required id="user_empresa" name="user_empresa" style="margin-bottom: 10px" type="text" />
 											</div>
 										</div>
 
-										<div class="form-group required">
-											<label for="id_web_empresa" class="control-label col-md-3 requiredField"> Web Empresa<span>*</span> </label>
+										<div class="form-group">
+											<label for="user_web_empresa" class="control-label col-md-3 "> Web Empresa<span>*</span> </label>
 											<div class="controls col-md-9">
-												<input class="input-md form-control" maxlength="50" id="id_web_empresa" name="id_web_empresa" style="margin-bottom: 10px" type="text" />
+												<input class="input-md form-control" maxlength="50" required id="user_web_empresa" name="user_web_empresa" style="margin-bottom: 10px" type="text" />
 											</div>
 										</div>
 
-										<div class="form-group required">
-											<label for="id_direccion" class="control-label col-md-3 requiredField"> Dirección<span>*</span> </label>
+										<div class="form-group">
+											<label for="user_direccion" class="control-label col-md-3 "> Dirección<span>*</span> </label>
 											<div class="controls col-md-9">
-												<input class="input-md form-control" maxlength="50" id="id_direccion" name="id_direccion" style="margin-bottom: 10px" type="text" />
+												<input class="input-md form-control" maxlength="50" required id="user_direccion" name="user_direccion" style="margin-bottom: 10px" type="text" />
 											</div>
 										</div>
 
-										<div class="form-group required">
-											<label for="id_telefono" class="control-label col-md-3 requiredField"> Telefono<span>*</span> </label>
+										<div class="form-group">
+											<label for="user_telefono" class="control-label col-md-3 "> Telefono<span>*</span> </label>
 											<div class="controls col-md-9">
-												<input class="input-md form-control" maxlength="15" id="id_telefono" name="id_telefono" style="margin-bottom: 10px" type="text" />
+												<input class="input-md form-control" maxlength="15" required id="user_telefono" name="user_telefono" style="margin-bottom: 10px" type="text" />
 											</div>
 										</div>
 
-										<div class="form-group required">
-											<label for="id_cargo" class="control-label col-md-3 requiredField"> Cargo<span>*</span> </label>
+										<div class="form-group">
+											<label for="user_cargo" class="control-label col-md-3 "> Cargo<span>*</span> </label>
 											<div class="controls col-md-9">
-												<input class="input-md form-control" maxlength="15" id="id_cargo" name="id_cargo" style="margin-bottom: 10px" type="text" />
+												<input class="input-md form-control" maxlength="15" required id="user_cargo" name="user_cargo" style="margin-bottom: 10px" type="text" />
 											</div>
 										</div>
 
-										<div class="form-group required">
-											<label for="id_email" class="control-label col-md-3  requiredField"> Correo Electronico<span>*</span> </label>
+										<div class="form-group">
+											<label for="user_correo" class="control-label col-md-3  "> Correo Electronico<span>*</span> </label>
 											<div class="controls col-md-9">
-												<input class="input-md form-control" maxlength="255" id="id_email" name="email" style="margin-bottom: 10px" type="email" />
+												<input class="input-md form-control" maxlength="255" required id="user_correo" name="user_correo" style="margin-bottom: 10px" type="email" />
 											</div>
 										</div>
 
-										<div class="form-group required">
-											<label for="id_password1" class="control-label col-md-3  requiredField">Contraseña<span>*</span> </label>
+										<div class="form-group">
+											<label for="user_password" class="control-label col-md-3  ">Contraseña<span>*</span> </label>
 											<div class="controls col-md-9 ">
-												<input class="input-md form-control" maxlength="255" id="id_password1" name="password1" style="margin-bottom: 10px" type="password" />
+												<input class="input-md form-control" maxlength="255" required id="user_password" name="user_password" style="margin-bottom: 10px" type="password" />
 											</div>
 										</div>
 
-										<div class="form-group required">
-											<label for="id_password2" class="control-label col-md-3  requiredField">Repetir Contraseña<span>*</span> </label>
-											<div class="controls col-md-9 ">
-												<input class="input-md form-control" maxlength="255" id="id_password2" name="id_password2" style="margin-bottom: 10px" type="password" />
-											</div>
-										</div>
-
-										<div class="form-group required">
-											<label for="id_privilegio" class="control-label col-md-3 requiredField"> Tipo de Privilegio<span>*</span> </label>
+										<div class="form-group">
+											<label for="user_priv_id" class="control-label col-md-3 "> Tipo de Privilegio<span>*</span> </label>
 											<div class="controls col-md-9 " style="margin-bottom: 10px">
-												<label class="radio-inline"> <input type="radio" name="id_privilegio" id="id_privilegio" value="1" style="margin-bottom: 10px">Administrador</label>
-												<label class="radio-inline"> <input type="radio" name="id_privilegio" id="id_privilegio" value="2" style="margin-bottom: 10px">Tecnico </label>
-												<label class="radio-inline"> <input type="radio" name="id_privilegio" id="id_privilegio" value="3" style="margin-bottom: 10px">Usuario </label>
+												<label class="radio-inline"> <input type="radio" name="user_priv_id" required id="user_priv_id" value="1" style="margin-bottom: 10px">Administrador</label>
+												<br />
+												<label class="radio-inline"> <input type="radio" name="user_priv_id" required id="user_priv_id" value="2" style="margin-bottom: 10px">Tecnico </label>
+												<br />
+												<label class="radio-inline"> <input type="radio" name="user_priv_id" required id="user_priv_id" value="3" style="margin-bottom: 10px">Usuario </label>
 											</div>
 										</div>
 
@@ -632,6 +709,7 @@
 
 		})
 	</script>
+
 </body>
 
 </html>

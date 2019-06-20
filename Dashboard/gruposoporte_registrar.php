@@ -4,6 +4,8 @@
 // 	header("Location: http://softicket.cl");
 // }
 
+
+
 ?>
 
 <!DOCTYPE html>
@@ -75,7 +77,7 @@
 
 			<ul class="nav nav-list">
 				<li class="active">
-					<a href="Dashboard.html">
+					<a href="index.php">
 						<i class="menu-icon fa fa-tachometer"></i>
 						<span class="menu-text"> Dashboard </span>
 					</a>
@@ -280,10 +282,11 @@
 											<label for="id_privilegio" class="control-label col-md-3 requiredField"> Tipo de Privilegio<span>*</span> </label>
 											<div class="controls col-md-9 " style="margin-bottom: 10px">
 												<label class="radio-inline"> <input type="radio" name="id_privilegio" id="id_privilegio" value="1" style="margin-bottom: 10px">Administrador</label>
+												<br/>
 												<label class="radio-inline"> <input type="radio" name="id_privilegio" id="id_privilegio" value="2" style="margin-bottom: 10px">Tecnico </label>
+												<br/>
 												<label class="radio-inline"> <input type="radio" name="id_privilegio" id="id_privilegio" value="3" style="margin-bottom: 10px">Usuario </label>
 											</div>
-										</div>
 
 										<div class="form-group">
 											<div class="aab controls col-md-3 "></div>
