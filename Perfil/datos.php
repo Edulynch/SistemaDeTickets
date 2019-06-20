@@ -49,7 +49,7 @@ if (empty($row['user_id'])) {
 
 <head>
 	<meta charset="utf-8" />
-	<title>User Profile Page - Ace Admin</title>
+	<title><?php echo "Perfil de " . $row['user_nombre'] ?></title>
 
 	<meta name="description" content="3 styles with inline editable feature" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />

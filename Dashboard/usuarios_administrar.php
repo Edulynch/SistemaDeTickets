@@ -1,3 +1,16 @@
+<?php
+if (
+	!isset($_COOKIE['user_id'])
+	|| !isset($_COOKIE['user_nombre'])
+	|| count($_COOKIE) == 0
+	|| !isset($_COOKIE['priv_id'])
+	|| $_COOKIE['priv_id'] != 1 //Administrador
+) {
+	header("Location: http://softicket.cl");
+}
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 	<head>

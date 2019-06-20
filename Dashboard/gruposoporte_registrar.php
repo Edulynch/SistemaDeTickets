@@ -1,8 +1,14 @@
 <?php
 
-// if (!isset($_COOKIE['user_id']) || count($_COOKIE) == 0) {
-// 	header("Location: http://softicket.cl");
-// }
+if (
+	!isset($_COOKIE['user_id'])
+	|| !isset($_COOKIE['user_nombre'])
+	|| count($_COOKIE) == 0
+	|| !isset($_COOKIE['priv_id'])
+	|| $_COOKIE['priv_id'] != 1 //Administrador
+) {
+	header("Location: http://softicket.cl");
+}
 
 include_once '../config.php';
 include_once '../conexion.php';

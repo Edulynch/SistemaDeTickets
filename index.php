@@ -1,7 +1,11 @@
 <?php
 
-if (isset($_COOKIE['user_id']) && count($_COOKIE) > 0) {
-    header("Location: http://softicket.cl/perfil/datos.php?id=" . $_COOKIE['user_id']);
+if (isset($_COOKIE['user_id']) && count($_COOKIE) != 0) {
+    if ($_COOKIE['priv_id'] == 1) {
+        header("Location: http://softicket.cl/Dashboard");
+    } else {
+        header("Location: http://softicket.cl/perfil/datos.php?id=" . $_COOKIE['user_id']);
+    }
 }
 
 ?>
@@ -15,7 +19,7 @@ if (isset($_COOKIE['user_id']) && count($_COOKIE) > 0) {
     <link rel="stylesheet" href="estilos/bootstrap.min.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css">
     <link rel="stylesheet" href="estilos/index.css">
-    <title>Bootstrap 4 Login/Register Form</title>
+    <title>Softicket</title>
 </head>
 
 <body>
@@ -64,7 +68,7 @@ if (
     $login_correo = limpiar($_POST['login_correo']);
     $login_password = limpiar($_POST['login_password']);
 
-    $query = "SELECT * FROM `usuarios` WHERE user_correo = " . "'" .  $login_correo . "'" . " AND user_password = " .  $login_password . " LIMIT 1;";
+    $query = "SELECT * FROM tickets.usuarios WHERE user_correo = " . "'" .  $login_correo . "'" . " AND user_password = " .  $login_password . " LIMIT 1;";
 
     mysqli_set_charset($link, "utf8");
 
@@ -74,9 +78,17 @@ if (
 
     if (!empty($row["user_id"])) {
         setcookie("user_id", $row["user_id"], time() + 30 * 24 * 60 * 60);
-        header("Location: http://softicket.cl/perfil/datos.php?id=" . $row["user_id"]);
+        setcookie("priv_id", $row["priv_id"], time() + 30 * 24 * 60 * 60);
+        setcookie("user_nombre", $row["user_nombre"], time() + 30 * 24 * 60 * 60);
+        if ($row["priv_id"] == 1) {
+            header("Location: http://softicket.cl/dashboard");
+        } else {
+            header("Location: http://softicket.cl/perfil/datos.php?id=" . $row["user_id"]);
+        }
     } else {
         setcookie("user_id", "", time() - 3600);
+        setcookie("priv_id", "", time() - 3600);
+        setcookie("user_nombre", "", time() - 3600);
     }
 }
 
