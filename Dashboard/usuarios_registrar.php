@@ -120,21 +120,8 @@ if (isset($_SERVER['REQUEST_METHOD']) && $_SERVER['REQUEST_METHOD'] === 'POST') 
 
 	<link rel="stylesheet" href="css/dashboard_registrar_usuario.css" />
 
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.16.0/jquery.validate.min.js"></script>
 
-	<script>
-		$("#user_form").validate({
-			rules: {
-				// simple rule, converted to {required:true}
-				user_nombre: "required",
-				// compound rule
-				user_correo: {
-					required: true,
-					email: true
-				}
-			}
-		});
-	</script>
+
 
 </head>
 
@@ -296,67 +283,67 @@ if (isset($_SERVER['REQUEST_METHOD']) && $_SERVER['REQUEST_METHOD'] === 'POST') 
 										<div class="form-group">
 											<label for="user_nombre" class="control-label col-md-3"> Nombre Completo<span>*</span> </label>
 											<div class="controls col-md-9">
-												<input class="input-md form-control" required maxlength="50" id="user_nombre" name="user_nombre" style="margin-bottom: 10px" type="text" />
+												<input class="input-md form-control" maxlength="50" id="user_nombre" name="user_nombre" style="margin-bottom: 10px" type="text" />
 											</div>
 										</div>
 
 										<div class="form-group">
 											<label for="user_empresa" class="control-label col-md-3 "> Empresa<span>*</span> </label>
 											<div class="controls col-md-9">
-												<input class="input-md form-control" maxlength="50" required id="user_empresa" name="user_empresa" style="margin-bottom: 10px" type="text" />
+												<input class="input-md form-control" maxlength="50" id="user_empresa" name="user_empresa" style="margin-bottom: 10px" type="text" />
 											</div>
 										</div>
 
 										<div class="form-group">
 											<label for="user_web_empresa" class="control-label col-md-3 "> Web Empresa<span>*</span> </label>
 											<div class="controls col-md-9">
-												<input class="input-md form-control" maxlength="50" required id="user_web_empresa" name="user_web_empresa" style="margin-bottom: 10px" type="text" />
+												<input class="input-md form-control" maxlength="50" id="user_web_empresa" name="user_web_empresa" style="margin-bottom: 10px" type="text" />
 											</div>
 										</div>
 
 										<div class="form-group">
 											<label for="user_direccion" class="control-label col-md-3 "> Dirección<span>*</span> </label>
 											<div class="controls col-md-9">
-												<input class="input-md form-control" maxlength="50" required id="user_direccion" name="user_direccion" style="margin-bottom: 10px" type="text" />
+												<input class="input-md form-control" maxlength="50" id="user_direccion" name="user_direccion" style="margin-bottom: 10px" type="text" />
 											</div>
 										</div>
 
 										<div class="form-group">
 											<label for="user_telefono" class="control-label col-md-3 "> Telefono<span>*</span> </label>
 											<div class="controls col-md-9">
-												<input class="input-md form-control" maxlength="15" required id="user_telefono" name="user_telefono" style="margin-bottom: 10px" type="text" />
+												<input class="input-md form-control" maxlength="15" id="user_telefono" name="user_telefono" style="margin-bottom: 10px" type="text" />
 											</div>
 										</div>
 
 										<div class="form-group">
 											<label for="user_cargo" class="control-label col-md-3 "> Cargo<span>*</span> </label>
 											<div class="controls col-md-9">
-												<input class="input-md form-control" maxlength="15" required id="user_cargo" name="user_cargo" style="margin-bottom: 10px" type="text" />
+												<input class="input-md form-control" maxlength="15" id="user_cargo" name="user_cargo" style="margin-bottom: 10px" type="text" />
 											</div>
 										</div>
 
 										<div class="form-group">
 											<label for="user_correo" class="control-label col-md-3  "> Correo Electronico<span>*</span> </label>
 											<div class="controls col-md-9">
-												<input class="input-md form-control" maxlength="255" required id="user_correo" name="user_correo" style="margin-bottom: 10px" type="email" />
+												<input class="input-md form-control" maxlength="255" id="user_correo" name="user_correo" style="margin-bottom: 10px" type="email" />
 											</div>
 										</div>
 
 										<div class="form-group">
 											<label for="user_password" class="control-label col-md-3  ">Contraseña<span>*</span> </label>
 											<div class="controls col-md-9 ">
-												<input class="input-md form-control" maxlength="255" required id="user_password" name="user_password" style="margin-bottom: 10px" type="password" />
+												<input class="input-md form-control" maxlength="255" id="user_password" name="user_password" style="margin-bottom: 10px" type="password" />
 											</div>
 										</div>
 
 										<div class="form-group">
 											<label for="user_priv_id" class="control-label col-md-3 "> Tipo de Privilegio<span>*</span> </label>
 											<div class="controls col-md-9 " style="margin-bottom: 10px">
-												<label class="radio-inline"> <input type="radio" name="user_priv_id" required id="user_priv_id" value="1" style="margin-bottom: 10px">Administrador</label>
+												<label class="radio-inline"> <input type="radio" name="user_priv_id" id="user_priv_id" value="1" style="margin-bottom: 10px">Administrador</label>
 												<br />
-												<label class="radio-inline"> <input type="radio" name="user_priv_id" required id="user_priv_id" value="2" style="margin-bottom: 10px">Tecnico </label>
+												<label class="radio-inline"> <input type="radio" name="user_priv_id" id="user_priv_id" value="2" style="margin-bottom: 10px">Tecnico </label>
 												<br />
-												<label class="radio-inline"> <input type="radio" name="user_priv_id" required id="user_priv_id" value="3" style="margin-bottom: 10px">Usuario </label>
+												<label class="radio-inline"> <input type="radio" name="user_priv_id" id="user_priv_id" value="3" style="margin-bottom: 10px">Usuario </label>
 											</div>
 										</div>
 
@@ -448,7 +435,7 @@ if (isset($_SERVER['REQUEST_METHOD']) && $_SERVER['REQUEST_METHOD'] === 'POST') 
 	<script src="assets/js/ace.min.js"></script>
 
 	<!-- inline scripts related to this page -->
-	<script type="text/javascript">
+	<!-- <script type="text/javascript">
 		jQuery(function($) {
 			$('.easy-pie-chart.percentage').each(function() {
 				var $box = $(this).closest('.infobox');
@@ -708,7 +695,30 @@ if (isset($_SERVER['REQUEST_METHOD']) && $_SERVER['REQUEST_METHOD'] === 'POST') 
 			});
 
 		})
+	</script> -->
+
+	<script src="https://jqueryvalidation.org/files/lib/jquery.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.16.0/jquery.validate.min.js"></script>
+
+	
+	<script>
+		$("#myform").validate({
+			onsubmit: false
+		});
+
+		$("#user_form").validate({
+			rules: {
+				// simple rule, converted to {required:true}
+				user_nombre: "required",
+				// compound rule
+				user_correo: {
+					required: true,
+					email: true
+				}
+			}
+		});
 	</script>
+
 
 </body>
 
