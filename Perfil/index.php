@@ -217,16 +217,20 @@ if (empty($row['user_id'])) {
 											<div class="profile-contact-info">
 												<div class="profile-contact-links align-center">
 
+												<a href="/formulario.php" class="btn btn-link">
+														<i class="ace-icon fa fa-pencil-square-o bigger-125 pink"></i>
+														Crear Nuevo Ticket
+													</a>
 
-													<a href="mailto:<?php echo $row["user_correo"]; ?>" class="btn btn-link">
-														<i class="ace-icon fa fa-envelope bigger-120 pink"></i>
+													<!-- <a href="mailto:<?php echo $row["user_correo"]; ?>" class="btn btn-link">
+														<i class="ace-icon fa fa-envelope bigger-125 pink"></i>
 														Enviar un Correo
 													</a>
 
 													<a href="<?php echo "http://" . $row["user_web_empresa"]; ?>" class="btn btn-link">
 														<i class="ace-icon fa fa-globe bigger-125 blue"></i>
 														<?php echo $row["user_web_empresa"]; ?>
-													</a>
+													</a> -->
 												</div>
 
 												<div class="space-6"></div>
@@ -300,7 +304,11 @@ if (empty($row['user_id'])) {
 													<div class="profile-info-name"> Correo :</div>
 
 													<div class="profile-info-value">
-														<span class="editable" id="correo"><?php echo $row["user_correo"]; ?></span>
+														<span class="editable" id="correo">
+															<a href="mailto:<?php echo $row["user_correo"]; ?>">
+															<?php echo $row["user_correo"]; ?>
+															</a>
+												</span>
 													</div>
 												</div>
 
@@ -335,7 +343,22 @@ if (empty($row['user_id'])) {
 														<span class="editable" id="telefono"><?php echo $row["user_telefono"]; ?></span>
 													</div>
 												</div>
+
+												<div class="profile-info-row">
+													<div class="profile-info-name"> Web Empresa : </div>
+
+													<div class="profile-info-value">
+														<span class="editable" id="telefono">
+															<a href="<?php echo "http://" . $row["user_web_empresa"]; ?>">
+															<?php echo $row["user_web_empresa"];?>
+															</a>
+														</span>
+													</div>
+												</div>
+												
 											</div>
+
+											
 
 											<div class="space-20"></div>
 
