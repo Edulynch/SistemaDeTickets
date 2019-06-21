@@ -3,16 +3,16 @@
 include_once 'config.php';
 include_once 'conexion.php';
 
-#PREFIJO_ORDEN_TRABAJO
-#=> OT-
-#000
+if (
+	!isset($_COOKIE['user_id'])
+	|| !isset($_COOKIE['user_nombre'])
+	|| count($_COOKIE) == 0
+	|| !isset($_COOKIE['priv_id'])
+) {
+	header("Location: http://softicket.cl");
+}
 
 $link = Conectarse('ticket');
-
-//Recorrer valores obtenidos por el select
-//while ($row = $result2->fetch_assoc()) {
-//    echo $row['ticket_id'] . "<br>";
-//}
 
 $registrado = false;
 
@@ -40,11 +40,14 @@ if (isset($_SERVER['REQUEST_METHOD']) && $_SERVER['REQUEST_METHOD'] === 'POST') 
         '$ticket_descripcion'
         );";
 
-    echo $query;
+    // echo $query;
 
     $ticket = mysqli_query($link, $query);
 
     $registrado = true;
+
+    header("Location: http://softicket.cl/perfil");
+
 }
 
 

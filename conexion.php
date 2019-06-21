@@ -46,5 +46,8 @@ function Conectarse($tabla)
         }
     }
 
+    //añadir tildes y ñ
+    mysqli_set_charset($link, "utf8");
+
     return $link;
 }

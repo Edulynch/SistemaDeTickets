@@ -30,9 +30,6 @@ INNER JOIN tickets.privilegios p
 ON u.priv_id = p.priv_id
 WHERE user_id = " . $id . " LIMIT 1;";
 
-//Tildes y ñ
-mysqli_set_charset($link, "utf8");
-
 $ticket = mysqli_query($link, $squery);
 
 //$row = mysqli_fetch_array($ticket, MYSQLI_NUM);
@@ -217,11 +214,18 @@ if (empty($row['user_id'])) {
 											<div class="profile-contact-info">
 												<div class="profile-contact-links align-center">
 
-												<a href="/formulario.php" class="btn btn-link">
+													<a href="/formulario.php" class="btn btn-link">
 														<i class="ace-icon fa fa-pencil-square-o bigger-125 pink"></i>
 														Crear Nuevo Ticket
 													</a>
-
+													<?php
+													if ($_COOKIE['priv_id'] == 1) {
+														echo "<a href='/dashboard' class='btn btn-link'>";
+														echo "<i class='ace-icon fa fa-cog bigger-125 pink'></i>";
+														echo "Administracion";
+														echo "</a>";
+													}
+													?>
 													<!-- <a href="mailto:<?php echo $row["user_correo"]; ?>" class="btn btn-link">
 														<i class="ace-icon fa fa-envelope bigger-125 pink"></i>
 														Enviar un Correo
@@ -306,9 +310,9 @@ if (empty($row['user_id'])) {
 													<div class="profile-info-value">
 														<span class="editable" id="correo">
 															<a href="mailto:<?php echo $row["user_correo"]; ?>">
-															<?php echo $row["user_correo"]; ?>
+																<?php echo $row["user_correo"]; ?>
 															</a>
-												</span>
+														</span>
 													</div>
 												</div>
 
@@ -350,15 +354,15 @@ if (empty($row['user_id'])) {
 													<div class="profile-info-value">
 														<span class="editable" id="telefono">
 															<a href="<?php echo "http://" . $row["user_web_empresa"]; ?>">
-															<?php echo $row["user_web_empresa"];?>
+																<?php echo $row["user_web_empresa"]; ?>
 															</a>
 														</span>
 													</div>
 												</div>
-												
+
 											</div>
 
-											
+
 
 											<div class="space-20"></div>
 

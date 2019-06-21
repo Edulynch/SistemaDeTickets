@@ -16,14 +16,14 @@ if (
 $link = Conectarse('ticket');
 
 // Dropdown tecnicos
-$usuarios = "SELECT * FROM tickets.usuarios u
-inner join tickets.privilegios p
-on u.priv_id = p.priv_id;";
+$ticket = "SELECT * FROM tickets.ticket t
+inner join tickets.gruposoporte g
+on t.gsoporte_id = g.gsoporte_id
+WHERE ticket_titulo is not null;";
 
-$lista_usuarios = mysqli_query($link, $usuarios);
+$lista_ticket = mysqli_query($link, $ticket);
 
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -74,16 +74,16 @@ $lista_usuarios = mysqli_query($link, $usuarios);
 
     <div class="main-container ace-save-state" id="main-container">
         <script type="text/javascript">
-        try {
-            ace.settings.loadState('main-container')
-        } catch (e) {}
+            try {
+                ace.settings.loadState('main-container')
+            } catch (e) { }
         </script>
 
         <div id="sidebar" class="sidebar                  responsive                    ace-save-state">
             <script type="text/javascript">
-            try {
-                ace.settings.loadState('sidebar')
-            } catch (e) {}
+                try {
+                    ace.settings.loadState('sidebar')
+                } catch (e) { }
             </script>
 
 
@@ -167,37 +167,38 @@ $lista_usuarios = mysqli_query($link, $usuarios);
                 </li>
 
                 <b class="arrow"></b>
-
                 <li class="">
-					<a href="#" class="dropdown-toggle">
-						<i class="menu-icon fa fa-file-text "></i>
-						<span class="menu-text"> Ticket de Soporte </span>
+                    <a href="#" class="dropdown-toggle">
+                        <i class="menu-icon fa fa-file-text "></i>
+                        <span class="menu-text"> Ticket de Soporte </span>
 
-						<b class="arrow fa fa-angle-down"></b>
-					</a>
+                        <b class="arrow fa fa-angle-down"></b>
+                    </a>
 
-					<b class="arrow"></b>
+                    <b class="arrow"></b>
 
-					<ul class="submenu">
-						<li class="">
-							<a href="/formulario.php">
-								<i class="menu-icon fa fa-plus"></i>
-								Registrar
-							</a>
-						</li>
-					</ul>
+                    <ul class="submenu">
+                        <li class="">
+                            <a href="/formulario.php">
+                                <i class="menu-icon fa fa-plus"></i>
+                                Registrar
+                            </a>
+                        </li>
+                    </ul>
 
-					<ul class="submenu">
-						<li class="">
-							<a href="ticket_administrar.php">
-								<i class="menu-icon fa fa-cog"></i>
-								Administrar
-							</a>
-						</li>
-					</ul>
-				</li>
+                    <ul class="submenu">
+                        <li class="">
+                            <a href="ticket_administrar.php">
+                                <i class="menu-icon fa fa-cog"></i>
+                                Administrar
+                            </a>
+                        </li>
+                    </ul>
+                </li>
 
-				<b class="arrow"></b>
+                <b class="arrow"></b>
+
+
                 </li>
             </ul>
             </li>
@@ -233,7 +234,7 @@ $lista_usuarios = mysqli_query($link, $usuarios);
                             Dashboard
                             <small>
                                 <i class="ace-icon fa fa-angle-double-right"></i>
-                                Listado de Usuario
+                                Listado de Grupos de Soporte
                             </small>
                         </h1>
                     </div><!-- /.page-header -->
@@ -249,14 +250,10 @@ $lista_usuarios = mysqli_query($link, $usuarios);
                                                 class="table table-bordered table-responsive-md table-striped text-center">
                                                 <thead>
                                                     <tr>
-                                                        <th class="text-center">Nombre Completo</th>
-                                                        <th class="text-center">Empresa</th>
-                                                        <th class="text-center">Web Empresa</th>
-                                                        <th class="text-center">Dirección</th>
-                                                        <th class="text-center">Telefono</th>
-                                                        <th class="text-center">Cargo</th>
-                                                        <th class="text-center">Correo Electronico</th>
-                                                        <th class="text-center">Tipo de Privilegio</th>
+                                                        <th class="text-center">Nombre Ticket</th>
+                                                        <th class="text-center">Descripcion</th>
+                                                        <th class="text-center">Grupo Resolutor</th>
+                                                        <th class="text-center">Fecha creación</th>
                                                         <th class="text-center">Opciones</th>
                                                     </tr>
                                                 </thead>
@@ -264,32 +261,20 @@ $lista_usuarios = mysqli_query($link, $usuarios);
 
                                                     <?php
 
-																								while ($row = $lista_usuarios->fetch_assoc()) {
-																								?>
+                                                    while ($row = $lista_ticket->fetch_assoc()) {
+                                                    ?>
                                                     <tr>
                                                         <td class="pt-3-half">
-                                                            <?php echo $row['user_nombre']; ?>
+                                                            <?php echo $row['ticket_titulo']; ?>
                                                         </td>
                                                         <td class="pt-3-half">
-                                                            <?php echo $row['user_empresa']; ?>
+                                                            <?php echo $row['ticket_descripcion']; ?>
                                                         </td>
                                                         <td class="pt-3-half">
-                                                            <?php echo $row['user_web_empresa']; ?>
+                                                            <?php echo $row['gsoporte_titulo']; ?>
                                                         </td>
                                                         <td class="pt-3-half">
-                                                            <?php echo $row['user_direccion']; ?>
-                                                        </td>
-                                                        <td class="pt-3-half">
-                                                            <?php echo $row['user_telefono']; ?>
-                                                        </td>
-                                                        <td class="pt-3-half">
-                                                            <?php echo $row['user_cargo']; ?>
-                                                        </td>
-                                                        <td class="pt-3-half">
-                                                            <?php echo $row['user_correo']; ?>
-                                                        </td>
-                                                        <td class="pt-3-half">
-                                                            <?php echo $row['priv_titulo']; ?>
+                                                            <?php echo $row['ticket_fecha_creacion']; ?>
                                                         </td>
                                                         </td>
                                                         <td>
@@ -297,6 +282,7 @@ $lista_usuarios = mysqli_query($link, $usuarios);
                                                                 <i class="ace-icon fa fa-pencil-square-o bigger-230"
                                                                     style="color:#f0ad4e"> </i>
                                                             </a>
+
                                                             <a href="#">
                                                                 <i class="ace-icon fa fa-trash-o bigger-230"
                                                                     style="color:#d9534f"> </i>
@@ -367,8 +353,8 @@ $lista_usuarios = mysqli_query($link, $usuarios);
 <script src="assets/js/jquery-1.11.3.min.js"></script>
 <![endif]-->
     <script type="text/javascript">
-    if ('ontouchstart' in document.documentElement) document.write(
-        "<script src='assets/js/jquery.mobile.custom.min.js'>" + "<" + "/script>");
+        if ('ontouchstart' in document.documentElement) document.write(
+            "<script src='assets/js/jquery.mobile.custom.min.js'>" + "<" + "/script>");
     </script>
     <script src="assets/js/bootstrap.min.js"></script>
 
@@ -391,46 +377,46 @@ $lista_usuarios = mysqli_query($link, $usuarios);
 
     <!-- inline scripts related to this page -->
     <script type="text/javascript">
-    jQuery(function($) {
-        $('.easy-pie-chart.percentage').each(function() {
-            var $box = $(this).closest('.infobox');
-            var barColor = $(this).data('color') || (!$box.hasClass('infobox-dark') ? $box.css(
-                'color') : 'rgba(255,255,255,0.95)');
-            var trackColor = barColor == 'rgba(255,255,255,0.95)' ? 'rgba(255,255,255,0.25)' :
-                '#E2E2E2';
-            var size = parseInt($(this).data('size')) || 50;
-            $(this).easyPieChart({
-                barColor: barColor,
-                trackColor: trackColor,
-                scaleColor: false,
-                lineCap: 'butt',
-                lineWidth: parseInt(size / 10),
-                animate: ace.vars['old_ie'] ? false : 1000,
-                size: size
+        jQuery(function ($) {
+            $('.easy-pie-chart.percentage').each(function () {
+                var $box = $(this).closest('.infobox');
+                var barColor = $(this).data('color') || (!$box.hasClass('infobox-dark') ? $box.css(
+                    'color') : 'rgba(255,255,255,0.95)');
+                var trackColor = barColor == 'rgba(255,255,255,0.95)' ? 'rgba(255,255,255,0.25)' :
+                    '#E2E2E2';
+                var size = parseInt($(this).data('size')) || 50;
+                $(this).easyPieChart({
+                    barColor: barColor,
+                    trackColor: trackColor,
+                    scaleColor: false,
+                    lineCap: 'butt',
+                    lineWidth: parseInt(size / 10),
+                    animate: ace.vars['old_ie'] ? false : 1000,
+                    size: size
+                });
+            })
+
+            $('.sparkline').each(function () {
+                var $box = $(this).closest('.infobox');
+                var barColor = !$box.hasClass('infobox-dark') ? $box.css('color') : '#FFF';
+                $(this).sparkline('html', {
+                    tagValuesAttribute: 'data-values',
+                    type: 'bar',
+                    barColor: barColor,
+                    chartRangeMin: $(this).data('min') || 0
+                });
             });
-        })
 
-        $('.sparkline').each(function() {
-            var $box = $(this).closest('.infobox');
-            var barColor = !$box.hasClass('infobox-dark') ? $box.css('color') : '#FFF';
-            $(this).sparkline('html', {
-                tagValuesAttribute: 'data-values',
-                type: 'bar',
-                barColor: barColor,
-                chartRangeMin: $(this).data('min') || 0
+
+            //flot chart resize plugin, somehow manipulates default browser resize event to optimize it!
+            //but sometimes it brings up errors with normal resize event handlers
+            $.resize.throttleWindow = false;
+
+            var placeholder = $('#piechart-placeholder').css({
+                'width': '90%',
+                'min-height': '150px'
             });
-        });
-
-
-        //flot chart resize plugin, somehow manipulates default browser resize event to optimize it!
-        //but sometimes it brings up errors with normal resize event handlers
-        $.resize.throttleWindow = false;
-
-        var placeholder = $('#piechart-placeholder').css({
-            'width': '90%',
-            'min-height': '150px'
-        });
-        var data = [{
+            var data = [{
                 label: "social networks",
                 data: 38.7,
                 color: "#68BC31"
@@ -455,98 +441,98 @@ $lista_usuarios = mysqli_query($link, $usuarios);
                 data: 10,
                 color: "#FEE074"
             }
-        ]
+            ]
 
-        function drawPieChart(placeholder, data, position) {
-            $.plot(placeholder, data, {
-                series: {
-                    pie: {
+            function drawPieChart(placeholder, data, position) {
+                $.plot(placeholder, data, {
+                    series: {
+                        pie: {
+                            show: true,
+                            tilt: 0.8,
+                            highlight: {
+                                opacity: 0.25
+                            },
+                            stroke: {
+                                color: '#fff',
+                                width: 2
+                            },
+                            startAngle: 2
+                        }
+                    },
+                    legend: {
                         show: true,
-                        tilt: 0.8,
-                        highlight: {
-                            opacity: 0.25
-                        },
-                        stroke: {
-                            color: '#fff',
-                            width: 2
-                        },
-                        startAngle: 2
+                        position: position || "ne",
+                        labelBoxBorderColor: null,
+                        margin: [-30, 15]
+                    },
+                    grid: {
+                        hoverable: true,
+                        clickable: true
                     }
-                },
-                legend: {
-                    show: true,
-                    position: position || "ne",
-                    labelBoxBorderColor: null,
-                    margin: [-30, 15]
-                },
-                grid: {
-                    hoverable: true,
-                    clickable: true
+                })
+            }
+            drawPieChart(placeholder, data);
+
+            /**
+            we saved the drawing function and the data to redraw with different position later when switching to RTL mode dynamically
+            so that's not needed actually.
+            */
+            placeholder.data('chart', data);
+            placeholder.data('draw', drawPieChart);
+
+
+            //pie chart tooltip example
+            var $tooltip = $("<div class='tooltip top in'><div class='tooltip-inner'></div></div>").hide().appendTo(
+                'body');
+            var previousPoint = null;
+
+            placeholder.on('plothover', function (event, pos, item) {
+                if (item) {
+                    if (previousPoint != item.seriesIndex) {
+                        previousPoint = item.seriesIndex;
+                        var tip = item.series['label'] + " : " + item.series['percent'] + '%';
+                        $tooltip.show().children(0).text(tip);
+                    }
+                    $tooltip.css({
+                        top: pos.pageY + 10,
+                        left: pos.pageX + 10
+                    });
+                } else {
+                    $tooltip.hide();
+                    previousPoint = null;
                 }
-            })
-        }
-        drawPieChart(placeholder, data);
 
-        /**
-        we saved the drawing function and the data to redraw with different position later when switching to RTL mode dynamically
-        so that's not needed actually.
-        */
-        placeholder.data('chart', data);
-        placeholder.data('draw', drawPieChart);
+            });
+
+            /////////////////////////////////////
+            $(document).one('ajaxloadstart.page', function (e) {
+                $tooltip.remove();
+            });
 
 
-        //pie chart tooltip example
-        var $tooltip = $("<div class='tooltip top in'><div class='tooltip-inner'></div></div>").hide().appendTo(
-            'body');
-        var previousPoint = null;
 
-        placeholder.on('plothover', function(event, pos, item) {
-            if (item) {
-                if (previousPoint != item.seriesIndex) {
-                    previousPoint = item.seriesIndex;
-                    var tip = item.series['label'] + " : " + item.series['percent'] + '%';
-                    $tooltip.show().children(0).text(tip);
-                }
-                $tooltip.css({
-                    top: pos.pageY + 10,
-                    left: pos.pageX + 10
-                });
-            } else {
-                $tooltip.hide();
-                previousPoint = null;
+
+            var d1 = [];
+            for (var i = 0; i < Math.PI * 2; i += 0.5) {
+                d1.push([i, Math.sin(i)]);
             }
 
-        });
+            var d2 = [];
+            for (var i = 0; i < Math.PI * 2; i += 0.5) {
+                d2.push([i, Math.cos(i)]);
+            }
 
-        /////////////////////////////////////
-        $(document).one('ajaxloadstart.page', function(e) {
-            $tooltip.remove();
-        });
-
-
-
-
-        var d1 = [];
-        for (var i = 0; i < Math.PI * 2; i += 0.5) {
-            d1.push([i, Math.sin(i)]);
-        }
-
-        var d2 = [];
-        for (var i = 0; i < Math.PI * 2; i += 0.5) {
-            d2.push([i, Math.cos(i)]);
-        }
-
-        var d3 = [];
-        for (var i = 0; i < Math.PI * 2; i += 0.2) {
-            d3.push([i, Math.tan(i)]);
-        }
+            var d3 = [];
+            for (var i = 0; i < Math.PI * 2; i += 0.2) {
+                d3.push([i, Math.tan(i)]);
+            }
 
 
-        var sales_charts = $('#sales-charts').css({
-            'width': '100%',
-            'height': '220px'
-        });
-        $.plot("#sales-charts", [{
+            var sales_charts = $('#sales-charts').css({
+                'width': '100%',
+                'height': '220px'
+            });
+            $.plot("#sales-charts", [{
                 label: "Domains",
                 data: d1
             },
@@ -558,101 +544,101 @@ $lista_usuarios = mysqli_query($link, $usuarios);
                 label: "Services",
                 data: d3
             }
-        ], {
-            hoverable: true,
-            shadowSize: 0,
-            series: {
-                lines: {
-                    show: true
-                },
-                points: {
-                    show: true
-                }
-            },
-            xaxis: {
-                tickLength: 0
-            },
-            yaxis: {
-                ticks: 10,
-                min: -2,
-                max: 2,
-                tickDecimals: 3
-            },
-            grid: {
-                backgroundColor: {
-                    colors: ["#fff", "#fff"]
-                },
-                borderWidth: 1,
-                borderColor: '#555'
-            }
-        });
+            ], {
+                    hoverable: true,
+                    shadowSize: 0,
+                    series: {
+                        lines: {
+                            show: true
+                        },
+                        points: {
+                            show: true
+                        }
+                    },
+                    xaxis: {
+                        tickLength: 0
+                    },
+                    yaxis: {
+                        ticks: 10,
+                        min: -2,
+                        max: 2,
+                        tickDecimals: 3
+                    },
+                    grid: {
+                        backgroundColor: {
+                            colors: ["#fff", "#fff"]
+                        },
+                        borderWidth: 1,
+                        borderColor: '#555'
+                    }
+                });
 
 
-        $('#recent-box [data-rel="tooltip"]').tooltip({
-            placement: tooltip_placement
-        });
-
-        function tooltip_placement(context, source) {
-            var $source = $(source);
-            var $parent = $source.closest('.tab-content')
-            var off1 = $parent.offset();
-            var w1 = $parent.width();
-
-            var off2 = $source.offset();
-            //var w2 = $source.width();
-
-            if (parseInt(off2.left) < parseInt(off1.left) + parseInt(w1 / 2)) return 'right';
-            return 'left';
-        }
-
-
-        $('.dialogs,.comments').ace_scroll({
-            size: 300
-        });
-
-
-        //Android's default browser somehow is confused when tapping on label which will lead to dragging the task
-        //so disable dragging when clicking on label
-        var agent = navigator.userAgent.toLowerCase();
-        if (ace.vars['touch'] && ace.vars['android']) {
-            $('#tasks').on('touchstart', function(e) {
-                var li = $(e.target).closest('#tasks li');
-                if (li.length == 0) return;
-                var label = li.find('label.inline').get(0);
-                if (label == e.target || $.contains(label, e.target)) e.stopImmediatePropagation();
+            $('#recent-box [data-rel="tooltip"]').tooltip({
+                placement: tooltip_placement
             });
-        }
 
-        $('#tasks').sortable({
-            opacity: 0.8,
-            revert: true,
-            forceHelperSize: true,
-            placeholder: 'draggable-placeholder',
-            forcePlaceholderSize: true,
-            tolerance: 'pointer',
-            stop: function(event, ui) {
-                //just for Chrome!!!! so that dropdowns on items don't appear below other items after being moved
-                $(ui.item).css('z-index', 'auto');
+            function tooltip_placement(context, source) {
+                var $source = $(source);
+                var $parent = $source.closest('.tab-content')
+                var off1 = $parent.offset();
+                var w1 = $parent.width();
+
+                var off2 = $source.offset();
+                //var w2 = $source.width();
+
+                if (parseInt(off2.left) < parseInt(off1.left) + parseInt(w1 / 2)) return 'right';
+                return 'left';
             }
-        });
-        $('#tasks').disableSelection();
-        $('#tasks input:checkbox').removeAttr('checked').on('click', function() {
-            if (this.checked) $(this).closest('li').addClass('selected');
-            else $(this).closest('li').removeClass('selected');
-        });
 
 
-        //show the dropdowns on top or bottom depending on window height and menu position
-        $('#task-tab .dropdown-hover').on('mouseenter', function(e) {
-            var offset = $(this).offset();
+            $('.dialogs,.comments').ace_scroll({
+                size: 300
+            });
 
-            var $w = $(window)
-            if (offset.top > $w.scrollTop() + $w.innerHeight() - 100)
-                $(this).addClass('dropup');
-            else $(this).removeClass('dropup');
-        });
 
-    })
+            //Android's default browser somehow is confused when tapping on label which will lead to dragging the task
+            //so disable dragging when clicking on label
+            var agent = navigator.userAgent.toLowerCase();
+            if (ace.vars['touch'] && ace.vars['android']) {
+                $('#tasks').on('touchstart', function (e) {
+                    var li = $(e.target).closest('#tasks li');
+                    if (li.length == 0) return;
+                    var label = li.find('label.inline').get(0);
+                    if (label == e.target || $.contains(label, e.target)) e.stopImmediatePropagation();
+                });
+            }
+
+            $('#tasks').sortable({
+                opacity: 0.8,
+                revert: true,
+                forceHelperSize: true,
+                placeholder: 'draggable-placeholder',
+                forcePlaceholderSize: true,
+                tolerance: 'pointer',
+                stop: function (event, ui) {
+                    //just for Chrome!!!! so that dropdowns on items don't appear below other items after being moved
+                    $(ui.item).css('z-index', 'auto');
+                }
+            });
+            $('#tasks').disableSelection();
+            $('#tasks input:checkbox').removeAttr('checked').on('click', function () {
+                if (this.checked) $(this).closest('li').addClass('selected');
+                else $(this).closest('li').removeClass('selected');
+            });
+
+
+            //show the dropdowns on top or bottom depending on window height and menu position
+            $('#task-tab .dropdown-hover').on('mouseenter', function (e) {
+                var offset = $(this).offset();
+
+                var $w = $(window)
+                if (offset.top > $w.scrollTop() + $w.innerHeight() - 100)
+                    $(this).addClass('dropup');
+                else $(this).removeClass('dropup');
+            });
+
+        })
     </script>
 </body>
 

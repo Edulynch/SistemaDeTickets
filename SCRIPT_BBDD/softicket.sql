@@ -84,6 +84,7 @@ CREATE TABLE tickets.ticket (
   user_id INT,
   gsoporte_id INT,
   ticket_descripcion VARCHAR(255),
+  ticket_estado boolean,
   ticket_fecha_creacion datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   ticket_fecha_actualizado datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (ticket_id)

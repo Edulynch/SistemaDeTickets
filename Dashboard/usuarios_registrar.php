@@ -229,6 +229,36 @@ if (isset($_SERVER['REQUEST_METHOD']) && $_SERVER['REQUEST_METHOD'] === 'POST') 
 				</li>
 
 				<b class="arrow"></b>
+				<li class="">
+					<a href="#" class="dropdown-toggle">
+						<i class="menu-icon fa fa-file-text "></i>
+						<span class="menu-text"> Ticket de Soporte </span>
+
+						<b class="arrow fa fa-angle-down"></b>
+					</a>
+
+					<b class="arrow"></b>
+
+					<ul class="submenu">
+						<li class="">
+							<a href="/formulario.php">
+								<i class="menu-icon fa fa-plus"></i>
+								Registrar
+							</a>
+						</li>
+					</ul>
+
+					<ul class="submenu">
+						<li class="">
+							<a href="ticket_administrar.php">
+								<i class="menu-icon fa fa-cog"></i>
+								Administrar
+							</a>
+						</li>
+					</ul>
+				</li>
+
+				<b class="arrow"></b>
 				</li>
 			</ul>
 			</li>

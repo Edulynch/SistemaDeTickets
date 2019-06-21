@@ -65,14 +65,14 @@ if (
 		<script type="text/javascript">
 			try {
 				ace.settings.loadState('main-container')
-			} catch (e) {}
+			} catch (e) { }
 		</script>
 
 		<div id="sidebar" class="sidebar                  responsive                    ace-save-state">
 			<script type="text/javascript">
 				try {
 					ace.settings.loadState('sidebar')
-				} catch (e) {}
+				} catch (e) { }
 			</script>
 
 
@@ -156,6 +156,38 @@ if (
 				</li>
 
 				<b class="arrow"></b>
+
+
+				<li class="">
+					<a href="#" class="dropdown-toggle">
+						<i class="menu-icon fa fa-file-text "></i>
+						<span class="menu-text"> Ticket de Soporte </span>
+
+						<b class="arrow fa fa-angle-down"></b>
+					</a>
+
+					<b class="arrow"></b>
+
+					<ul class="submenu">
+						<li class="">
+							<a href="/formulario.php">
+								<i class="menu-icon fa fa-plus"></i>
+								Registrar
+							</a>
+						</li>
+					</ul>
+
+					<ul class="submenu">
+						<li class="">
+							<a href="ticket_administrar.php">
+								<i class="menu-icon fa fa-cog"></i>
+								Administrar
+							</a>
+						</li>
+					</ul>
+				</li>
+
+				<b class="arrow"></b>
 				</li>
 			</ul>
 			</li>
@@ -164,7 +196,8 @@ if (
 			</ul><!-- /.nav-list -->
 
 			<div class="sidebar-toggle sidebar-collapse" id="sidebar-collapse">
-				<i id="sidebar-toggle-icon" class="ace-icon fa fa-angle-double-left ace-save-state" data-icon1="ace-icon fa fa-angle-double-left" data-icon2="ace-icon fa fa-angle-double-right"></i>
+				<i id="sidebar-toggle-icon" class="ace-icon fa fa-angle-double-left ace-save-state"
+					data-icon1="ace-icon fa fa-angle-double-left" data-icon2="ace-icon fa fa-angle-double-right"></i>
 			</div>
 		</div>
 
@@ -177,9 +210,11 @@ if (
 							<a href="#">Dashboard</a>
 						</li>
 						<li class="active">
-							<?php
+							<a href="../perfil/" style="none;color:black">
+								<?php
 							echo $_COOKIE['user_nombre'];
 							?>
+							</a>
 							<a href="/salir.php" class="RED">
 								[Cerrar sesion]
 								<!-- <i class="ace-icon fa fa-trash-o"></i> -->
@@ -280,8 +315,8 @@ if (
 
 	<!-- inline scripts related to this page -->
 	<script type="text/javascript">
-		jQuery(function($) {
-			$('.easy-pie-chart.percentage').each(function() {
+		jQuery(function ($) {
+			$('.easy-pie-chart.percentage').each(function () {
 				var $box = $(this).closest('.infobox');
 				var barColor = $(this).data('color') || (!$box.hasClass('infobox-dark') ? $box.css('color') : 'rgba(255,255,255,0.95)');
 				var trackColor = barColor == 'rgba(255,255,255,0.95)' ? 'rgba(255,255,255,0.25)' : '#E2E2E2';
@@ -297,7 +332,7 @@ if (
 				});
 			})
 
-			$('.sparkline').each(function() {
+			$('.sparkline').each(function () {
 				var $box = $(this).closest('.infobox');
 				var barColor = !$box.hasClass('infobox-dark') ? $box.css('color') : '#FFF';
 				$(this).sparkline('html', {
@@ -318,30 +353,30 @@ if (
 				'min-height': '150px'
 			});
 			var data = [{
-					label: "social networks",
-					data: 38.7,
-					color: "#68BC31"
-				},
-				{
-					label: "search engines",
-					data: 24.5,
-					color: "#2091CF"
-				},
-				{
-					label: "ad campaigns",
-					data: 8.2,
-					color: "#AF4E96"
-				},
-				{
-					label: "direct traffic",
-					data: 18.6,
-					color: "#DA5430"
-				},
-				{
-					label: "other",
-					data: 10,
-					color: "#FEE074"
-				}
+				label: "social networks",
+				data: 38.7,
+				color: "#68BC31"
+			},
+			{
+				label: "search engines",
+				data: 24.5,
+				color: "#2091CF"
+			},
+			{
+				label: "ad campaigns",
+				data: 8.2,
+				color: "#AF4E96"
+			},
+			{
+				label: "direct traffic",
+				data: 18.6,
+				color: "#DA5430"
+			},
+			{
+				label: "other",
+				data: 10,
+				color: "#FEE074"
+			}
 			]
 
 			function drawPieChart(placeholder, data, position) {
@@ -386,7 +421,7 @@ if (
 			var $tooltip = $("<div class='tooltip top in'><div class='tooltip-inner'></div></div>").hide().appendTo('body');
 			var previousPoint = null;
 
-			placeholder.on('plothover', function(event, pos, item) {
+			placeholder.on('plothover', function (event, pos, item) {
 				if (item) {
 					if (previousPoint != item.seriesIndex) {
 						previousPoint = item.seriesIndex;
@@ -405,7 +440,7 @@ if (
 			});
 
 			/////////////////////////////////////
-			$(document).one('ajaxloadstart.page', function(e) {
+			$(document).one('ajaxloadstart.page', function (e) {
 				$tooltip.remove();
 			});
 
@@ -433,45 +468,45 @@ if (
 				'height': '220px'
 			});
 			$.plot("#sales-charts", [{
-					label: "Domains",
-					data: d1
-				},
-				{
-					label: "Hosting",
-					data: d2
-				},
-				{
-					label: "Services",
-					data: d3
-				}
+				label: "Domains",
+				data: d1
+			},
+			{
+				label: "Hosting",
+				data: d2
+			},
+			{
+				label: "Services",
+				data: d3
+			}
 			], {
-				hoverable: true,
-				shadowSize: 0,
-				series: {
-					lines: {
-						show: true
+					hoverable: true,
+					shadowSize: 0,
+					series: {
+						lines: {
+							show: true
+						},
+						points: {
+							show: true
+						}
 					},
-					points: {
-						show: true
+					xaxis: {
+						tickLength: 0
+					},
+					yaxis: {
+						ticks: 10,
+						min: -2,
+						max: 2,
+						tickDecimals: 3
+					},
+					grid: {
+						backgroundColor: {
+							colors: ["#fff", "#fff"]
+						},
+						borderWidth: 1,
+						borderColor: '#555'
 					}
-				},
-				xaxis: {
-					tickLength: 0
-				},
-				yaxis: {
-					ticks: 10,
-					min: -2,
-					max: 2,
-					tickDecimals: 3
-				},
-				grid: {
-					backgroundColor: {
-						colors: ["#fff", "#fff"]
-					},
-					borderWidth: 1,
-					borderColor: '#555'
-				}
-			});
+				});
 
 
 			$('#recent-box [data-rel="tooltip"]').tooltip({
@@ -501,7 +536,7 @@ if (
 			//so disable dragging when clicking on label
 			var agent = navigator.userAgent.toLowerCase();
 			if (ace.vars['touch'] && ace.vars['android']) {
-				$('#tasks').on('touchstart', function(e) {
+				$('#tasks').on('touchstart', function (e) {
 					var li = $(e.target).closest('#tasks li');
 					if (li.length == 0) return;
 					var label = li.find('label.inline').get(0);
@@ -516,20 +551,20 @@ if (
 				placeholder: 'draggable-placeholder',
 				forcePlaceholderSize: true,
 				tolerance: 'pointer',
-				stop: function(event, ui) {
+				stop: function (event, ui) {
 					//just for Chrome!!!! so that dropdowns on items don't appear below other items after being moved
 					$(ui.item).css('z-index', 'auto');
 				}
 			});
 			$('#tasks').disableSelection();
-			$('#tasks input:checkbox').removeAttr('checked').on('click', function() {
+			$('#tasks input:checkbox').removeAttr('checked').on('click', function () {
 				if (this.checked) $(this).closest('li').addClass('selected');
 				else $(this).closest('li').removeClass('selected');
 			});
 
 
 			//show the dropdowns on top or bottom depending on window height and menu position
-			$('#task-tab .dropdown-hover').on('mouseenter', function(e) {
+			$('#task-tab .dropdown-hover').on('mouseenter', function (e) {
 				var offset = $(this).offset();
 
 				var $w = $(window)
