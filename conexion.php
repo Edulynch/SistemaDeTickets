@@ -21,9 +21,9 @@ $baseDeDatos = "tickets";
 //Activar para mostrar mensajes
 $debug = 0;
 
-function Conectarse($tabla)
+function Conectarse()
 {
-    global $host, $puerto, $usuario, $contrasena, $baseDeDatos, $tabla, $debug;
+    global $host, $puerto, $usuario, $contrasena, $baseDeDatos, $debug;
 
     if (!($link = mysqli_connect($host . ":" . $puerto, $usuario, $contrasena))) {
         if ($debug == 1) {

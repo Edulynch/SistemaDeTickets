@@ -79,13 +79,44 @@ PRIMARY KEY (gsoporte_id)
 DROP TABLE tickets.ticket;
 
 CREATE TABLE tickets.ticket (
-  ticket_id INT UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT,
+  ticket_id INT NOT NULL AUTO_INCREMENT,
   ticket_titulo VARCHAR(100),
   user_id INT,
   gsoporte_id INT,
   ticket_descripcion VARCHAR(255),
-  ticket_estado boolean,
+  ticket_estado_id INT(1) NOT NULL DEFAULT '1',
   ticket_fecha_creacion datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   ticket_fecha_actualizado datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (ticket_id)
 );
+
+DROP TABLE tickets.ticket_estado;
+
+CREATE TABLE tickets.ticket_estado (
+ticket_estado_id INT NOT NULL AUTO_INCREMENT,
+ticket_estado_titulo VARCHAR(10),
+PRIMARY KEY (ticket_estado_id)
+);
+
+INSERT INTO tickets.ticket_estado (ticket_estado_id,ticket_estado_titulo)
+value (1,"Abierto");
+INSERT INTO tickets.ticket_estado (ticket_estado_id,ticket_estado_titulo)
+value (2,"Cerrado");
+
+SELECT 
+    ticket_titulo,
+    ticket_descripcion,
+    gsoporte_titulo,
+    te.ticket_estado_titulo,
+    t.ticket_fecha_creacion,
+    t.ticket_fecha_actualizado
+FROM
+    tickets.ticket t
+        INNER JOIN
+    tickets.ticket_estado te ON t.ticket_estado_id = te.ticket_estado_id
+        INNER JOIN
+    tickets.gruposoporte g ON g.gsoporte_id = t.gsoporte_id
+WHERE
+    ticket_titulo IS NOT NULL;
+
+SELECT * FROM tickets.ticket_estado;
