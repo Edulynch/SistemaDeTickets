@@ -10,7 +10,7 @@ include_once '../conexion.php';
 // $id = $_GET['id'];
 $id = $_COOKIE['user_id'];
 
-$link = Conectarse('usuarios');
+$link = Conectarse();
 
 $squery = "SELECT 
 user_id,
@@ -217,6 +217,10 @@ if (empty($row['user_id'])) {
 													<a href="/formulario.php" class="btn btn-link">
 														<i class="ace-icon fa fa-pencil-square-o bigger-125 pink"></i>
 														Crear Nuevo Ticket
+													</a>
+													<a href="../bandeja" class="btn btn-link">
+														<i class="ace-icon fa fa-file-text bigger-125 pink"></i>
+														Bandeja de Tickets
 													</a>
 													<?php
 													if ($_COOKIE['priv_id'] == 1) {

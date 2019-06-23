@@ -71,6 +71,7 @@ if ($password->num_rows != 0) {
         }
 
         mysqli_query($link, $query_correo);
+        $registrado = true;
     }
 
     $id2 = "SELECT 
@@ -80,8 +81,6 @@ if ($password->num_rows != 0) {
         WHERE
             user_id = '$id'
         LIMIT 1;";
-    echo "<br />";
-    echo $id2;
 
     $soporte_id = mysqli_query($link, $id2);
 
@@ -99,7 +98,7 @@ include_once 'menu/header.php'
         Dashboard
         <small>
             <i class="ace-icon fa fa-angle-double-right"></i>
-            Registrar Usuarios
+            Actualizar Datos de Usuarios
         </small>
     </h1>
 </div><!-- /.page-header -->
@@ -210,7 +209,7 @@ include_once 'menu/header.php'
                         echo '<div class="form-group">';
                         echo '<label for="gsoporte_descripcion" class="control-label col-md-3 "></label>';
                         echo '<div class="controls col-md-9">';
-                        echo '<label class="text-success"> Se registro correctamente. !</label>';
+                        echo '<label class="text-success"> Se actualizaron los datos correctamente. !</label>';
                         echo '</div>';
                         echo '</div>';
                     }
