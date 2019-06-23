@@ -120,3 +120,20 @@ WHERE
     ticket_titulo IS NOT NULL;
 
 SELECT * FROM tickets.ticket_estado;
+
+TRUNCATE TABLE tickets.gruposoporte_usuarios;
+
+SELECT * FROM tickets.gruposoporte_usuarios;
+
+CREATE TABLE tickets.gruposoporte_usuarios (
+    gsoporte_usuarios_id INT NOT NULL AUTO_INCREMENT,
+    gsoporte_id INT,
+    user_id INT,
+    PRIMARY KEY (gsoporte_usuarios_id)
+);
+
+CREATE UNIQUE INDEX idx_gruposoporte_usuarios
+ON tickets.gruposoporte_usuarios(gsoporte_id,user_id);
+
+
+SELECT * FROM tickets.ticket;

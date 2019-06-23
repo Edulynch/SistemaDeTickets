@@ -168,31 +168,14 @@
 
                     <ul class="submenu">
                         <li class="">
-                            <a href="tickets_todos.php">
+                            <a href="tickets_administrar.php">
                                 <i class="menu-icon fa fa-cog"></i>
-                                Todos
+                                Administrar
                             </a>
                         </li>
                     </ul>
-                    <ul class="submenu">
-                        <li class="">
-                            <a href="tickets_abiertos.php">
-                                <i class="menu-icon fa fa-cog"></i>
-                                En Curso
-                            </a>
-                        </li>
-                    </ul>
-                    <ul class="submenu">
-                        <li class="">
-                            <a href="tickets_cerrados.php">
-                                <i class="menu-icon fa fa-cog"></i>
-                                Cerrados
-                            </a>
-                        </li>
-                    </ul>
-                </li>
 
-                <b class="arrow"></b>
+                    <b class="arrow"></b>
                 </li>
             </ul>
             </li>

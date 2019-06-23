@@ -67,10 +67,14 @@ include_once 'menu/header.php'
                                             </td>
                                             </td>
                                             <td>
-                                                <a href="#">
+                                                <a href="./gruposoporte_editar.php?id=<?php
+                                                                                        echo $row['gsoporte_id'];
+                                                                                        ?>" style="text-decoration:none">
                                                     <i class="ace-icon fa fa-pencil-square-o bigger-230" style="color:#f0ad4e"> </i>
                                                 </a>
-                                                <a href="#">
+                                                <a href="./gruposoporte_eliminar.php?id=<?php
+                                                                                        echo $row['gsoporte_id'];
+                                                                                        ?>" style="text-decoration:none">
                                                     <i class="ace-icon fa fa-trash-o bigger-230" style="color:#d9534f"> </i>
                                                 </a>
 

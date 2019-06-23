@@ -117,10 +117,11 @@ include_once 'menu/header.php'
 							<select class="form-control input-md dropdown-toggle" id="user_tenico" style="margin-bottom: 10px">
 
 								// <?php
-								// while ($lista_tecnicos = mysqli_fetch_assoc($ticket_tenicos)) {
-								// 	echo "<option value=" . $lista_tecnicos['user_id'] . ">" . $lista_tecnicos['user_nombre'] . "</option>";
-								// }
-								// ?>
+									// while ($lista_tecnicos = mysqli_fetch_assoc($ticket_tenicos)) {
+									// 	echo "<option value=" . $lista_tecnicos['user_id'] . ">" . $lista_tecnicos['user_nombre'] . "</option>";
+									// }
+									
+									?>
 							</select>
 
 						</div>

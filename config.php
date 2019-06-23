@@ -1,6 +1,6 @@
 <?php
 
-const PREFIJO_ORDEN_TRABAJO="OT-";
+const PREFIJO_ORDEN_TRABAJO = "OT-";
 
 
 function limpiar($data){
@@ -9,5 +9,3 @@ function limpiar($data){
     $data = htmlspecialchars($data);
     return $data;
 }
-
-?>

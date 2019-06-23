@@ -8,7 +8,7 @@
                 <span class="blue bolder">Softicket</span>
                 &copy; 2019
             </span>
-
+            <!-- 
             &nbsp; &nbsp;
             <span class="action-buttons">
                 <a href="#">
@@ -22,7 +22,7 @@
                 <a href="#">
                     <i class="ace-icon fa fa-rss-square orange bigger-150"></i>
                 </a>
-            </span>
+            </span> -->
         </div>
     </div>
 </div>
