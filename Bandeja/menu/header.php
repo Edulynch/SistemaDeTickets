@@ -106,11 +106,49 @@
                         </li>
                     </ul>
 
+                    <?php
+
+                    //3 ==> Usuario
+                    if ($_COOKIE['priv_id'] != 3) {
+
+                        ?>
+
+                        <ul class="submenu">
+                            <li class="">
+                                <a href="tickets_asignado_grupo.php">
+                                    <i class="menu-icon fa fa-cog"></i>
+                                    Tickets Asignados En Mis Grupos
+                                </a>
+                            </li>
+                        </ul>
+
+                        <ul class="submenu">
+                            <li class="">
+                                <a href="tickets_asginado_a_mi.php">
+                                    <i class="menu-icon fa fa-cog"></i>
+                                    Tickets Asignados a mi
+                                </a>
+                            </li>
+                        </ul>
+
+                    <?php
+                }
+                ?>
+
                     <ul class="submenu">
                         <li class="">
-                            <a href="tickets_administrar.php">
+                            <a href="tickets_abiertos_enviados.php">
                                 <i class="menu-icon fa fa-cog"></i>
-                                Administrar
+                                Tickets Abiertos Enviados
+                            </a>
+                        </li>
+                    </ul>
+
+                    <ul class="submenu">
+                        <li class="">
+                            <a href="tickets_cerrados_enviados.php">
+                                <i class="menu-icon fa fa-cog"></i>
+                                Tickets Cerrados Enviados
                             </a>
                         </li>
                     </ul>

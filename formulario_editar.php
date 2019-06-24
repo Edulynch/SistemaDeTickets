@@ -21,6 +21,8 @@ $registrado = false;
 if (isset($_SERVER['REQUEST_METHOD']) && $_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $ticket_titulo = limpiar($_POST['ticket_titulo']);
+    $ticket_user_id = limpiar($_POST['ticket_user_id']);
+    $ticket_estado_id = limpiar($_POST['ticket_estado_id']);
     $user_id = $_COOKIE['user_id'];
     $ticket_gsoporte_id = limpiar($_POST['ticket_gsoporte_id']);
     $ticket_descripcion = limpiar($_POST['ticket_descripcion']);
@@ -28,22 +30,23 @@ if (isset($_SERVER['REQUEST_METHOD']) && $_SERVER['REQUEST_METHOD'] === 'POST') 
     $query = "UPDATE tickets.ticket
                 SET ticket_titulo = '$ticket_titulo',
                 ticket_descripcion = '$ticket_descripcion',
-                gsoporte_id = '$ticket_gsoporte_id'
+                gsoporte_id = '$ticket_gsoporte_id',
+                tecnico_id = '$ticket_user_id',
+                ticket_estado_id = '$ticket_estado_id'
                 WHERE ticket_id = '$id';";
-
-    echo $query;
 
     $ticket = mysqli_query($link, $query);
 
     $registrado = true;
-
 }
 
 $squery = "SELECT 
                 ticket_id,
                 ticket_titulo,
                 gsoporte_id,
-                ticket_descripcion 
+                ticket_descripcion,
+                tecnico_id,
+                ticket_estado_id
             FROM 
                 tickets.ticket
             WHERE 
@@ -64,10 +67,38 @@ $lpad_ticket_result = $lpad_row[0];
 
 $ID_ORDEN_TRABAJO = PREFIJO_ORDEN_TRABAJO . $lpad_ticket_result;
 
-// Dropdown tecnicos
+// Dropdown Grupo Resolutor
 $gsoporte = "SELECT gsoporte_id, gsoporte_titulo FROM tickets.gruposoporte;";
 
 $lista_gsoporte = mysqli_query($link, $gsoporte);
+
+// Dropdown tecnicos
+
+$tecnico = "SELECT 
+                u.user_id, u.user_nombre
+            FROM
+                tickets.usuarios u
+            INNER JOIN
+                tickets.gruposoporte_usuarios g 
+            ON 
+                u.user_id = g.user_id
+            WHERE
+                g.gsoporte_id = '$row[2]'
+            AND
+                priv_id = 2
+            ;";
+
+$lista_tecnico = mysqli_query($link, $tecnico);
+
+// Dropdown ticket_estados
+
+$ticket_estado = "SELECT 
+                ticket_estado_id, ticket_estado_titulo
+            FROM 
+                tickets.ticket_estado 
+            ;";
+
+$lista_ticket_estado = mysqli_query($link, $ticket_estado);
 
 ?>
 
@@ -124,25 +155,71 @@ $lista_gsoporte = mysqli_query($link, $gsoporte);
                             <div class="name">Grupo Resolutor</div>
                             <div class="input-group">
                                 <div class="col-auto my-1">
-                                    <select name="ticket_gsoporte_id" class="custom-select">
+                                    <select name="ticket_gsoporte_id" class="custom-select" <?php
+                                                                                            if ($_COOKIE['priv_id'] != 1) {
+                                                                                                echo "disabled";
+                                                                                            }
+                                                                                            ?> onchange="myFunction()" id="dropdown">
                                         <option value="">Seleccionar un Grupo</option>
                                         <?php
                                         while ($gruposoporte = mysqli_fetch_assoc($lista_gsoporte)) {
-                                            if (!empty($row[2])) {
+                                            if ($row[2] == $gruposoporte['gsoporte_id']) {
                                                 echo "<option value=" . $gruposoporte['gsoporte_id'] . " selected>" . $gruposoporte['gsoporte_titulo'] . "</option>";
                                             } else {
                                                 echo "<option value=" . $gruposoporte['gsoporte_id'] . ">" . $gruposoporte['gsoporte_titulo'] . "</option>";
                                             }
                                         }
                                         ?>
-                                    </select> </div>
+                                    </select>
+                                </div>
                             </div>
                         </div>
+
+                        <div class="form-row">
+                            <div class="name">Seleccionar Tecnico</div>
+                            <div class="input-group">
+                                <div class="col-auto my-1">
+                                    <select name="ticket_user_id" class="custom-select" id="dropdown2">
+                                        <option value="" id="tecnico">Seleccionar un Tecnico</option>
+                                        <?php
+                                        while ($row_tecnico = mysqli_fetch_assoc($lista_tecnico)) {
+                                            if ($row[4] == $row_tecnico['user_id']) {
+                                                echo "<option value=" . $row_tecnico['user_id'] . " selected>" . $row_tecnico['user_nombre'] . "</option>";
+                                            } else {
+                                                echo "<option value=" . $row_tecnico['user_id'] . ">" . $row_tecnico['user_nombre'] . "</option>";
+                                            }
+                                        }
+                                        ?>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
                         <div class="form-row">
                             <div class="name">Descripción de Tarea</div>
                             <div class="value">
                                 <div class="input-group">
                                     <textarea class="textarea--style-6" name="ticket_descripcion"><?php echo $row[3]; ?></textarea>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="name">Estado del Ticket</div>
+                            <div class="input-group">
+                                <div class="col-auto my-1">
+                                    <select name="ticket_estado_id" class="custom-select">
+                                        <option value="">Seleccionar un Estado</option>
+                                        <?php
+                                        while ($row_ticket_estado = mysqli_fetch_assoc($lista_ticket_estado)) {
+                                            if ($row[5] == $row_ticket_estado['ticket_estado_id']) {
+                                                echo "<option value=" . $row_ticket_estado['ticket_estado_id'] . " selected>" . $row_ticket_estado['ticket_estado_titulo'] . "</option>";
+                                            } else {
+                                                echo "<option value=" . $row_ticket_estado['ticket_estado_id'] . ">" . $row_ticket_estado['ticket_estado_titulo'] . "</option>";
+                                            }
+                                        }
+                                        ?>
+                                    </select>
                                 </div>
                             </div>
                         </div>
@@ -169,13 +246,32 @@ $lista_gsoporte = mysqli_query($link, $gsoporte);
                                     </div>
                                     <div class="label--desc">Upload your CV/Resume or any other relevant file. Max file size 50 MB</div>
                                 </div>
-                            </div>
-                        </form> -->
+                            </div> -->
                 </div>
                 <div class="card-footer">
                     <button class="btn btn--radius-2 btn--blue-2" type="submit">Actualizar Orden de Trabajo</button>
-                    <a href="./Dashboard/tickets_administrar.php" class="btn btn--radius-2" style="color:white;background-color:green;text-decoration:none" type="submit">Volver</button>
+                    <?php
+                    if ($_COOKIE['priv_id'] == 1) {
+                        ?>
+                        <a href="./Dashboard/tickets_administrar.php" class="btn btn--radius-2" style="color:white;background-color:green;text-decoration:none" type="submit">Volver</button>
+                        <?php
+                    } else {
+                        ?>
+                            <a href="./Bandeja/tickets_asignado_grupo.php" class="btn btn--radius-2" style="color:white;background-color:green;text-decoration:none" type="submit">Volver</button>
+                            <?php
+                        }
+                        ?>
                 </div>
+                </form>
+                <script>
+                    function myFunction() {
+                        if(document.getElementById("dropdown2").value){
+                        document.getElementById("dropdown2").disabled = true;
+                        document.getElementById("dropdown2").selectedIndex = "0";
+                        alert("Estimado,\n\nAl cambiar el Grupo Resolutor, no es posible asignar un tenico.\n - Primero se debe guardar los cambios.\n\nAtte. Developers");
+                    }
+                }
+                </script>
             </div>
         </div>
     </div>

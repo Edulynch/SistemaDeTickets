@@ -8,38 +8,40 @@ if (
     || !isset($_COOKIE['user_nombre'])
     || count($_COOKIE) == 0
     || !isset($_COOKIE['priv_id'])
-    || $_COOKIE['priv_id'] != 1 //Administrador
 ) {
     header("Location: http://softicket.cl");
 }
 
 $link = Conectarse('ticket');
 
+$id = limpiar($_COOKIE['user_id']);
+
 // Dropdown tecnicos
 $ticket = "SELECT 
-                ticket_id,
-                ticket_titulo,
-                ticket_descripcion,
-                gsoporte_titulo,
-                IFNULL(tec.user_nombre, 'NO ASIGNADO') tecnico_nombre,
-                te.ticket_estado_titulo,
-                u.user_nombre,
-                t.ticket_fecha_creacion,
-                t.ticket_fecha_actualizado
-            FROM
-                tickets.ticket t
-                    INNER JOIN
-                tickets.ticket_estado te ON t.ticket_estado_id = te.ticket_estado_id
-                    RIGHT JOIN
-                tickets.gruposoporte g ON g.gsoporte_id = t.gsoporte_id
-                    RIGHT JOIN
-                tickets.usuarios u ON u.user_id = t.user_id
-                    LEFT JOIN
-                tickets.usuarios tec ON tec.user_id = t.tecnico_id
-            WHERE
-                ticket_titulo IS NOT NULL
-            ORDER BY t.ticket_id DESC;
-            ";
+ticket_id,
+ticket_titulo,
+ticket_descripcion,
+gsoporte_titulo,
+t.ticket_estado_id,
+te.ticket_estado_titulo,
+u.user_nombre,
+t.ticket_fecha_creacion,
+t.ticket_fecha_actualizado,
+tec.user_nombre tecnico_nombre
+FROM
+tickets.ticket t
+    INNER JOIN
+tickets.ticket_estado te ON t.ticket_estado_id = te.ticket_estado_id
+    INNER JOIN
+tickets.gruposoporte g ON g.gsoporte_id = t.gsoporte_id
+    INNER JOIN
+tickets.usuarios u ON u.user_id = t.user_id
+    INNER JOIN
+tickets.usuarios tec ON t.tecnico_id = tec.user_id
+WHERE
+t.tecnico_id = '$id'
+    AND ticket_titulo IS NOT NULL
+ORDER BY t.ticket_id DESC;";
 
 $lista_ticket = mysqli_query($link, $ticket);
 
@@ -52,7 +54,7 @@ include_once 'menu/header.php'
         Dashboard
         <small>
             <i class="ace-icon fa fa-angle-double-right"></i>
-            Listado de Tickets de Soporte
+            Tickets Asignados a mi
         </small>
     </h1>
 </div><!-- /.page-header -->
@@ -125,13 +127,24 @@ include_once 'menu/header.php'
                                             </td>
                                             </td>
                                             <td>
-                                                <a href="../formulario_editar.php?id=<?php echo $row['ticket_id']; ?>" style="text-decoration: none">
-                                                    <i class="ace-icon fa fa-pencil-square-o bigger-230" style="color:#f0ad4e;text-decoration:none"> </i>
-                                                </a>
+                                                <?php
+                                                if ($row['ticket_estado_id'] == 1) { ?>
+                                                    <a href="../formulario_editar.php?id=<?php echo $row['ticket_id']; ?>" style="text-decoration: none">
+                                                        <i class="ace-icon fa fa-pencil-square-o bigger-230" style="color:#f0ad4e;text-decoration:none"> </i>
+                                                    </a>
+                                                <?php
+                                            } else {
+                                                ?>
+                                                    <a href="#" onClick="alert('Estimado,\n\nLos Tickets Cerrados, solo pueden ser editados por un Administrador.\n\nAtte. Developers')" style="text-decoration: none">
+                                                        <i class="ace-icon fa fa-info-circle bigger-230 text-primary" style="text-decoration:none"> </i>
+                                                    </a>
+                                                <?php
+                                            }
+                                            ?>
 
-                                                <a href="../formulario_eliminar.php?id=<?php echo $row['ticket_id']; ?>" class="icon_opcion" style="color:#d9534f;text-decoration:none">
-                                                    <i class="ace-icon fa fa-trash-o bigger-230"> </i>
-                                                </a>
+                                                <!-- <a href="../formulario_eliminar.php?id=<?php echo $row['ticket_id']; ?>" class="icon_opcion" style="color:#d9534f;text-decoration:none">
+                                                                    <i class="ace-icon fa fa-trash-o bigger-230"> </i>
+                                                                </a> -->
 
                                             <?php
                                         }

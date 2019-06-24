@@ -18,7 +18,8 @@ $link = Conectarse('ticket');
 // Dropdown tecnicos
 $gruposoporte = "SELECT * 
 FROM tickets.gruposoporte
-WHERE length(gsoporte_titulo) > 0;";
+WHERE length(gsoporte_titulo) > 0
+ORDER BY gsoporte_id ASC;";
 
 $lista_gruposoporte = mysqli_query($link, $gruposoporte);
 

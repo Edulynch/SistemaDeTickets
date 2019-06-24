@@ -18,7 +18,8 @@ $link = Conectarse('ticket');
 // Dropdown tecnicos
 $usuarios = "SELECT * FROM tickets.usuarios u
 inner join tickets.privilegios p
-on u.priv_id = p.priv_id;";
+on u.priv_id = p.priv_id
+order by u.priv_id ASC, user_id ASC;";
 
 $lista_usuarios = mysqli_query($link, $usuarios);
 
