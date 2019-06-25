@@ -23,11 +23,11 @@ $id = limpiar($_GET['id']);
 $user = limpiar($_GET['user']);
 
 $query = "SELECT 
-                gsoporte_usuarios_id, user_id
+                gsoporte_id, user_id
             FROM 
                 tickets.gruposoporte_usuarios
             WHERE 
-            gsoporte_usuarios_id = " . $id . "
+            gsoporte_id = " . $id . "
             LIMIT 1;";
 
 $gsoporte = mysqli_query($link, $query);
@@ -36,11 +36,13 @@ $gsoporte = mysqli_query($link, $query);
 
 $row = $gsoporte->fetch_assoc();
 
-echo $gsoporte->num_rows;
-
 if (
-    limpiar($row['gsoporte_usuarios_id']) == $id && isset($row['gsoporte_usuarios_id']) && !empty($row['gsoporte_usuarios_id']) ||
-    limpiar($row['user_id']) == $id && isset($row['user_id']) && !empty($row['user_id']) &&
+    limpiar($row['gsoporte_id']) == $id &&
+    isset($row['gsoporte_id']) && 
+    !empty($row['gsoporte_id']) ||
+    limpiar($row['user_id']) == $user && 
+    isset($row['user_id']) && 
+    !empty($row['user_id']) &&
     $gsoporte->num_rows > 0
 ) {
     $query_borrar = "DELETE FROM 
@@ -50,8 +52,8 @@ if (
                     AND 
                         user_id = " . $user . ";";
 
-    echo $query_borrar;
-
     $gsoporte_borrar = mysqli_query($link, $query_borrar);
     header("Location: http://softicket.cl/Dashboard/gruposoporte_editar.php?id=" . $id);
 }
+
+?>

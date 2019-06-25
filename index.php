@@ -68,7 +68,7 @@ if (
     $login_correo = limpiar($_POST['login_correo']);
     $login_password = limpiar($_POST['login_password']);
 
-    $query = "SELECT * FROM tickets.usuarios WHERE user_correo = " . "'" .  $login_correo . "'" . " AND user_password = " .  $login_password . " LIMIT 1;";
+    $query = "SELECT * FROM tickets.usuarios WHERE user_correo = '$login_correo' AND user_password = '$login_password' LIMIT 1;";
 
     mysqli_set_charset($link, "utf8");
 
