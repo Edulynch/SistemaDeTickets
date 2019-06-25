@@ -65,7 +65,7 @@ if ($password->num_rows != 0) {
         user_telefono = '$user_telefono',
         user_cargo = '$user_cargo',
         user_correo = '$user_correo',
-        user_password = '$user_password',
+        user_password = PASSWORD('$user_password'),
         priv_id = '$user_priv_id'
         WHERE user_id = '$id';";
         }

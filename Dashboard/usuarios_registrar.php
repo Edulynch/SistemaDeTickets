@@ -60,7 +60,7 @@ if (isset($_SERVER['REQUEST_METHOD']) && $_SERVER['REQUEST_METHOD'] === 'POST') 
 		'$user_direccion',
 		'$user_empresa',
 		'$user_nombre',
-		'$user_password',
+		PASSWORD('$user_password'),
 		'$user_telefono',
 		'$user_web_empresa',
 		'$user_priv_id'
