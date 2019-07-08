@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 24-06-2019 a las 10:07:23
+-- Tiempo de generación: 08-07-2019 a las 07:40:44
 -- Versión del servidor: 10.3.15-MariaDB
 -- Versión de PHP: 7.3.6
 
@@ -160,26 +160,26 @@ INSERT INTO `ticket_estado` (`ticket_estado_id`, `ticket_estado_titulo`) VALUES
 
 CREATE TABLE `usuarios` (
   `user_id` int(11) NOT NULL,
-  `user_nombre` varchar(50) DEFAULT NULL,
-  `user_correo` varchar(255) DEFAULT NULL,
-  `user_password` varchar(255) DEFAULT NULL,
-  `user_empresa` varchar(50) DEFAULT NULL,
-  `user_direccion` varchar(50) DEFAULT NULL,
-  `user_telefono` varchar(15) DEFAULT NULL,
-  `user_web_empresa` varchar(50) DEFAULT NULL,
-  `user_cargo` varchar(50) DEFAULT NULL,
-  `priv_id` int(11) DEFAULT NULL
+  `user_nombre` varchar(50) NOT NULL,
+  `user_correo` varchar(255) NOT NULL,
+  `user_password` varchar(255) NOT NULL,
+  `user_empresa` varchar(50) NOT NULL,
+  `user_direccion` varchar(50) NOT NULL,
+  `user_telefono` varchar(15) NOT NULL,
+  `user_web_empresa` varchar(50) NOT NULL,
+  `user_cargo` varchar(50) NOT NULL,
+  `user_fecha_creacion` date NOT NULL DEFAULT current_timestamp(),
+  `priv_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Volcado de datos para la tabla `usuarios`
 --
 
-INSERT INTO `usuarios` (`user_id`, `user_nombre`, `user_correo`, `user_password`, `user_empresa`, `user_direccion`, `user_telefono`, `user_web_empresa`, `user_cargo`, `priv_id`) VALUES
-(1, 'Eduardo Lynch Araya', 'eduardolynch94@gmail.com', '123456', 'Eware Consulting', 'Amunategui 20, Santiago', '+56996630457', 'www.eware.com', 'Consultor Informático', 1),
-(2, 'Alvaro Cardoza', 'acardoza@carcom.com', '123456', 'Carcom', 'Quilicura 1234, Santiago', '+56912345678', 'www.carcom.com', 'Soporte Informático', 2),
-(4, 'pier miqueles', 'pier@inacap.cl', '123456', 'inacap', 'apoquindo 123', '996630474', 'http://www.inacap.cl', 'Profesor', 2),
-(7, 'sdasdazzzzxxxaaaa', 'hola@hola.cl', '123456', 'everis', 'apoquindo 123', '912345672', 'http://www.youtube.com', 'analista', 3);
+INSERT INTO `usuarios` (`user_id`, `user_nombre`, `user_correo`, `user_password`, `user_empresa`, `user_direccion`, `user_telefono`, `user_web_empresa`, `user_cargo`, `user_fecha_creacion`, `priv_id`) VALUES
+(1, 'Administrador', 'admin@admin.com', '*6BB4837EB74329105EE4568DDA7DC67ED2CA2AD9', 'Eware Consulting', 'Amunategui 20, Santiago', '+56996630457', 'www.eware.com', 'Consultor Informático', '2019-07-07', 1),
+(2, 'Tecnico', 'tecnico@tecnico.com', '*6BB4837EB74329105EE4568DDA7DC67ED2CA2AD9', 'Carcom', 'Quilicura 1234, Santiago', '+56912345678', 'www.carcom.com', 'Soporte Informático', '2019-07-07', 2),
+(3, 'Usuario', 'usuario@usuario.com', '*6BB4837EB74329105EE4568DDA7DC67ED2CA2AD9', 'Junaeb Consulting', 'Bandera 2331, Santiago', '+56996612547', 'www.junaeb.com', 'Administrador DBA', '2019-07-01', 3);
 
 --
 -- Índices para tablas volcadas
@@ -254,7 +254,7 @@ ALTER TABLE `ticket_estado`
 -- AUTO_INCREMENT de la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
