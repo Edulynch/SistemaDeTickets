@@ -6,15 +6,16 @@ DROP TABLE tickets.usuarios;
 
 CREATE TABLE tickets.usuarios (
     user_id INT NOT NULL AUTO_INCREMENT,
-    user_nombre VARCHAR(50),
-    user_correo VARCHAR(255),
-    user_password VARCHAR(255),
-    user_empresa VARCHAR(50),
-    user_direccion VARCHAR(50),
-    user_telefono VARCHAR(15),
-    user_web_empresa VARCHAR(50),
-    user_cargo VARCHAR(50),
-    priv_id INT,
+    user_nombre VARCHAR(50) NOT NULL,
+    user_correo VARCHAR(255) NOT NULL,
+    user_password VARCHAR(255) NOT NULL,
+    user_empresa VARCHAR(50) NOT NULL,
+    user_direccion VARCHAR(50) NOT NULL,
+    user_telefono VARCHAR(15) NOT NULL,
+    user_web_empresa VARCHAR(50) NOT NULL,
+    user_cargo VARCHAR(50) NOT NULL,
+    user_fecha_creacion date NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    priv_id INT NOT NULL,
     PRIMARY KEY (user_id)
 );
 
@@ -28,14 +29,13 @@ PRIMARY KEY (priv_id)
 );
 
 INSERT INTO tickets.usuarios (user_id,user_nombre,user_correo,user_password,user_empresa,user_direccion,user_telefono,user_web_empresa,user_cargo,priv_id) 
-value (null,"Eduardo Lynch Araya","eduardolynch94@gmail.com","123456","Eware Consulting","Amunategui 20, Santiago","+56996630457","www.eware.com","Consultor Informático",1);
-COMMIT;
+value (null,"Administrador","admin@admin.com",PASSWORD("123456"),"Eware Consulting","Amunategui 20, Santiago","+56996630457","www.eware.com","Consultor Informático",1);
 
 INSERT INTO tickets.usuarios (user_id,user_nombre,user_correo,user_password,user_empresa,user_direccion,user_telefono,user_web_empresa,user_cargo,priv_id) 
-value (null,"Alvaro Cardoza","acardoza@carcom.com","123456","Carcom","Quilicura 1234, Santiago","+56912345678","www.carcom.com","Soporte Informático",2);
+value (null,"Tecnico","tecnico@tecnico.com",PASSWORD("123456"),"Carcom","Quilicura 1234, Santiago","+56912345678","www.carcom.com","Soporte Informático",2);
 
 INSERT INTO tickets.usuarios (user_id,user_nombre,user_correo,user_password,user_empresa,user_direccion,user_telefono,user_web_empresa,user_cargo,priv_id) 
-value (null,"Jaime Larrondo","jlarrondo@gmail.com","123456","Junaeb Consulting","Bandera 2331, Santiago","+56996612547","www.junaeb.com","Administrador DBA",3);
+value (null,"Usuario","usuario@usuario.com",PASSWORD("123456"),"Junaeb Consulting","Bandera 2331, Santiago","+56996612547","www.junaeb.com","Administrador DBA",3);
 
 SELECT * FROM tickets.usuarios;
 
@@ -135,5 +135,12 @@ CREATE TABLE tickets.gruposoporte_usuarios (
 CREATE UNIQUE INDEX idx_gruposoporte_usuarios
 ON tickets.gruposoporte_usuarios(gsoporte_id,user_id);
 
-
-SELECT * FROM tickets.ticket;
+SELECT 
+    *
+FROM
+    tickets.usuarios
+    
+WHERE
+    DATE(user_fecha_creacion) BETWEEN DATE('2019-15-07') - 1 AND DATE('2019-15-07');
+    
+    INSERT INTO tickets.usuarios (user_id,user_nombre,user_correo,user_password,user_empresa,user_direccion,user_telefono,user_web_empresa,user_cargo,priv_id)  value (null,"Administrador","admin@admin.com",PASSWORD("123456"),"Eware Consulting","Amunategui 20, Santiago","+56996630457","www.eware.com","Consultor Informático",1)

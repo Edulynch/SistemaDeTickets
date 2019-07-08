@@ -64,6 +64,8 @@
 <script src="assets/js/ace-elements.min.js"></script>
 <script src="assets/js/ace.min.js"></script>
 
+<script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.1/js/bootstrap-datepicker.min.js"></script>
+
 <!-- inline scripts related to this page -->
 <script type="text/javascript">
     jQuery(function($) {
@@ -326,6 +328,20 @@
 
     })
 </script>
+
+<script>
+    $('.input-group.date').datepicker({
+        format: "yyyy-mm-dd"
+    });
+</script>
+
+<!-- <script type='text/javascript'>
+    function submitForm() {
+        // Call submit() method on <form id='myform'>
+        document.getElementById('form1').submit();
+    }
+</script> -->
+
 </body>
 
 </html>
