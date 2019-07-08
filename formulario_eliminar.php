@@ -37,7 +37,7 @@ if (limpiar($row['ticket_id']) == $id && isset($row['ticket_id']) && !empty($row
     $query_borrar = "DELETE FROM 
                         tickets.ticket
                     WHERE 
-                        ticket_id = " . $id . ";";   
+                        ticket_id = " . $id . ";";
 
     $gsoporte_borrar = mysqli_query($link, $query_borrar);
     header("Location: http://softicket.cl/dashboard/tickets_administrar.php");

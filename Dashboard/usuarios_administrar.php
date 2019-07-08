@@ -15,26 +15,39 @@ if (
 
 $link = Conectarse('ticket');
 
-// echo $_SERVER['REQUEST_METHOD'];
-// echo "<br />";
-// var_dump(isset($_SERVER['REQUEST_METHOD']) == 'POST');
-// echo "<br />";
-// var_dump(isset($_POST['fechaFinal']));
-// echo "<br />";
-// var_dump(isset($_POST['fechaInicial']));
-// echo "<br />";
-
 $filtro_exitoso = false;
 $mostrar_mensaje = false;
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-
-    $mostrar_mensaje = true;
-
     if (
-        isset($_POST['fechaInicial']) && !empty($_POST['fechaInicial']) &&
-        isset($_POST['fechaFinal']) && !empty($_POST['fechaFinal'])
+        //TICKET SELECCIONADO
+        isset($_POST['ticket_perfil_id']) && !empty($_POST['ticket_perfil_id']) &&
+        empty($_POST['fechaInicial']) &&
+        empty($_POST['fechaFinal'])
     ) {
+        $ticket_perfil_id = limpiar($_POST['ticket_perfil_id']);
+
+        //QUERY - TICKET SELECCIONAD
+        $usuarios = "SELECT *
+                    FROM 
+                        TICKETS.USUARIOS U
+                    INNER JOIN 
+                        TICKETS.PRIVILEGIOS P
+                    ON 
+                        U.PRIV_ID = P.PRIV_ID
+                    WHERE
+                        U.PRIV_ID = $ticket_perfil_id
+                    ORDER BY 
+                        U.PRIV_ID ASC, USER_ID ASC;";
+
+        $filtro_exitoso = true;
+        //FECHA SELECCIONADA
+    } else if (
+        isset($_POST['fechaInicial']) && !empty($_POST['fechaInicial']) &&
+        !empty($_POST['fechaFinal']) &&
+        empty($_POST['ticket_perfil_id'])
+    ) {
+        //QUERY - FECHA SELECCIONADA
         $fechaInicial = limpiar($_POST['fechaInicial']);
         $fechaFinal = limpiar($_POST['fechaFinal']);
 
@@ -52,6 +65,32 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         U.PRIV_ID ASC, USER_ID ASC;";
 
         $filtro_exitoso = true;
+
+        //TICKET SELECCIONADO - FECHA SELECCINONADA
+    } else if (
+        isset($_POST['ticket_perfil_id']) && !empty($_POST['ticket_perfil_id']) &&
+        isset($_POST['fechaInicial']) && !empty($_POST['fechaInicial']) &&
+        isset($_POST['fechaFinal']) && !empty($_POST['fechaFinal'])
+    ) {
+        $ticket_perfil_id = limpiar($_POST['ticket_perfil_id']);
+        $fechaInicial = limpiar($_POST['fechaInicial']);
+        $fechaFinal = limpiar($_POST['fechaFinal']);
+
+        $usuarios = "SELECT *
+        FROM 
+            TICKETS.USUARIOS U
+        INNER JOIN 
+            TICKETS.PRIVILEGIOS P
+        ON 
+            U.PRIV_ID = P.PRIV_ID
+        WHERE
+            U.USER_FECHA_CREACION BETWEEN '$fechaInicial' AND '$fechaFinal'
+        AND
+            U.PRIV_ID = $ticket_perfil_id
+        ORDER BY 
+            U.PRIV_ID ASC, USER_ID ASC;";
+
+        $filtro_exitoso = true;
     } else {
         $filtro_exitoso = false;
     }
@@ -59,18 +98,25 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 if (!$filtro_exitoso) {
 
-    $usuarios = "SELECT * 
-                    FROM 
-                        TICKETS.USUARIOS U
-                    INNER JOIN 
-                        TICKETS.PRIVILEGIOS P
-                    ON 
-                        U.PRIV_ID = P.PRIV_ID
-                    ORDER BY 
-                        U.PRIV_ID ASC, USER_ID ASC;";
+    // Dropdown tecnicos
+    $usuarios = "SELECT *
+    FROM 
+        TICKETS.USUARIOS U
+    INNER JOIN 
+        TICKETS.PRIVILEGIOS P
+    ON 
+        U.PRIV_ID = P.PRIV_ID
+    ORDER BY 
+        U.PRIV_ID ASC, USER_ID ASC;";
 }
 
+
 $lista_usuarios = mysqli_query($link, $usuarios);
+
+// Dropdown Perfiles
+$perfil = "SELECT priv_id, priv_titulo FROM tickets.privilegios;";
+
+$lista_perfil = mysqli_query($link, $perfil);
 
 include_once 'menu/header.php';
 
@@ -87,8 +133,24 @@ include_once 'menu/header.php';
 </div><!-- /.page-header -->
 
 <!-- Boton Superior Tabla -->
-<form action="usuarios_administrar.php" method="POST">
-    <div class="row" style="text-align:right">
+<form action="usuarios_administrar.php" method="POST" id="form1" name="form1">
+    <!-- Grupo de Soporte -->
+    <div class="row">
+        <div class="col-sm-1">
+            <b>Grupo de Soporte:</b>
+        </div>
+        <div class="col-sm-2">
+            <!-- <div class="col-auto my-1"> -->
+            <select name="ticket_perfil_id" class="form-control" onchange="submitForm();">
+                <option value="">Seleccionar un Grupo</option>
+                <?php
+                while ($gruposoporte = mysqli_fetch_assoc($lista_perfil)) {
+                    echo "<option value=" . $gruposoporte['priv_id'] . ">" . $gruposoporte['priv_titulo'] . "</option>";
+                }
+                ?>
+            </select>
+            <!-- </div> -->
+        </div>
         <div class='col-sm-offset-3 col-sm-2'>
             <div class="form-group">
                 <div id="filterDate2">
@@ -103,6 +165,7 @@ include_once 'menu/header.php';
                 </div>
             </div>
         </div>
+
         <div class='col-sm-2'>
             <div class="form-group">
                 <div id="filterDate2">
@@ -121,10 +184,8 @@ include_once 'menu/header.php';
             <i class="glyphicon glyphicon-search"></i>
             Filtrar
         </button>
-
     </div>
 </form>
-
 <!-- Boton Superior Tabla -->
 
 <div class="row">
@@ -206,6 +267,15 @@ include_once 'menu/header.php';
                 </div>
             </div>
             <!-- Editable table -->
+            <form action="exportar_to_csv.php" method="post" id="form3" name="form3">
+                <input type="text" name="archivo" value="usuario.csv" hidden>
+                <input type="text" name="tipo_reporteria" value="usuario" hidden>
+                <input type="text" name="querySelect" value="<?php echo $usuarios; ?>" hidden>
+                <button type="submit" class="btn btn-success col-sm-1" id="submit-form3" name="submit-form3">
+                    <i class="glyphicon glyphicon-file"></i>
+                    Exportar
+                </button>
+            </form>
         </div>
 
 
@@ -239,5 +309,7 @@ include_once 'menu/header.php';
 </div><!-- /.row -->
 
 <?php
+
 include_once 'menu/footer.php';
+
 ?>

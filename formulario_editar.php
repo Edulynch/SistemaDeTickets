@@ -255,22 +255,22 @@ $lista_ticket_estado = mysqli_query($link, $ticket_estado);
                         ?>
                         <a href="./Dashboard/tickets_administrar.php" class="btn btn--radius-2" style="color:white;background-color:green;text-decoration:none" type="submit">Volver</button>
                         <?php
-                    } else {
-                        ?>
+                        } else {
+                            ?>
                             <a href="./Bandeja/tickets_asignado_grupo.php" class="btn btn--radius-2" style="color:white;background-color:green;text-decoration:none" type="submit">Volver</button>
                             <?php
-                        }
-                        ?>
+                            }
+                            ?>
                 </div>
                 </form>
                 <script>
                     function myFunction() {
-                        if(document.getElementById("dropdown2").value){
-                        document.getElementById("dropdown2").disabled = true;
-                        document.getElementById("dropdown2").selectedIndex = "0";
-                        alert("Estimado,\n\nAl cambiar el Grupo Resolutor, no es posible asignar un tenico.\n - Primero se debe guardar los cambios.\n\nAtte. Developers");
+                        if (document.getElementById("dropdown2").value) {
+                            document.getElementById("dropdown2").disabled = true;
+                            document.getElementById("dropdown2").selectedIndex = "0";
+                            alert("Estimado,\n\nAl cambiar el Grupo Resolutor, no es posible asignar un tenico.\n - Primero se debe guardar los cambios.\n\nAtte. Developers");
+                        }
                     }
-                }
                 </script>
             </div>
         </div>

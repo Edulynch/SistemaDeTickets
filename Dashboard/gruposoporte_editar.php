@@ -291,8 +291,8 @@ include_once 'menu/header.php'
                                                     </td>
                                                     <td>
                                                         <!-- <a href="#" style="text-decoration:none">
-                                                                    <i class="ace-icon fa fa-pencil-square-o bigger-230" style="color:#f0ad4e"> </i>
-                                                                </a> -->
+                                                                            <i class="ace-icon fa fa-pencil-square-o bigger-230" style="color:#f0ad4e"> </i>
+                                                                        </a> -->
                                                         <a href="./gruposoporte_editar_eliminar.php?id=<?php
                                                                                                         echo $row['gsoporte_id'] . "&user=" . $row['user_id'];
                                                                                                         ?>" style="text-decoration:none">
@@ -300,13 +300,13 @@ include_once 'menu/header.php'
                                                         </a>
 
                                                     <?php
+                                                    }
+                                                } else {
+                                                    echo "<tr>";
+                                                    echo "<b>No hay Tecnicos asociados al Ticket</b>";
+                                                    echo "</tr>";
                                                 }
-                                            } else {
-                                                echo "<tr>";
-                                                echo "<b>No hay Tecnicos asociados al Ticket</b>";
-                                                echo "</tr>";
-                                            }
-                                            ?>
+                                                ?>
 
                                         </tr>
 
