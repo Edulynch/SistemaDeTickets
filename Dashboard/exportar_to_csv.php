@@ -1,5 +1,7 @@
 <?php
 
+include_once '../config.php';
+
 //?archivo=""
 $file = $_POST['archivo'];
 
@@ -20,16 +22,47 @@ $querySelect = $_POST['querySelect'];
 
 if ($tipo_reporteria == "usuario") {
     $cabecera = array(
-        'ID_USUARIO', 'NOMBRE_USUARIO', 'CORREO_USUARIO', 'EMPRESA_USUARIO', 'DIRECCION_USUARIO', 'TELEFONO_USUARIO', 'CARGO_USUARIO', 'CREACION_USUARIO', 'PRIVILEGIO', 'DESC_PRIVILEGIO'
+        'ID_USUARIO',
+        'NOMBRE_USUARIO',
+        'CORREO_USUARIO',
+        'EMPRESA_USUARIO',
+        'DIRECCION_USUARIO',
+        'TELEFONO_USUARIO',
+        'CARGO_USUARIO',
+        'CREACION_USUARIO',
+        'PRIVILEGIO',
+        'DESC_PRIVILEGIO'
     );
-} else {
-    if ($tipo_reporteria == "tickets") {
-        $cabecera = array(
-            'ID_TICKET', 'NOMBRE_TICKET', 'DESC_TICKET', 'GRUPO_SOPORTE', 'TECNICO_ASIGNADO', 'TITULO_ESTADO', 'NOMBRE_USUARIO', 'CREACION_TICKET', 'ACTUALIZACION_TICKET'
-        );
-    }
 }
 
+if ($tipo_reporteria == "tickets") {
+    $cabecera = array(
+        'ID_TICKET',
+        'NOMBRE_TICKET',
+        'DESC_TICKET',
+        'GRUPO_SOPORTE',
+        'TECNICO_ASIGNADO',
+        'TITULO_ESTADO',
+        'NOMBRE_USUARIO',
+        'CREACION_TICKET',
+        'ACTUALIZACION_TICKET'
+    );
+}
+
+if ($tipo_reporteria == "auditoria_usuarios") {
+    $cabecera = array(
+        'MODIFICADOR',
+        'NOMBRE_USUARIO',
+        'EMPRESA_USUARIO',
+        'WEB_EMPRESA_USUARIO',
+        'DIRECCION_USUARIO',
+        'TELEFONO_USUARIO',
+        'CARGO_USUARIO',
+        'CORREO_USUARIO',
+        'MODIFICACION_USUARIO',
+        'DESC_PRIVILEGIO'
+    );
+}
 
 $salida = fopen('php://output', 'w');
 

@@ -29,7 +29,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         //QUERY - TICKET SELECCIONAD
         $usuarios = "SELECT 
-                        mu.user_nombre user_nombre_mod, a.*, u.*, priv_titulo
+                        mu.user_nombre user_nombre_mod, 
+                        u.user_nombre, 
+                        u.user_empresa,
+                        u.user_web_empresa,
+                        u.user_direccion,
+                        u.user_telefono,
+                        u.user_cargo,
+                        u.user_correo,
+                        a.auditoria_fecha_creacion, 
+                        priv_titulo
                     FROM
                         auditoria a
                     INNER JOIN
@@ -223,7 +232,7 @@ include_once 'menu/header.php';
         <div class="col-sm-2">
             <!-- <div class="col-auto my-1"> -->
             <select name="buscar_usuario" class="form-control" onchange="submitForm();">
-                <option value="">Seleccionar un Grupo</option>
+                <option value="">Seleccionar un Usuario</option>
                 <?php
                 while ($row_usuarios = mysqli_fetch_assoc($lista_usuarios_id)) {
                     echo "<option value=" . $row_usuarios['user_id'] . ">" . $row_usuarios['user_nombre'] . "</option>";
@@ -349,8 +358,8 @@ include_once 'menu/header.php';
             </div>
             <!-- Editable table -->
             <form action="exportar_to_csv.php" method="post" id="form3" name="form3">
-                <input type="text" name="archivo" value="usuario.csv" hidden>
-                <input type="text" name="tipo_reporteria" value="usuario" hidden>
+                <input type="text" name="archivo" value="auditoria_usuarios.csv" hidden>
+                <input type="text" name="tipo_reporteria" value="auditoria_usuarios" hidden>
                 <input type="text" name="querySelect" value="<?php echo $usuarios; ?>" hidden>
                 <button type="submit" class="btn btn-success col-sm-1" id="submit-form3" name="submit-form3">
                     <i class="fa fa-download"></i>
