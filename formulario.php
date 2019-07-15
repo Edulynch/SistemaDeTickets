@@ -9,10 +9,10 @@ if (
     || count($_COOKIE) == 0
     || !isset($_COOKIE['priv_id'])
 ) {
-    header("Location: http://softicket.cl");
+    header("Location: " . SITIO_WEB);
 }
 
-$link = Conectarse('ticket');
+$link = Conectarse();
 
 $registrado = false;
 
@@ -46,7 +46,7 @@ if (isset($_SERVER['REQUEST_METHOD']) && $_SERVER['REQUEST_METHOD'] === 'POST') 
 
     $registrado = true;
 
-    header("Location: http://softicket.cl");
+    header("Location: " . SITIO_WEB);
 }
 
 

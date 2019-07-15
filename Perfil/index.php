@@ -1,7 +1,7 @@
 <?php
 
 if (!isset($_COOKIE['user_id']) || count($_COOKIE) == 0) {
-	header("Location: http://softicket.cl");
+	header("Location: " . SITIO_WEB);
 }
 
 // include_once 'config.php';
@@ -37,7 +37,7 @@ $ticket = mysqli_query($link, $squery);
 $row = $ticket->fetch_assoc();
 
 if (empty($row['user_id'])) {
-	header("Location: http://softicket.cl");
+	header("Location: " . SITIO_WEB);
 }
 
 ?>

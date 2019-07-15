@@ -286,12 +286,8 @@ include_once 'menu/header.php'
                                                 </td>
                                                 </td>
                                                 <td>
-                                                    <a href="../formulario_editar.php?id=<?php echo $row['ticket_id']; ?>" style="text-decoration: none">
-                                                        <i class="ace-icon fa fa-pencil-square-o bigger-230" style="color:#f0ad4e;text-decoration:none"> </i>
-                                                    </a>
-
-                                                    <a href="../formulario_eliminar.php?id=<?php echo $row['ticket_id']; ?>" class="icon_opcion" style="color:#d9534f;text-decoration:none">
-                                                        <i class="ace-icon fa fa-trash-o bigger-230"> </i>
+                                                    <a href="usuario_detalle.php?id=<?php echo $row['ticket_id']; ?>" style="text-decoration: none">
+                                                        <i class="ace-icon fa fa-file-text-o bigger-230 text-pimary"> </i>
                                                     </a>
 
                                                 <?php

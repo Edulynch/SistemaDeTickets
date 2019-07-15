@@ -7,13 +7,13 @@ if (
     || !isset($_COOKIE['priv_id'])
     || $_COOKIE['priv_id'] != 1 //Administrador
 ) {
-    header("Location: http://softicket.cl");
+    header("Location: " . SITIO_WEB);
 }
 
 include_once '../config.php';
 include_once '../conexion.php';
 
-$link = Conectarse('ticket');
+$link = Conectarse();
 
 $id = limpiar($_GET['id']);
 
@@ -45,6 +45,29 @@ if ($password->num_rows != 0) {
         $user_web_empresa = limpiar($_POST['user_web_empresa']);
         $user_priv_id = limpiar($_POST['user_priv_id']);
 
+        // Insertar en HISTORICO
+
+        $query_historico = "INSERT INTO tickets.usuarios_historico
+        SELECT 	
+            NULL,
+            user_id,
+            user_nombre,
+            user_correo,
+			user_password,
+            user_empresa,
+            user_direccion,
+            user_telefono,
+            user_web_empresa,
+            user_cargo,
+            user_fecha_creacion,            
+            priv_id 
+        FROM
+            tickets.usuarios
+        WHERE
+            user_id = '$id';";
+
+        mysqli_query($link, $query_historico);
+
         if ($password_row['user_password'] == $user_password || empty($user_password)) {
             $query_correo = "UPDATE tickets.usuarios
         SET user_nombre = '$user_nombre',
@@ -72,6 +95,27 @@ if ($password->num_rows != 0) {
 
         mysqli_query($link, $query_correo);
         $registrado = true;
+
+        // Insertar en Auditoria
+
+        $query_auditoria = "INSERT INTO tickets.auditoria
+        (
+        auditoria_id,
+        modificador_id,
+        user_id,
+        ticket_id,
+        gsoporte_id
+        )
+        VALUES
+        (
+        NULL,
+        " . $_COOKIE['user_id'] . ",
+        '$id',
+        NULL,
+        NULL
+        );";
+
+        mysqli_query($link, $query_auditoria);
     }
 
     $id2 = "SELECT 
@@ -86,7 +130,7 @@ if ($password->num_rows != 0) {
 
     $row = mysqli_fetch_array($soporte_id, MYSQLI_ASSOC);
 } else {
-    header("Location: http://softicket.cl/dashboard/usuarios_administrar.php");
+    header("Location: " . SITIO_WEB_DASHBOARD . "/usuarios_administrar.php");
 }
 
 include_once 'menu/header.php'

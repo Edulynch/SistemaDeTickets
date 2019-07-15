@@ -1,29 +1,13 @@
 <?php
 
-// Dirección o IP del servidor MySQL
-$host = "localhost";
-
-// Puerto del servidor MySQL
-$puerto = "3306";
-
-// Nombre de usuario del servidor MySQL
-$usuario = "root";
-
-// Contraseña del usuario
-$contrasena = "";
-
-// Nombre de la base de datos
-$baseDeDatos = "tickets";
-
-// Nombre de la tabla a trabajar
-// $tabla = "personas";
-
-//Activar para mostrar mensajes
-$debug = 0;
-
 function Conectarse()
 {
-    global $host, $puerto, $usuario, $contrasena, $baseDeDatos, $debug;
+    $host = DB_HOST;
+    $puerto = DB_PORT;
+    $usuario = DB_USUARIO;
+    $contrasena = DB_PASSWORD;
+    $baseDeDatos = DB_NOMBRE;
+    $debug = DB_DEBUG;
 
     if (!($link = mysqli_connect($host . ":" . $puerto, $usuario, $contrasena))) {
         if ($debug == 1) {

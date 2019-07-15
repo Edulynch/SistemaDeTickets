@@ -44,7 +44,7 @@
         <![endif]-->
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.1/css/bootstrap-datepicker.min.css">
 
 </head>
@@ -176,6 +176,45 @@
                         </li>
                     </ul>
 
+                    <b class="arrow"></b>
+                </li>
+
+                <li class="">
+                    <a href="#" class="dropdown-toggle">
+                        <i class="menu-icon fa fa-database"></i>
+                        <span class="menu-text"> Auditoria </span>
+
+                        <b class="arrow fa fa-angle-down"></b>
+                    </a>
+
+                    <b class="arrow"></b>
+
+                    <ul class="submenu">
+                        <li class="">
+                            <a href="auditoria_usuarios.php">
+                                <i class="menu-icon fa fa-eye"></i>
+                                Usuarios
+                            </a>
+                        </li>
+                    </ul>
+                    <b class="arrow"></b>
+                    <ul class="submenu">
+                        <li class="">
+                            <a href="auditoria_gruposoporte.php">
+                                <i class="menu-icon fa fa-eye"></i>
+                                Grupo Soporte
+                            </a>
+                        </li>
+                    </ul>
+                    <b class="arrow"></b>
+                    <ul class="submenu">
+                        <li class="">
+                            <a href="auditoria_tickets.php">
+                                <i class="menu-icon fa fa-eye"></i>
+                                Tickets
+                            </a>
+                        </li>
+                    </ul>
                     <b class="arrow"></b>
                 </li>
             </ul>

@@ -7,13 +7,13 @@ if (
 	|| !isset($_COOKIE['priv_id'])
 	|| $_COOKIE['priv_id'] != 1 //Administrador
 ) {
-	header("Location: http://softicket.cl");
+	header("Location: " . SITIO_WEB);
 }
 
 include_once '../config.php';
 include_once '../conexion.php';
 
-$link = Conectarse('ticket');
+$link = Conectarse();
 
 // // Dropdown tecnicos
 $query_tecnicos = "SELECT user_id,user_nombre
@@ -120,7 +120,7 @@ include_once 'menu/header.php'
 									// while ($lista_tecnicos = mysqli_fetch_assoc($ticket_tenicos)) {
 									// 	echo "<option value=" . $lista_tecnicos['user_id'] . ">" . $lista_tecnicos['user_nombre'] . "</option>";
 									// }
-									
+
 									?>
 							</select>
 

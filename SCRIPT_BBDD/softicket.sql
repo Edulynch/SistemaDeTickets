@@ -135,12 +135,52 @@ CREATE TABLE tickets.gruposoporte_usuarios (
 CREATE UNIQUE INDEX idx_gruposoporte_usuarios
 ON tickets.gruposoporte_usuarios(gsoporte_id,user_id);
 
-SELECT 
-    *
-FROM
-    tickets.usuarios
-    
-WHERE
-    DATE(user_fecha_creacion) BETWEEN DATE('2019-15-07') - 1 AND DATE('2019-15-07');
-    
-    INSERT INTO tickets.usuarios (user_id,user_nombre,user_correo,user_password,user_empresa,user_direccion,user_telefono,user_web_empresa,user_cargo,priv_id)  value (null,"Administrador","admin@admin.com",PASSWORD("123456"),"Eware Consulting","Amunategui 20, Santiago","+56996630457","www.eware.com","Consultor Informático",1)
+DROP TABLE usuarios_historico;
+
+CREATE TABLE `usuarios_historico` (
+	`userhist_id` INT NOT NULL AUTO_INCREMENT,
+    `user_id` INT(11) NOT NULL,
+    `user_nombre` VARCHAR(50) NOT NULL,
+    `user_correo` VARCHAR(255) NOT NULL,
+    `user_password` VARCHAR(255) NOT NULL,
+    `user_empresa` VARCHAR(50) NOT NULL,
+    `user_direccion` VARCHAR(50) NOT NULL,
+    `user_telefono` VARCHAR(15) NOT NULL,
+    `user_web_empresa` VARCHAR(50) NOT NULL,
+    `user_cargo` VARCHAR(50) NOT NULL,
+    `user_fecha_creacion` DATE NOT NULL,
+    `priv_id` INT(11) NOT NULL,
+    PRIMARY KEY(userhist_id)
+);
+
+CREATE TABLE `ticket_historico` (
+  `ticket_id` int(11) NOT NULL,
+  `ticket_titulo` varchar(100) DEFAULT NULL,
+  `user_id` int(11) DEFAULT NULL,
+  `tecnico_id` int(11) DEFAULT NULL,
+  `gsoporte_id` int(11) DEFAULT NULL,
+  `ticket_descripcion` varchar(255) DEFAULT NULL,
+  `ticket_estado_id` int(1) NOT NULL,
+  `ticket_fecha_creacion` datetime NOT NULL ,
+  `ticket_fecha_actualizado` datetime NOT NULL
+);
+
+CREATE TABLE `gruposoporte_historico` (
+    `gsoporte_id` INT(11) NOT NULL,
+    `gsoporte_titulo` VARCHAR(50) DEFAULT NULL,
+    `gsoporte_descripcion` VARCHAR(50) DEFAULT NULL,
+    `user_id` INT(11) DEFAULT NULL
+);
+
+DROP TABLE auditoria;
+
+CREATE TABLE auditoria (
+auditoria_id INT NOT NULL auto_increment,
+modificador_id INT,
+user_id INT,
+ticket_id INT,
+gsoporte_id INT,
+auditoria_fecha_creacion datetime NOT NULL DEFAULT current_timestamp(),
+PRIMARY KEY (auditoria_id)
+);
+

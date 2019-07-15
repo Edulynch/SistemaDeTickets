@@ -9,10 +9,10 @@ if (
     || count($_COOKIE) == 0
     || !isset($_COOKIE['priv_id'])
 ) {
-    header("Location: http://softicket.cl");
+    header("Location: " . SITIO_WEB);
 }
 
-$link = Conectarse('ticket');
+$link = Conectarse();
 
 $id = limpiar($_COOKIE['user_id']);
 
@@ -148,8 +148,8 @@ include_once 'menu/header.php'
                                                 ?>
 
                                                 <!-- <a href="../formulario_eliminar.php?id=<?php echo $row['ticket_id']; ?>" class="icon_opcion" style="color:#d9534f;text-decoration:none">
-                                                                            <i class="ace-icon fa fa-trash-o bigger-230"> </i>
-                                                                        </a> -->
+                                                                                    <i class="ace-icon fa fa-trash-o bigger-230"> </i>
+                                                                                </a> -->
 
                                             <?php
                                             }

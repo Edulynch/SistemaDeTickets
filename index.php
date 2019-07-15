@@ -2,9 +2,9 @@
 
 if (isset($_COOKIE['user_id']) && count($_COOKIE) != 0) {
     if ($_COOKIE['priv_id'] == 1) {
-        header("Location: http://softicket.cl/Dashboard");
+        header("Location: " . SITIO_WEB_DASHBOARD);
     } else {
-        header("Location: http://softicket.cl/perfil");
+        header("Location: " . SITIO_WEB_PERFIL);
     }
 }
 
@@ -58,7 +58,7 @@ if (isset($_COOKIE['user_id']) && count($_COOKIE) != 0) {
 include_once 'config.php';
 include_once 'conexion.php';
 
-$link = Conectarse('usuarios');
+$link = Conectarse();
 
 if (
     $_SERVER['REQUEST_METHOD'] == 'POST' &&
@@ -81,9 +81,9 @@ if (
         setcookie("priv_id", $row["priv_id"], time() + 30 * 24 * 60 * 60);
         setcookie("user_nombre", $row["user_nombre"], time() + 30 * 24 * 60 * 60);
         if ($row["priv_id"] == 1) {
-            header("Location: http://softicket.cl/dashboard");
+            header("Location: " . SITIO_WEB_DASHBOARD);
         } else {
-            header("Location: http://softicket.cl/perfil");
+            header("Location: " . SITIO_WEB_PERFIL);
         }
     } else {
         setcookie("user_id", "", time() - 3600);

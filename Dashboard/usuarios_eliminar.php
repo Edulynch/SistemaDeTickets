@@ -9,7 +9,7 @@ if (
     || !isset($_GET['id'])
     || $_COOKIE['priv_id'] != 1 //Administrador
 ) {
-    header("Location: http://softicket.cl");
+    header("Location: " . SITIO_WEB);
 }
 
 include_once '../config.php';
@@ -40,5 +40,5 @@ if (limpiar($row['user_id']) == $id && isset($row['user_id']) && !empty($row['us
                         user_id = " . $id . ";";
 
     $gsoporte_borrar = mysqli_query($link, $query_borrar);
-    header("Location: http://softicket.cl/dashboard/usuarios_administrar.php");
+    header("Location: " . SITIO_WEB_DASHBOARD . "/usuarios_administrar.php");
 }

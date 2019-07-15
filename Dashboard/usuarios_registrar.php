@@ -7,13 +7,13 @@ if (
 	|| !isset($_COOKIE['priv_id'])
 	|| $_COOKIE['priv_id'] != 1 //Administrador
 ) {
-	header("Location: http://softicket.cl");
+	header("Location: " . SITIO_WEB);
 }
 
 include_once '../config.php';
 include_once '../conexion.php';
 
-$link = Conectarse('ticket');
+$link = Conectarse();
 
 $registrado = false;
 

@@ -11,13 +11,13 @@ if (
     || !isset($_GET['user'])
     || $_COOKIE['priv_id'] != 1 //Administrador
 ) {
-    header("Location: http://softicket.cl");
+    header("Location: " . SITIO_WEB);
 }
 
 include_once '../config.php';
 include_once '../conexion.php';
 
-$link = Conectarse('usuarios');
+$link = Conectarse();
 
 $id = limpiar($_GET['id']);
 $user = limpiar($_GET['user']);
@@ -38,10 +38,10 @@ $row = $gsoporte->fetch_assoc();
 
 if (
     limpiar($row['gsoporte_id']) == $id &&
-    isset($row['gsoporte_id']) && 
+    isset($row['gsoporte_id']) &&
     !empty($row['gsoporte_id']) ||
-    limpiar($row['user_id']) == $user && 
-    isset($row['user_id']) && 
+    limpiar($row['user_id']) == $user &&
+    isset($row['user_id']) &&
     !empty($row['user_id']) &&
     $gsoporte->num_rows > 0
 ) {
@@ -53,7 +53,5 @@ if (
                         user_id = " . $user . ";";
 
     $gsoporte_borrar = mysqli_query($link, $query_borrar);
-    header("Location: http://softicket.cl/Dashboard/gruposoporte_editar.php?id=" . $id);
+    header("Location: " . SITIO_WEB_DASHBOARD . "/gruposoporte_editar.php?id=" . $id);
 }
-
-?>

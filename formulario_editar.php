@@ -9,7 +9,7 @@ if (
     || count($_COOKIE) == 0
     || !isset($_COOKIE['priv_id'])
 ) {
-    header("Location: http://softicket.cl");
+    header("Location: " . SITIO_WEB);
 }
 
 $link = Conectarse();
@@ -253,11 +253,11 @@ $lista_ticket_estado = mysqli_query($link, $ticket_estado);
                     <?php
                     if ($_COOKIE['priv_id'] == 1) {
                         ?>
-                        <a href="./Dashboard/tickets_administrar.php" class="btn btn--radius-2" style="color:white;background-color:green;text-decoration:none" type="submit">Volver</button>
+                        <a href="./dashboard/tickets_administrar.php" class="btn btn--radius-2" style="color:white;background-color:green;text-decoration:none" type="submit">Volver</button>
                         <?php
                         } else {
                             ?>
-                            <a href="./Bandeja/tickets_asignado_grupo.php" class="btn btn--radius-2" style="color:white;background-color:green;text-decoration:none" type="submit">Volver</button>
+                            <a href="./bandeja/tickets_asignado_grupo.php" class="btn btn--radius-2" style="color:white;background-color:green;text-decoration:none" type="submit">Volver</button>
                             <?php
                             }
                             ?>

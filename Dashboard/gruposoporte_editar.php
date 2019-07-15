@@ -7,7 +7,7 @@ if (
     || !isset($_COOKIE['priv_id'])
     || $_COOKIE['priv_id'] != 1 //Administrador
 ) {
-    header("Location: http://softicket.cl");
+    header("Location: " . SITIO_WEB);
 }
 
 include_once '../config.php';
@@ -107,10 +107,10 @@ if ($id_existe > 0) {
 
         $lista_gruposoporte_choosed = mysqli_query($link, $gruposoporte);
     } else {
-        header("Location: http://softicket.cl/Dashboard/gruposoporte_administrar.php");
+        header("Location: " . SITIO_WEB_DASHBOARD . "/gruposoporte_administrar.php");
     }
 } else {
-    header("Location: http://softicket.cl/Dashboard/gruposoporte_administrar.php");
+    header("Location: " . SITIO_WEB_DASHBOARD . "/gruposoporte_administrar.php");
 }
 
 // // Dropdown tecnicos
@@ -291,8 +291,8 @@ include_once 'menu/header.php'
                                                     </td>
                                                     <td>
                                                         <!-- <a href="#" style="text-decoration:none">
-                                                                            <i class="ace-icon fa fa-pencil-square-o bigger-230" style="color:#f0ad4e"> </i>
-                                                                        </a> -->
+                                                                                                    <i class="ace-icon fa fa-pencil-square-o bigger-230" style="color:#f0ad4e"> </i>
+                                                                                                </a> -->
                                                         <a href="./gruposoporte_editar_eliminar.php?id=<?php
                                                                                                         echo $row['gsoporte_id'] . "&user=" . $row['user_id'];
                                                                                                         ?>" style="text-decoration:none">

@@ -1,12 +1,14 @@
 <?php
 
+include_once '../config.php';
+
 if (
 	!isset($_COOKIE['user_id'])
 	|| !isset($_COOKIE['user_nombre'])
 	|| count($_COOKIE) == 0
 	|| !isset($_COOKIE['priv_id'])
 ) {
-	header("Location: http://softicket.cl");
+	header("Location: " . SITIO_WEB);
 }
 
 include_once 'menu/header.php'
