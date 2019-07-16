@@ -85,29 +85,31 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 if (!$filtro_exitoso) {
 
     // Dropdown tecnicos
-    $ticket = "SELECT 
-                ticket_id,
-                ticket_titulo,
-                ticket_descripcion,
-                gsoporte_titulo,
-                IFNULL(tec.user_nombre, 'NO ASIGNADO') tecnico_nombre,
-                te.ticket_estado_titulo,
-                u.user_nombre,
-                t.ticket_fecha_creacion,
-                t.ticket_fecha_actualizado
-            FROM
-                ticket t
-                    INNER JOIN
-                ticket_estado te ON t.ticket_estado_id = te.ticket_estado_id
-                    RIGHT JOIN
-                gruposoporte g ON g.gsoporte_id = t.gsoporte_id
-                    RIGHT JOIN
-                usuarios u ON u.user_id = t.user_id
-                    LEFT JOIN
-                usuarios tec ON tec.user_id = t.tecnico_id
-            WHERE
-                ticket_titulo IS NOT NULL
-            ORDER BY t.ticket_id DESC;
+    $ticket = "SELECT
+					ticket_id,
+					ticket_titulo,
+					ticket_descripcion,
+					IFNULL(gsoporte_titulo, 'NO ASIGNADO') gsoporte_titulo,
+					IFNULL(tec.user_nombre, 'NO ASIGNADO') tecnico_nombre,
+					IFNULL(te.ticket_estado_titulo, 'NO ASIGNADO') ticket_estado_titulo,
+					u.user_nombre,
+					t.ticket_fecha_creacion,
+					t.ticket_fecha_actualizado
+				FROM
+					ticket t
+				LEFT OUTER JOIN ticket_estado te ON
+					t.ticket_estado_id = te.ticket_estado_id
+				LEFT JOIN usuarios tec ON
+					tec.user_id = t.tecnico_id
+				LEFT OUTER JOIN gruposoporte g ON
+					g.gsoporte_id = t.gsoporte_id
+				RIGHT JOIN usuarios u ON
+					u.user_id = t.user_id
+				WHERE
+					ticket_titulo IS NOT NULL
+				ORDER BY
+					t.ticket_id
+				DESC;
             ";
 }
 

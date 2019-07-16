@@ -153,7 +153,10 @@ CREATE TABLE `usuarios_historico` (
     PRIMARY KEY(userhist_id)
 );
 
+DROP TABLE ticket_historico;
+
 CREATE TABLE `ticket_historico` (
+  `tickethist_id` INT NOT NULL AUTO_INCREMENT,
   `ticket_id` int(11) NOT NULL,
   `ticket_titulo` varchar(100) DEFAULT NULL,
   `user_id` int(11) DEFAULT NULL,
@@ -162,14 +165,19 @@ CREATE TABLE `ticket_historico` (
   `ticket_descripcion` varchar(255) DEFAULT NULL,
   `ticket_estado_id` int(1) NOT NULL,
   `ticket_fecha_creacion` datetime NOT NULL ,
-  `ticket_fecha_actualizado` datetime NOT NULL
+  `ticket_fecha_actualizado` datetime NOT NULL,
+  PRIMARY KEY (tickethist_id)
 );
 
+DROP TABLE gruposoporte_historico;
+
 CREATE TABLE `gruposoporte_historico` (
+    `gsoportehist_id` INT NOT NULL AUTO_INCREMENT,
     `gsoporte_id` INT(11) NOT NULL,
     `gsoporte_titulo` VARCHAR(50) DEFAULT NULL,
     `gsoporte_descripcion` VARCHAR(50) DEFAULT NULL,
-    `user_id` INT(11) DEFAULT NULL
+    `user_id` INT(11) DEFAULT NULL,
+    PRIMARY KEY(gsoportehist_id)
 );
 
 DROP TABLE auditoria;

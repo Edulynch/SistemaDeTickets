@@ -28,17 +28,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $ticket_perfil_id = limpiar($_POST['ticket_perfil_id']);
 
         //QUERY - TICKET SELECCIONAD
-        $usuarios = "SELECT *
-                    FROM 
-                        TICKETS.USUARIOS U
-                    INNER JOIN 
-                        TICKETS.PRIVILEGIOS P
-                    ON 
-                        U.PRIV_ID = P.PRIV_ID
-                    WHERE
-                        U.PRIV_ID = $ticket_perfil_id
-                    ORDER BY 
-                        U.PRIV_ID ASC, USER_ID ASC;";
+        $usuarios = "select *
+                    from 
+                        usuarios u
+                    inner join 
+                        privilegios p
+                    on 
+                        u.priv_id = p.priv_id
+                    where
+                        u.priv_id = $ticket_perfil_id
+                    order by 
+                        u.priv_id asc, user_id asc;";
 
         $filtro_exitoso = true;
         //FECHA SELECCIONADA
@@ -51,18 +51,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $fechaInicial = limpiar($_POST['fechaInicial']);
         $fechaFinal = limpiar($_POST['fechaFinal']);
 
-        $usuarios = "SELECT *
-                    FROM 
-                        TICKETS.USUARIOS U
-                    INNER JOIN 
-                        TICKETS.PRIVILEGIOS P
-                    ON 
-                        U.PRIV_ID = P.PRIV_ID
-                    WHERE
-                        U.USER_FECHA_CREACION BETWEEN '$fechaInicial'
-                        AND '$fechaFinal'
-                    ORDER BY 
-                        U.PRIV_ID ASC, USER_ID ASC;";
+        $usuarios = "select *
+                    from 
+                        usuarios u
+                    inner join 
+                        privilegios p
+                    on 
+                        u.priv_id = p.priv_id
+                    where
+                        u.user_fecha_creacion between '$fechainicial'
+                        and '$fechafinal'
+                    order by 
+                        u.priv_id asc, user_id asc;";
 
         $filtro_exitoso = true;
 
@@ -76,19 +76,19 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $fechaInicial = limpiar($_POST['fechaInicial']);
         $fechaFinal = limpiar($_POST['fechaFinal']);
 
-        $usuarios = "SELECT *
-        FROM 
-            TICKETS.USUARIOS U
-        INNER JOIN 
-            TICKETS.PRIVILEGIOS P
-        ON 
-            U.PRIV_ID = P.PRIV_ID
-        WHERE
-            U.USER_FECHA_CREACION BETWEEN '$fechaInicial' AND '$fechaFinal'
-        AND
-            U.PRIV_ID = $ticket_perfil_id
-        ORDER BY 
-            U.PRIV_ID ASC, USER_ID ASC;";
+        $usuarios = "select *
+        from 
+            usuarios u
+        inner join 
+            privilegios p
+        on 
+            u.priv_id = p.priv_id
+        where
+            u.user_fecha_creacion between '$fechainicial' and '$fechafinal'
+        and
+            u.priv_id = $ticket_perfil_id
+        order by 
+            u.priv_id asc, user_id asc;";
 
         $filtro_exitoso = true;
     } else {
@@ -99,15 +99,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 if (!$filtro_exitoso) {
 
     // Dropdown tecnicos
-    $usuarios = "SELECT *
-    FROM 
-        TICKETS.USUARIOS U
-    INNER JOIN 
-        TICKETS.PRIVILEGIOS P
-    ON 
-        U.PRIV_ID = P.PRIV_ID
-    ORDER BY 
-        U.PRIV_ID ASC, USER_ID ASC;";
+    $usuarios = "select *
+    from 
+        usuarios u
+    inner join 
+        privilegios p
+    on 
+        u.priv_id = p.priv_id
+    order by 
+        u.priv_id asc, user_id asc;";
 }
 
 

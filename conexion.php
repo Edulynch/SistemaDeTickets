@@ -4,9 +4,9 @@ function Conectarse()
 {
     $host = DB_HOST;
     $puerto = DB_PORT;
-    $usuario = DB_USUARIO;
+    $usuario = DB_USER;
     $contrasena = DB_PASSWORD;
-    $baseDeDatos = DB_NOMBRE;
+    $baseDeDatos = DB_NAME;
     $debug = DB_DEBUG;
 
     if (!($link = mysqli_connect($host . ":" . $puerto, $usuario, $contrasena))) {

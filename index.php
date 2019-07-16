@@ -1,5 +1,42 @@
 <?php
 
+include_once 'config.php';
+include_once 'conexion.php';
+
+$link = Conectarse();
+
+if (
+    $_SERVER['REQUEST_METHOD'] == 'POST' &&
+    isset($_POST['login_correo']) &&
+    isset($_POST['login_password'])
+) {
+    $login_correo = limpiar($_POST['login_correo']);
+    $login_password = limpiar($_POST['login_password']);
+
+    $query = "SELECT * FROM usuarios WHERE user_correo = '$login_correo' AND user_password = PASSWORD('$login_password') LIMIT 1;";
+
+    mysqli_set_charset($link, "utf8");
+
+    $ticket = mysqli_query($link, $query);
+
+    $row = $ticket->fetch_assoc();
+
+    if (!empty($row["user_id"])) {
+        setcookie("user_id", $row["user_id"], time() + 30 * 24 * 60 * 60);
+        setcookie("priv_id", $row["priv_id"], time() + 30 * 24 * 60 * 60);
+        setcookie("user_nombre", $row["user_nombre"], time() + 30 * 24 * 60 * 60);
+        if ($row["priv_id"] == 1) {
+            header("Location: " . SITIO_WEB_DASHBOARD);
+        } else {
+            header("Location: " . SITIO_WEB_PERFIL);
+        }
+    } else {
+        setcookie("user_id", "", time() - 3600);
+        setcookie("priv_id", "", time() - 3600);
+        setcookie("user_nombre", "", time() - 3600);
+    }
+}
+
 if (isset($_COOKIE['user_id']) && count($_COOKIE) != 0) {
     if ($_COOKIE['priv_id'] == 1) {
         header("Location: " . SITIO_WEB_DASHBOARD);
@@ -53,43 +90,3 @@ if (isset($_COOKIE['user_id']) && count($_COOKIE) != 0) {
 </body>
 
 </html>
-<?php
-
-include_once 'config.php';
-include_once 'conexion.php';
-
-$link = Conectarse();
-
-if (
-    $_SERVER['REQUEST_METHOD'] == 'POST' &&
-    isset($_POST['login_correo']) &&
-    isset($_POST['login_password'])
-) {
-    $login_correo = limpiar($_POST['login_correo']);
-    $login_password = limpiar($_POST['login_password']);
-
-    $query = "SELECT * FROM usuarios WHERE user_correo = '$login_correo' AND user_password = PASSWORD('$login_password') LIMIT 1;";
-
-    mysqli_set_charset($link, "utf8");
-
-    $ticket = mysqli_query($link, $query);
-
-    $row = $ticket->fetch_assoc();
-
-    if (!empty($row["user_id"])) {
-        setcookie("user_id", $row["user_id"], time() + 30 * 24 * 60 * 60);
-        setcookie("priv_id", $row["priv_id"], time() + 30 * 24 * 60 * 60);
-        setcookie("user_nombre", $row["user_nombre"], time() + 30 * 24 * 60 * 60);
-        if ($row["priv_id"] == 1) {
-            header("Location: " . SITIO_WEB_DASHBOARD);
-        } else {
-            header("Location: " . SITIO_WEB_PERFIL);
-        }
-    } else {
-        setcookie("user_id", "", time() - 3600);
-        setcookie("priv_id", "", time() - 3600);
-        setcookie("user_nombre", "", time() - 3600);
-    }
-}
-
-?>

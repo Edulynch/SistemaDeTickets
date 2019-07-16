@@ -285,7 +285,7 @@ $lista_ticket_estado = mysqli_query($link, $ticket_estado);
     <script src="https://jqueryvalidation.org/files/lib/jquery.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.16.0/jquery.validate.min.js"></script>
 
-    <script src="js/formulario_registrar.js"></script>
+    <script src="js/formulario_editar.js"></script>
 
 </body><!-- This templates was made by Colorlib (https://colorlib.com) -->
 

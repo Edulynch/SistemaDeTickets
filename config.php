@@ -30,13 +30,13 @@ const DB_HOST = "localhost";
 const DB_PORT = "3306";
 
 // Nombre de usuario del servidor MySQL
-const DB_USUARIO = "root";
+const DB_USER = "root";
 
 // Contraseña de usuario del servidor MySQL
 const DB_PASSWORD = "";
 
 // Nombre de la base de datos del servidor MySQL
-const DB_NOMBRE = "tickets";
+const DB_NAME = "tickets";
 
 // Activar para mostrar mensajes (1:Activado / 0:Desactivado)
 const DB_DEBUG = 0;

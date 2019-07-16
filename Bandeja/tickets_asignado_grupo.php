@@ -17,31 +17,34 @@ $link = Conectarse();
 $id = limpiar($_COOKIE['user_id']);
 
 // Dropdown tecnicos
-$ticket = "SELECT 
-ticket_id,
-ticket_titulo,
-ticket_descripcion,
-gsoporte_titulo,
-t.ticket_estado_id,
-te.ticket_estado_titulo,
-IFNULL(tec.user_nombre, 'NO ASIGNADO') tecnico_nombre,
-u.user_nombre,
-t.ticket_fecha_creacion,
-t.ticket_fecha_actualizado
-FROM
-ticket t
-    INNER JOIN
-ticket_estado te ON t.ticket_estado_id = te.ticket_estado_id
-    INNER JOIN
-gruposoporte g ON g.gsoporte_id = t.gsoporte_id
-    INNER JOIN
-usuarios u ON u.user_id = t.user_id
-    LEFT OUTER JOIN
-usuarios tec ON tec.user_id = t.tecnico_id
-WHERE
-t.user_id = '$id'
-    AND ticket_titulo IS NOT NULL
-ORDER BY t.ticket_id DESC;";
+$ticket = "SELECT
+				ticket_id,
+				ticket_titulo,
+				ticket_descripcion,
+				gsoporte_titulo,
+				t.ticket_estado_id,
+				te.ticket_estado_titulo,
+				IFNULL(tec.user_nombre, 'NO ASIGNADO') tecnico_nombre,
+				u.user_nombre,
+				t.ticket_fecha_creacion,
+				t.ticket_fecha_actualizado
+			FROM
+				ticket t
+			INNER JOIN ticket_estado te ON
+				t.ticket_estado_id = te.ticket_estado_id
+			INNER JOIN gruposoporte g ON
+				g.gsoporte_id = t.gsoporte_id
+			INNER JOIN usuarios u ON
+				u.user_id = t.user_id
+			INNER JOIN gruposoporte_usuarios gu ON
+				gu.gsoporte_id = g.gsoporte_id
+			LEFT OUTER JOIN usuarios tec ON
+				tec.user_id = t.tecnico_id
+			WHERE
+				gu.user_id = '$id' AND ticket_titulo IS NOT NULL
+			ORDER BY
+				t.ticket_id
+			DESC;";
 
 $lista_ticket = mysqli_query($link, $ticket);
 
@@ -143,8 +146,8 @@ include_once 'menu/header.php'
                                                 ?>
 
                                                 <!-- <a href="../formulario_eliminar.php?id=<?php echo $row['ticket_id']; ?>" class="icon_opcion" style="color:#d9534f;text-decoration:none">
-                                                                                    <i class="ace-icon fa fa-trash-o bigger-230"> </i>
-                                                                                </a> -->
+                                                                                            <i class="ace-icon fa fa-trash-o bigger-230"> </i>
+                                                                                        </a> -->
 
                                             <?php
                                             }

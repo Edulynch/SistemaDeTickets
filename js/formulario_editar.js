@@ -10,6 +10,9 @@ $("#formulario_form").validate({
         ticket_descripcion: {
             required: true,
             rangelength: [5, 255]
+        },
+        ticket_estado_id: {
+            required: true
         }
     },
     messages: {
@@ -23,6 +26,9 @@ $("#formulario_form").validate({
         ticket_descripcion: {
             required: "Ingresa una descripción para el Ticket",
             rangelength: "El largo debe ser minimo de 5 caracteres."
+        },
+        ticket_estado_id: {
+            required: "Selecciona un estado de Ticket"
         }
     }
 });

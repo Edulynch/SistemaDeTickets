@@ -242,7 +242,7 @@
                                 echo $_COOKIE['user_nombre'];
                                 ?>
                             </a>
-                            <a href="/salir.php" class="RED">
+                            <a href="../salir.php" class="RED">
                                 [Cerrar sesion]
                                 <!-- <i class="ace-icon fa fa-trash-o"></i> -->
                             </a>

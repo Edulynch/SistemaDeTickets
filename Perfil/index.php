@@ -4,7 +4,7 @@ if (!isset($_COOKIE['user_id']) || count($_COOKIE) == 0) {
 	header("Location: " . SITIO_WEB);
 }
 
-// include_once 'config.php';
+include_once '../config.php';
 include_once '../conexion.php';
 
 // $id = $_GET['id'];
@@ -131,7 +131,7 @@ if (empty($row['user_id'])) {
 								<a href="#">Perfil</a>
 							</li>
 							<li class="active"><?php echo $row['user_nombre'] ?></li>
-							<a href="/salir.php" class="RED">
+							<a href="../salir.php" class="RED">
 								[Cerrar sesion]
 								<!-- <i class="ace-icon fa fa-trash-o"></i> -->
 							</a>
@@ -214,7 +214,7 @@ if (empty($row['user_id'])) {
 											<div class="profile-contact-info">
 												<div class="profile-contact-links align-center">
 
-													<a href="/formulario.php" class="btn btn-link">
+													<a href="../formulario.php" class="btn btn-link">
 														<i class="ace-icon fa fa-pencil-square-o bigger-125 pink"></i>
 														Crear Nuevo Ticket
 													</a>

@@ -194,7 +194,7 @@ $lista_gsoporte = mysqli_query($link, $gsoporte);
                 </div>
                 <div class="card-footer">
                     <button class="btn btn--radius-2 btn--blue-2" type="submit">Crear Orden de Trabajo</button>
-                    <a href="/" class="btn btn--radius-2" style="color:white;background-color:green;text-decoration:none" type="submit">Volver</button>
+                    <a href="./" class="btn btn--radius-2" style="color:white;background-color:green;text-decoration:none" type="submit">Volver</button>
                 </div>
             </div>
         </div>
