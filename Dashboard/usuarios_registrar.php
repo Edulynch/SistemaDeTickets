@@ -30,7 +30,7 @@ if (isset($_SERVER['REQUEST_METHOD']) && $_SERVER['REQUEST_METHOD'] === 'POST') 
 	$user_priv_id = limpiar($_POST['user_priv_id']);
 
 	$query_correo = "SELECT user_correo
-	FROM tickets.usuarios
+	FROM usuarios
 	WHERE user_correo = '$user_correo';";
 
 	$ticketcorreo = mysqli_query($link, $query_correo);
@@ -39,7 +39,7 @@ if (isset($_SERVER['REQUEST_METHOD']) && $_SERVER['REQUEST_METHOD'] === 'POST') 
 
 	if (empty($row['user_correo']) || $row['user_correo'] == "") {
 
-		$query = "INSERT INTO tickets.usuarios 
+		$query = "INSERT INTO usuarios 
 		(
 		user_id,
 		user_cargo,

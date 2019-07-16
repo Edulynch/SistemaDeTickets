@@ -90,7 +90,7 @@ if ($id_existe > 0) {
                 $gsoporte_descripcion = limpiar($_POST['gsoporte_descripcion']);
                 if (!empty($row['gsoporte_titulo']) && !empty($row['gsoporte_descripcion'])) {
 
-                    $query = "UPDATE tickets.gruposoporte
+                    $query = "UPDATE gruposoporte
                                 SET gsoporte_titulo = '" . limpiar($gsoporte_titulo) . "',
                                     gsoporte_descripcion = '" . limpiar($gsoporte_descripcion) . "'
                                 WHERE gsoporte_id = '" . $usuario_id . "';";
@@ -106,7 +106,7 @@ if ($id_existe > 0) {
 
                     if (!empty($row['gsoporte_titulo']) && !empty($row['gsoporte_descripcion'])) {
 
-                        $query_tecnico = "INSERT INTO tickets.gruposoporte_usuarios (
+                        $query_tecnico = "INSERT INTO gruposoporte_usuarios (
                                         gsoporte_usuarios_id,
                                         gsoporte_id,
                                         user_id
@@ -133,11 +133,11 @@ if ($id_existe > 0) {
                             gu.user_id,
                             user_nombre
                         FROM
-                            tickets.gruposoporte_usuarios gu
+                            gruposoporte_usuarios gu
                         INNER JOIN
-                            tickets.gruposoporte g ON gu.gsoporte_id = g.gsoporte_id
+                            gruposoporte g ON gu.gsoporte_id = g.gsoporte_id
                         INNER JOIN
-                            tickets.usuarios u ON gu.user_id = u.user_id
+                            usuarios u ON gu.user_id = u.user_id
                         WHERE
                             gu.gsoporte_id = '$id_existe';";
 
@@ -152,7 +152,7 @@ if ($id_existe > 0) {
 // // Dropdown tecnicos
 $query_editar = "SELECT *
                             FROM
-                                tickets.gruposoporte
+                                gruposoporte
                             WHERE
                                 gsoporte_id = " . $usuario_id . "
                             AND

@@ -32,15 +32,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         t.ticket_fecha_creacion,
         t.ticket_fecha_actualizado
     FROM
-        tickets.ticket t
+        ticket t
             INNER JOIN
-        tickets.ticket_estado te ON t.ticket_estado_id = te.ticket_estado_id
+        ticket_estado te ON t.ticket_estado_id = te.ticket_estado_id
             RIGHT JOIN
-        tickets.gruposoporte g ON g.gsoporte_id = t.gsoporte_id
+        gruposoporte g ON g.gsoporte_id = t.gsoporte_id
             RIGHT JOIN
-        tickets.usuarios u ON u.user_id = t.user_id
+        usuarios u ON u.user_id = t.user_id
             LEFT JOIN
-        tickets.usuarios tec ON tec.user_id = t.tecnico_id
+        usuarios tec ON tec.user_id = t.tecnico_id
     WHERE
         ticket_titulo IS NOT NULL";
 
@@ -96,15 +96,15 @@ if (!$filtro_exitoso) {
                 t.ticket_fecha_creacion,
                 t.ticket_fecha_actualizado
             FROM
-                tickets.ticket t
+                ticket t
                     INNER JOIN
-                tickets.ticket_estado te ON t.ticket_estado_id = te.ticket_estado_id
+                ticket_estado te ON t.ticket_estado_id = te.ticket_estado_id
                     RIGHT JOIN
-                tickets.gruposoporte g ON g.gsoporte_id = t.gsoporte_id
+                gruposoporte g ON g.gsoporte_id = t.gsoporte_id
                     RIGHT JOIN
-                tickets.usuarios u ON u.user_id = t.user_id
+                usuarios u ON u.user_id = t.user_id
                     LEFT JOIN
-                tickets.usuarios tec ON tec.user_id = t.tecnico_id
+                usuarios tec ON tec.user_id = t.tecnico_id
             WHERE
                 ticket_titulo IS NOT NULL
             ORDER BY t.ticket_id DESC;
@@ -118,11 +118,11 @@ if ($filtro_exitoso == true) {
 $lista_ticket = mysqli_query($link, $ticket);
 
 // Dropdown tecnicos
-$gsoporte = "SELECT gsoporte_id, gsoporte_titulo FROM tickets.gruposoporte;";
+$gsoporte = "SELECT gsoporte_id, gsoporte_titulo FROM gruposoporte;";
 
 $lista_gsoporte = mysqli_query($link, $gsoporte);
 
-$estado_ticket = "SELECT ticket_estado_id, ticket_estado_titulo FROM tickets.ticket_estado;";
+$estado_ticket = "SELECT ticket_estado_id, ticket_estado_titulo FROM ticket_estado;";
 
 $lista_estado_ticket = mysqli_query($link, $estado_ticket);
 

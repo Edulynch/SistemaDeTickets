@@ -204,7 +204,7 @@ if (!$filtro_exitoso) {
 $lista_usuarios = mysqli_query($link, $usuarios);
 
 // Dropdown Perfiles
-$usuarios_id = "SELECT user_id, user_nombre FROM tickets.usuarios;";
+$usuarios_id = "SELECT user_id, user_nombre FROM usuarios;";
 
 $lista_usuarios_id = mysqli_query($link, $usuarios_id);
 

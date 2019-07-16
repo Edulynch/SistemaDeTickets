@@ -29,15 +29,15 @@ $ticket = "SELECT
                 t.ticket_fecha_creacion,
                 t.ticket_fecha_actualizado
             FROM
-                tickets.ticket t
+                ticket t
             INNER JOIN
-                tickets.ticket_estado te ON t.ticket_estado_id = te.ticket_estado_id
+                ticket_estado te ON t.ticket_estado_id = te.ticket_estado_id
             INNER JOIN
-                tickets.gruposoporte g ON g.gsoporte_id = t.gsoporte_id
+                gruposoporte g ON g.gsoporte_id = t.gsoporte_id
             INNER JOIN
-                tickets.usuarios u ON u.user_id = t.user_id
+                usuarios u ON u.user_id = t.user_id
             LEFT OUTER JOIN
-                tickets.usuarios tec ON t.tecnico_id = tec.user_id
+                usuarios tec ON t.tecnico_id = tec.user_id
             WHERE
                 t.user_id = '$id'
             AND 

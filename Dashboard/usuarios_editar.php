@@ -22,7 +22,7 @@ $registrado = false;
 $pass = "SELECT 
                 user_id, user_password
             FROM
-                tickets.usuarios
+                usuarios
             WHERE
                 user_id = '$id'
             LIMIT 1;";
@@ -47,7 +47,7 @@ if ($password->num_rows != 0) {
 
         // Insertar en HISTORICO
 
-        $query_historico = "INSERT INTO tickets.usuarios_historico
+        $query_historico = "INSERT INTO usuarios_historico
         SELECT 	
             NULL,
             user_id,
@@ -62,14 +62,14 @@ if ($password->num_rows != 0) {
             user_fecha_creacion,            
             priv_id 
         FROM
-            tickets.usuarios
+            usuarios
         WHERE
             user_id = '$id';";
 
         mysqli_query($link, $query_historico);
 
         if ($password_row['user_password'] == $user_password || empty($user_password)) {
-            $query_correo = "UPDATE tickets.usuarios
+            $query_correo = "UPDATE usuarios
         SET user_nombre = '$user_nombre',
         user_empresa = '$user_empresa',
         user_web_empresa = '$user_web_empresa',
@@ -80,7 +80,7 @@ if ($password->num_rows != 0) {
         priv_id = '$user_priv_id'
         WHERE user_id = '$id';";
         } else {
-            $query_correo = "UPDATE tickets.usuarios
+            $query_correo = "UPDATE usuarios
         SET user_nombre = '$user_nombre',
         user_empresa = '$user_empresa',
         user_web_empresa = '$user_web_empresa',
@@ -98,7 +98,7 @@ if ($password->num_rows != 0) {
 
         // Insertar en Auditoria
 
-        $query_auditoria = "INSERT INTO tickets.auditoria
+        $query_auditoria = "INSERT INTO auditoria
         (
         auditoria_id,
         modificador_id,
@@ -121,7 +121,7 @@ if ($password->num_rows != 0) {
     $id2 = "SELECT 
             *
         FROM
-            tickets.usuarios
+            usuarios
         WHERE
             user_id = '$id'
         LIMIT 1;";

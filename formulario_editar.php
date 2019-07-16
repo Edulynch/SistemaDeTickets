@@ -27,7 +27,7 @@ if (isset($_SERVER['REQUEST_METHOD']) && $_SERVER['REQUEST_METHOD'] === 'POST') 
     $ticket_gsoporte_id = limpiar($_POST['ticket_gsoporte_id']);
     $ticket_descripcion = limpiar($_POST['ticket_descripcion']);
 
-    $query = "UPDATE tickets.ticket
+    $query = "UPDATE ticket
                 SET ticket_titulo = '$ticket_titulo',
                 ticket_descripcion = '$ticket_descripcion',
                 gsoporte_id = '$ticket_gsoporte_id',
@@ -48,7 +48,7 @@ $squery = "SELECT
                 tecnico_id,
                 ticket_estado_id
             FROM 
-                tickets.ticket
+                ticket
             WHERE 
                 ticket_id = " . $id . "
             LIMIT 1;";
@@ -68,7 +68,7 @@ $lpad_ticket_result = $lpad_row[0];
 $ID_ORDEN_TRABAJO = PREFIJO_ORDEN_TRABAJO . $lpad_ticket_result;
 
 // Dropdown Grupo Resolutor
-$gsoporte = "SELECT gsoporte_id, gsoporte_titulo FROM tickets.gruposoporte;";
+$gsoporte = "SELECT gsoporte_id, gsoporte_titulo FROM gruposoporte;";
 
 $lista_gsoporte = mysqli_query($link, $gsoporte);
 
@@ -77,9 +77,9 @@ $lista_gsoporte = mysqli_query($link, $gsoporte);
 $tecnico = "SELECT 
                 u.user_id, u.user_nombre
             FROM
-                tickets.usuarios u
+                usuarios u
             INNER JOIN
-                tickets.gruposoporte_usuarios g 
+                gruposoporte_usuarios g 
             ON 
                 u.user_id = g.user_id
             WHERE
@@ -95,7 +95,7 @@ $lista_tecnico = mysqli_query($link, $tecnico);
 $ticket_estado = "SELECT 
                 ticket_estado_id, ticket_estado_titulo
             FROM 
-                tickets.ticket_estado 
+                ticket_estado 
             ;";
 
 $lista_ticket_estado = mysqli_query($link, $ticket_estado);

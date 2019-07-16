@@ -17,7 +17,7 @@ $link = Conectarse();
 
 // // Dropdown tecnicos
 $query_tecnicos = "SELECT user_id,user_nombre
-FROM tickets.usuarios
+FROM usuarios
 where priv_id = 2;";
 
 $ticket_tenicos = mysqli_query($link, $query_tecnicos);
@@ -31,7 +31,7 @@ if (isset($_SERVER['REQUEST_METHOD']) && $_SERVER['REQUEST_METHOD'] === 'POST') 
 	// $gsoporte_user_id = limpiar($_POST['gsoporte_user_id']);
 
 	// $query_correo = "SELECT gsoporte_titulo
-	// FROM tickets.usuarios
+	// FROM usuarios
 	// WHERE gsoporte_titulo = '$gsoporte_titulo';";
 
 	// $ticketcorreo = mysqli_query($link, $query_correo);
@@ -40,7 +40,7 @@ if (isset($_SERVER['REQUEST_METHOD']) && $_SERVER['REQUEST_METHOD'] === 'POST') 
 
 	if (empty($row['gsoporte_titulo']) || $row['gsoporte_titulo'] == "") {
 
-		$query = "INSERT INTO tickets.gruposoporte 
+		$query = "INSERT INTO gruposoporte 
 		(
 		gsoporte_id,
 		gsoporte_titulo,

@@ -29,15 +29,15 @@ t.ticket_fecha_creacion,
 t.ticket_fecha_actualizado,
 tec.user_nombre tecnico_nombre
 FROM
-tickets.ticket t
+ticket t
     INNER JOIN
-tickets.ticket_estado te ON t.ticket_estado_id = te.ticket_estado_id
+ticket_estado te ON t.ticket_estado_id = te.ticket_estado_id
     INNER JOIN
-tickets.gruposoporte g ON g.gsoporte_id = t.gsoporte_id
+gruposoporte g ON g.gsoporte_id = t.gsoporte_id
     INNER JOIN
-tickets.usuarios u ON u.user_id = t.user_id
+usuarios u ON u.user_id = t.user_id
     INNER JOIN
-tickets.usuarios tec ON t.tecnico_id = tec.user_id
+usuarios tec ON t.tecnico_id = tec.user_id
 WHERE
 t.tecnico_id = '$id'
     AND ticket_titulo IS NOT NULL

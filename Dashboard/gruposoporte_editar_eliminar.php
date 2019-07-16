@@ -25,7 +25,7 @@ $user = limpiar($_GET['user']);
 $query = "SELECT 
                 gsoporte_id, user_id
             FROM 
-                tickets.gruposoporte_usuarios
+                gruposoporte_usuarios
             WHERE 
             gsoporte_id = " . $id . "
             LIMIT 1;";
@@ -46,7 +46,7 @@ if (
     $gsoporte->num_rows > 0
 ) {
     $query_borrar = "DELETE FROM 
-                        tickets.gruposoporte_usuarios
+                        gruposoporte_usuarios
                     WHERE 
                         gsoporte_id = " . $id . "
                     AND 

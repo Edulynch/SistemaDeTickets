@@ -26,7 +26,7 @@ p.priv_id,
 priv_titulo,
 priv_descripcion
 FROM usuarios u
-INNER JOIN tickets.privilegios p
+INNER JOIN privilegios p
 ON u.priv_id = p.priv_id
 WHERE user_id = " . $id . " LIMIT 1;";
 

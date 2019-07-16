@@ -17,7 +17,7 @@ $link = Conectarse();
 
 // Dropdown tecnicos
 $gruposoporte = "SELECT * 
-FROM tickets.gruposoporte
+FROM gruposoporte
 WHERE length(gsoporte_titulo) > 0
 ORDER BY gsoporte_id ASC;";
 

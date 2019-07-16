@@ -22,7 +22,7 @@ $id = limpiar($_GET['id']);
 $query = "SELECT 
                 ticket_id
             FROM 
-                tickets.ticket
+                ticket
             WHERE 
                 ticket_id = " . $id . "
             LIMIT 1;";
@@ -35,7 +35,7 @@ $row = $gsoporte->fetch_assoc();
 
 if (limpiar($row['ticket_id']) == $id && isset($row['ticket_id']) && !empty($row['ticket_id']) && $gsoporte->num_rows > 0) {
     $query_borrar = "DELETE FROM 
-                        tickets.ticket
+                        ticket
                     WHERE 
                         ticket_id = " . $id . ";";
 

@@ -23,7 +23,7 @@ if (isset($_SERVER['REQUEST_METHOD']) && $_SERVER['REQUEST_METHOD'] === 'POST') 
     $ticket_gsoporte_id = limpiar($_POST['ticket_gsoporte_id']);
     $ticket_descripcion = limpiar($_POST['ticket_descripcion']);
 
-    $query = "INSERT INTO tickets.ticket 
+    $query = "INSERT INTO ticket 
 		(
         ticket_id,
 		ticket_titulo,
@@ -50,13 +50,13 @@ if (isset($_SERVER['REQUEST_METHOD']) && $_SERVER['REQUEST_METHOD'] === 'POST') 
 }
 
 
-$query = "INSERT INTO tickets.ticket (ticket_id, ticket_fecha_creacion, ticket_fecha_actualizado) VALUES (NULL, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);";
+$query = "INSERT INTO ticket (ticket_id, ticket_fecha_creacion, ticket_fecha_actualizado) VALUES (NULL, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);";
 
 //Crea un Numero de Ticket Distinto cada vez que se actualiza
 $result = mysqli_query($link, $query);
 
 //MAXIMO TICKET Y LPAD
-$squery = "SELECT MAX(ticket_id) ticket_id FROM tickets.ticket LIMIT 1;";
+$squery = "SELECT MAX(ticket_id) ticket_id FROM ticket LIMIT 1;";
 
 $ticket = mysqli_query($link, $squery);
 
@@ -83,7 +83,7 @@ $lpad_ticket_result = $lpad_row[0];
 $ID_ORDEN_TRABAJO = PREFIJO_ORDEN_TRABAJO . $lpad_ticket_result;
 
 // Dropdown tecnicos
-$gsoporte = "SELECT gsoporte_id, gsoporte_titulo FROM tickets.gruposoporte;";
+$gsoporte = "SELECT gsoporte_id, gsoporte_titulo FROM gruposoporte;";
 
 $lista_gsoporte = mysqli_query($link, $gsoporte);
 
