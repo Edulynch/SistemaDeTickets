@@ -27,47 +27,37 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     ) {
         $buscar_usuario = limpiar($_POST['buscar_usuario']);
 
-        //QUERY - TICKET SELECCIONAD
         $usuarios = "SELECT 
-                        mu.user_nombre user_nombre_mod, 
-                        u.user_nombre, 
+                        mu.user_nombre user_nombre_mod,
+                        uh.user_id,
+                        u.user_nombre,
+                        u.user_correo,
+                        u.user_password,
                         u.user_empresa,
-                        u.user_web_empresa,
                         u.user_direccion,
                         u.user_telefono,
+                        u.user_web_empresa,
                         u.user_cargo,
-                        u.user_correo,
-                        a.auditoria_fecha_creacion, 
-                        priv_titulo
+                        uh.user_fecha_creacion,
+                        p.priv_titulo,
+                        uh.fecha_mod
                     FROM
-                        auditoria a
+                        usuarios_historico uh
                     INNER JOIN
-                        usuarios u 
-                    ON 
-                        a.user_id = u.user_id
-                    INNER JOIN 
-                        privilegios p
-                    ON 
-                        p.priv_id = u.priv_id
-                    INNER JOIN 
-                        usuarios mu
-                    ON 
-                        mu.user_id = a.modificador_id
+                        usuarios u ON u.user_id = uh.user_id
+                    INNER JOIN
+                        usuarios mu ON mu.user_id = uh.user_id_mod
+                    INNER JOIN
+                        privilegios p ON p.priv_id = uh.priv_id
                     WHERE
-                        auditoria_id IN (
-                                        SELECT 
-                                            MAX(auditoria_id)
+                        uh.userhist_id IN (SELECT 
+                                            MAX(userhist_id)
                                         FROM
-                                            auditoria
-                                        GROUP BY
-                                            user_id
-                                        ORDER BY
-                                            user_id DESC
-                                        )
-                    AND
-                        a.user_id = '$buscar_usuario'
-                    ORDER BY 
-                        auditoria_id DESC;";
+                                            usuarios_historico z
+                                        GROUP BY user_id
+                                        ORDER BY fecha_mod DESC)
+                    AND u.user_id = '$buscar_usuario'
+                    ORDER BY fecha_mod DESC;";
 
         $filtro_exitoso = true;
         //FECHA SELECCIONADA
@@ -81,37 +71,38 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $fechaFinal = limpiar($_POST['fechaFinal']);
 
         $usuarios = "SELECT 
-                        mu.user_nombre user_nombre_mod, a.*, u.*, priv_titulo
+                        mu.user_nombre user_nombre_mod,
+                        uh.user_id,
+                        u.user_nombre,
+                        u.user_correo,
+                        u.user_password,
+                        u.user_empresa,
+                        u.user_direccion,
+                        u.user_telefono,
+                        u.user_web_empresa,
+                        u.user_cargo,
+                        uh.user_fecha_creacion,
+                        p.priv_titulo,
+                        uh.fecha_mod
                     FROM
-                        auditoria a
+                        usuarios_historico uh
                     INNER JOIN
-                        usuarios u 
-                    ON 
-                        a.user_id = u.user_id
-                    INNER JOIN 
-                        privilegios p
-                    ON 
-                        p.priv_id = u.priv_id
-                    INNER JOIN 
-                        usuarios mu
-                    ON 
-                        mu.user_id = a.modificador_id
+                        usuarios u ON u.user_id = uh.user_id
+                    INNER JOIN
+                        usuarios mu ON mu.user_id = uh.user_id_mod
+                    INNER JOIN
+                        privilegios p ON p.priv_id = uh.priv_id
                     WHERE
-                        auditoria_id IN (
-                                        SELECT 
-                                            MAX(auditoria_id)
+                        uh.userhist_id IN (SELECT 
+                                            MAX(userhist_id)
                                         FROM
-                                            auditoria
-                                        GROUP BY
-                                            user_id
-                                        ORDER BY
-                                            user_id DESC
-                                        )
+                                            usuarios_historico z
+                                        GROUP BY user_id
+                                        ORDER BY fecha_mod DESC)
                     AND
-                        date(a.auditoria_fecha_creacion) BETWEEN '$fechaInicial'
+                        date(fecha_mod) BETWEEN '$fechaInicial'
                         AND '$fechaFinal'
-                    ORDER BY 
-                        auditoria_id DESC;";
+                    ORDER BY fecha_mod DESC;";
 
         $filtro_exitoso = true;
 
@@ -126,39 +117,39 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $fechaFinal = limpiar($_POST['fechaFinal']);
 
         $usuarios = "SELECT 
-        mu.user_nombre user_nombre_mod, a.*, u.*, priv_titulo
-    FROM
-        auditoria a
-    INNER JOIN
-        usuarios u 
-    ON 
-        a.user_id = u.user_id
-    INNER JOIN 
-        privilegios p
-    ON 
-        p.priv_id = u.priv_id
-    INNER JOIN 
-        usuarios mu
-    ON 
-        mu.user_id = a.modificador_id
-    WHERE
-        auditoria_id IN (
-                        SELECT 
-                            MAX(auditoria_id)
-                        FROM
-                            auditoria
-                        GROUP BY
-                            user_id
-                        ORDER BY
-                            user_id DESC
-                        )
-    AND
-        a.user_id = '$buscar_usuario'
-    AND
-        date(a.auditoria_fecha_creacion) BETWEEN '$fechaInicial'
-        AND '$fechaFinal'
-    ORDER BY 
-        auditoria_id DESC;";
+                        mu.user_nombre user_nombre_mod,
+                        uh.user_id,
+                        u.user_nombre,
+                        u.user_correo,
+                        u.user_password,
+                        u.user_empresa,
+                        u.user_direccion,
+                        u.user_telefono,
+                        u.user_web_empresa,
+                        u.user_cargo,
+                        uh.user_fecha_creacion,
+                        p.priv_titulo,
+                        uh.fecha_mod
+                    FROM
+                        usuarios_historico uh
+                    INNER JOIN
+                        usuarios u ON u.user_id = uh.user_id
+                    INNER JOIN
+                        usuarios mu ON mu.user_id = uh.user_id_mod
+                    INNER JOIN
+                        privilegios p ON p.priv_id = uh.priv_id
+                    WHERE
+                        uh.userhist_id IN (SELECT 
+                                            MAX(userhist_id)
+                                        FROM
+                                            usuarios_historico z
+                                        GROUP BY user_id
+                                        ORDER BY fecha_mod DESC)
+                    AND u.user_id = '$buscar_usuario'
+                    AND
+                        date(fecha_mod) BETWEEN '$fechaInicial'
+                        AND '$fechaFinal'
+                    ORDER BY fecha_mod DESC;";
 
         $filtro_exitoso = true;
     } else {
@@ -168,36 +159,36 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 if (!$filtro_exitoso) {
 
-    // Dropdown tecnicos
     $usuarios = "SELECT 
-                    mu.user_nombre user_nombre_mod, a.*, u.*, priv_titulo
+                    mu.user_nombre user_nombre_mod,
+                    uh.user_id,
+                    u.user_nombre,
+                    u.user_correo,
+                    u.user_password,
+                    u.user_empresa,
+                    u.user_direccion,
+                    u.user_telefono,
+                    u.user_web_empresa,
+                    u.user_cargo,
+                    uh.user_fecha_creacion,
+                    p.priv_titulo,
+                    uh.fecha_mod
                 FROM
-                    auditoria a
+                    usuarios_historico uh
                 INNER JOIN
-                    usuarios u 
-                ON 
-                    a.user_id = u.user_id
-                INNER JOIN 
-                    privilegios p
-                ON 
-                    p.priv_id = u.priv_id
-                INNER JOIN 
-                    usuarios mu
-                ON 
-                    mu.user_id = a.modificador_id
+                    usuarios u ON u.user_id = uh.user_id
+                INNER JOIN
+                    usuarios mu ON mu.user_id = uh.user_id_mod
+                INNER JOIN
+                    privilegios p ON p.priv_id = uh.priv_id
                 WHERE
-                    auditoria_id IN (
-                                    SELECT 
-                                        MAX(auditoria_id)
+                    uh.userhist_id IN (SELECT 
+                                        MAX(userhist_id)
                                     FROM
-                                        auditoria
-                                    GROUP BY
-                                        user_id
-                                    ORDER BY
-                                        user_id DESC
-                                    )
-                ORDER BY 
-                    auditoria_id DESC;";
+                                        usuarios_historico z
+                                    GROUP BY user_id
+                                    ORDER BY fecha_mod DESC)
+                ORDER BY fecha_mod DESC;";
 }
 
 
@@ -296,8 +287,8 @@ include_once 'menu/header.php';
                                     <th class="text-center">Telefono</th>
                                     <th class="text-center">Cargo</th>
                                     <th class="text-center">Correo Electronico</th>
-                                    <th class="text-center">Fecha Modificación</th>
                                     <th class="text-center">Tipo de Privilegio</th>
+                                    <th class="text-center">Última Modificación</th>
                                     <th class="text-center">Opciones</th>
                                 </tr>
                             </thead>
@@ -334,10 +325,10 @@ include_once 'menu/header.php';
                                                 <?php echo $row['user_correo']; ?>
                                             </td>
                                             <td class="pt-3-half">
-                                                <?php echo $row['auditoria_fecha_creacion']; ?>
+                                                <?php echo $row['priv_titulo']; ?>
                                             </td>
                                             <td class="pt-3-half">
-                                                <?php echo $row['priv_titulo']; ?>
+                                                <?php echo $row['fecha_mod']; ?>
                                             </td>
                                             <td>
                                                 <a href="auditoria_usuarios_detalle.php?id=<?php echo $row['user_id']; ?>" style="text-decoration: none">

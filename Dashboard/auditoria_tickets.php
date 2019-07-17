@@ -22,27 +22,41 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     //QUERY - TICKET SELECCIONAD
     $ticket = "SELECT 
-        ticket_id,
-        ticket_titulo,
-        ticket_descripcion,
-        gsoporte_titulo,
-        IFNULL(tec.user_nombre, 'NO ASIGNADO') tecnico_nombre,
-        te.ticket_estado_titulo,
-        u.user_nombre,
-        t.ticket_fecha_creacion,
-        t.ticket_fecha_actualizado
-    FROM
-        ticket t
-            INNER JOIN
-        ticket_estado te ON t.ticket_estado_id = te.ticket_estado_id
-            RIGHT JOIN
-        gruposoporte g ON g.gsoporte_id = t.gsoporte_id
-            RIGHT JOIN
-        usuarios u ON u.user_id = t.user_id
-            LEFT JOIN
-        usuarios tec ON tec.user_id = t.tecnico_id
-    WHERE
-        ticket_titulo IS NOT NULL";
+    LPAD(t.ticket_id, 10, '0') ticket_id,
+    mu.user_nombre user_nombre_mod,
+    t.ticket_titulo,
+    t.ticket_descripcion,
+    gs.gsoporte_titulo,
+    te.ticket_estado_titulo,
+    u.user_nombre,
+    t.ticket_fecha_creacion,
+    t.ticket_fecha_actualizado,
+    IFNULL(tec.user_nombre, 'NO ASIGNADO') tecnico_nombre,
+    fecha_mod
+FROM
+    ticket t
+        INNER JOIN
+    ticket_historico th ON t.ticket_id = th.ticket_id
+        INNER JOIN
+    gruposoporte gs ON th.gsoporte_id = gs.gsoporte_id
+        INNER JOIN
+    usuarios mu ON mu.user_id = th.user_id_mod
+        INNER JOIN
+    ticket_estado te ON te.ticket_estado_id = th.ticket_estado_id
+        INNER JOIN
+    gruposoporte_usuarios gsu ON gsu.gsoporte_id = th.gsoporte_id
+        INNER JOIN
+    usuarios u ON u.user_id = gsu.user_id
+        LEFT OUTER JOIN
+    usuarios tec ON tec.user_id = t.tecnico_id
+WHERE
+    tickethist_id IN (SELECT 
+                        MAX(tickethist_id)
+                    FROM
+                        ticket_historico z
+                    GROUP BY z.ticket_id
+                    ORDER BY fecha_mod DESC)
+";
 
     if (
         isset($_POST['ticket_gsoporte_id']) && !empty($_POST['ticket_gsoporte_id'])
@@ -50,7 +64,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $ticket_gsoporte_id = limpiar($_POST['ticket_gsoporte_id']);
 
         //QUERY - TICKET SELECCIONAD
-        $ticket .= " AND g.gsoporte_id =  $ticket_gsoporte_id";
+        $ticket .= " AND gs.gsoporte_id =  $ticket_gsoporte_id";
 
         $filtro_exitoso = true;
     }
@@ -63,7 +77,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $fechaInicial = limpiar($_POST['fechaInicial']);
         $fechaFinal = limpiar($_POST['fechaFinal']);
 
-        $ticket .= " AND date(t.ticket_fecha_creacion) BETWEEN '$fechaInicial' AND '$fechaFinal'";
+        $ticket .= " AND date(th.fecha_mod) BETWEEN '$fechaInicial' AND '$fechaFinal'";
 
         $filtro_exitoso = true;
 
@@ -76,7 +90,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         //QUERY - FECHA SELECCIONADA
         $ticket_estado = limpiar($_POST['ticket_estado']);
 
-        $ticket .= " AND t.ticket_estado_id = $ticket_estado";
+        $ticket .= " AND th.ticket_estado_id = $ticket_estado";
 
         $filtro_exitoso = true;
     }
@@ -86,33 +100,46 @@ if (!$filtro_exitoso) {
 
     // Dropdown tecnicos
     $ticket = "SELECT 
-                ticket_id,
-                ticket_titulo,
-                ticket_descripcion,
-                gsoporte_titulo,
-                IFNULL(tec.user_nombre, 'NO ASIGNADO') tecnico_nombre,
-                te.ticket_estado_titulo,
-                u.user_nombre,
-                t.ticket_fecha_creacion,
-                t.ticket_fecha_actualizado
-            FROM
-                ticket t
-                    INNER JOIN
-                ticket_estado te ON t.ticket_estado_id = te.ticket_estado_id
-                    RIGHT JOIN
-                gruposoporte g ON g.gsoporte_id = t.gsoporte_id
-                    RIGHT JOIN
-                usuarios u ON u.user_id = t.user_id
-                    LEFT JOIN
-                usuarios tec ON tec.user_id = t.tecnico_id
-            WHERE
-                ticket_titulo IS NOT NULL
-            ORDER BY t.ticket_id DESC;
+    LPAD(t.ticket_id, 10, '0') ticket_id,
+    mu.user_nombre user_nombre_mod,
+    t.ticket_titulo,
+    t.ticket_descripcion,
+    gs.gsoporte_titulo,
+    te.ticket_estado_titulo,
+    u.user_nombre,
+    t.ticket_fecha_creacion,
+    t.ticket_fecha_actualizado,
+    IFNULL(tec.user_nombre, 'NO ASIGNADO') tecnico_nombre,
+    fecha_mod
+FROM
+    ticket t
+        INNER JOIN
+    ticket_historico th ON t.ticket_id = th.ticket_id
+        INNER JOIN
+    gruposoporte gs ON th.gsoporte_id = gs.gsoporte_id
+        INNER JOIN
+    usuarios mu ON mu.user_id = th.user_id_mod
+        INNER JOIN
+    ticket_estado te ON te.ticket_estado_id = th.ticket_estado_id
+        INNER JOIN
+    gruposoporte_usuarios gsu ON gsu.gsoporte_id = th.gsoporte_id
+        INNER JOIN
+    usuarios u ON u.user_id = gsu.user_id
+        LEFT OUTER JOIN
+    usuarios tec ON tec.user_id = t.tecnico_id
+WHERE
+    tickethist_id IN (SELECT 
+                        MAX(tickethist_id)
+                    FROM
+                        ticket_historico z
+                    GROUP BY z.ticket_id
+                    ORDER BY fecha_mod DESC)
+ORDER BY fecha_mod DESC;
             ";
 }
 
 if ($filtro_exitoso == true) {
-    $ticket .= " ORDER BY t.ticket_id DESC;";
+    $ticket .= " ORDER BY fecha_mod DESC;";
 }
 
 $lista_ticket = mysqli_query($link, $ticket);
@@ -141,7 +168,7 @@ include_once 'menu/header.php'
 </div><!-- /.page-header -->
 <div>
     <!-- Boton Superior Tabla -->
-    <form action="tickets_administrar.php" method="POST" id="form1" name="form1">
+    <form action="auditoria_tickets.php" method="POST" id="form1" name="form1">
         <!-- Grupo de Soporte -->
         <div class="row">
             <div class="col-sm-1">
@@ -177,7 +204,7 @@ include_once 'menu/header.php'
             </div>
 
             <!-- </form>
-        <form action="tickets_administrar.php" method="POST" id="form2" name="form2"> -->
+        <form action="auditoria_tickets.php" method="POST" id="form2" name="form2"> -->
             <div class='col-sm-2'>
                 <div class="form-group">
                     <div id="filterDate2">
@@ -228,6 +255,7 @@ include_once 'menu/header.php'
                             <table class="table table-bordered table-responsive-md table-striped text-center">
                                 <thead>
                                     <tr>
+                                        <th class="text-center">Modificador</th>
                                         <th class="text-center">Número Ticket</th>
                                         <th class="text-center">Nombre Ticket</th>
                                         <th class="text-center">Descripcion</th>
@@ -247,18 +275,11 @@ include_once 'menu/header.php'
                                         while ($row = $lista_ticket->fetch_assoc()) {
                                             ?>
                                             <tr>
-                                                <?php
-
-                                                $lpad_query = "SELECT LPAD(" . $row['ticket_id'] . ", 10, '0') ticket_id;";
-
-                                                $lpad_ticket = mysqli_query($link, $lpad_query);
-
-                                                $lpad_row = mysqli_fetch_array($lpad_ticket, MYSQLI_ASSOC);
-
-                                                ?>
-
                                                 <td class="pt-3-half">
-                                                    <?php echo PREFIJO_ORDEN_TRABAJO . $lpad_row['ticket_id']; ?>
+                                                    <?php echo $row['user_nombre_mod']; ?>
+                                                </td>
+                                                <td class="pt-3-half">
+                                                    <?php echo PREFIJO_ORDEN_TRABAJO . $row['ticket_id']; ?>
                                                 </td>
                                                 <td class="pt-3-half">
                                                     <?php echo $row['ticket_titulo']; ?>
@@ -284,9 +305,8 @@ include_once 'menu/header.php'
                                                 <td class="pt-3-half">
                                                     <?php echo $row['ticket_fecha_actualizado']; ?>
                                                 </td>
-                                                </td>
                                                 <td>
-                                                    <a href="usuario_detalle.php?id=<?php echo $row['ticket_id']; ?>" style="text-decoration: none">
+                                                    <a href="auditoria_tickets_detalle.php?id=<?php echo ltrim($row['ticket_id'], '0'); ?>" style="text-decoration: none">
                                                         <i class="ace-icon fa fa-file-text-o bigger-230 text-pimary"> </i>
                                                     </a>
 

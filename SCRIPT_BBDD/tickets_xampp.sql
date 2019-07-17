@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 08-07-2019 a las 07:40:44
+-- Tiempo de generación: 17-07-2019 a las 07:27:39
 -- Versión del servidor: 10.3.15-MariaDB
 -- Versión de PHP: 7.3.6
 
@@ -28,6 +28,7 @@ SET time_zone = "+00:00";
 -- Estructura de tabla para la tabla `gruposoporte`
 --
 
+DROP TABLE IF EXISTS `gruposoporte`;
 CREATE TABLE `gruposoporte` (
   `gsoporte_id` int(11) NOT NULL,
   `gsoporte_titulo` varchar(50) DEFAULT NULL,
@@ -35,13 +36,22 @@ CREATE TABLE `gruposoporte` (
   `user_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+-- --------------------------------------------------------
+
 --
--- Volcado de datos para la tabla `gruposoporte`
+-- Estructura de tabla para la tabla `gruposoporte_historico`
 --
 
-INSERT INTO `gruposoporte` (`gsoporte_id`, `gsoporte_titulo`, `gsoporte_descripcion`, `user_id`) VALUES
-(1, 'Soporte TI', 'Soporte TI', NULL),
-(2, 'BIG DATA', 'BIG DATA', NULL);
+DROP TABLE IF EXISTS `gruposoporte_historico`;
+CREATE TABLE `gruposoporte_historico` (
+  `gsoportehist_id` int(11) NOT NULL,
+  `gsoporte_id` int(11) NOT NULL,
+  `gsoporte_titulo` varchar(50) DEFAULT NULL,
+  `gsoporte_descripcion` varchar(50) DEFAULT NULL,
+  `user_id` int(11) DEFAULT NULL,
+  `user_id_mod` int(11) DEFAULT NULL,
+  `fecha_mod` datetime NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -49,24 +59,12 @@ INSERT INTO `gruposoporte` (`gsoporte_id`, `gsoporte_titulo`, `gsoporte_descripc
 -- Estructura de tabla para la tabla `gruposoporte_usuarios`
 --
 
+DROP TABLE IF EXISTS `gruposoporte_usuarios`;
 CREATE TABLE `gruposoporte_usuarios` (
   `gsoporte_usuarios_id` int(11) NOT NULL,
   `gsoporte_id` int(11) DEFAULT NULL,
   `user_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Volcado de datos para la tabla `gruposoporte_usuarios`
---
-
-INSERT INTO `gruposoporte_usuarios` (`gsoporte_usuarios_id`, `gsoporte_id`, `user_id`) VALUES
-(38, 1, 2),
-(42, 2, 2),
-(43, 2, 4),
-(1, 3, 2),
-(3, 3, 4),
-(10, 11, 2),
-(24, 11, 4);
 
 -- --------------------------------------------------------
 
@@ -74,12 +72,18 @@ INSERT INTO `gruposoporte_usuarios` (`gsoporte_usuarios_id`, `gsoporte_id`, `use
 -- Estructura de tabla para la tabla `privilegios`
 --
 
+DROP TABLE IF EXISTS `privilegios`;
 CREATE TABLE `privilegios` (
   `priv_id` int(11) NOT NULL,
   `priv_titulo` varchar(50) DEFAULT NULL,
   `priv_descripcion` varchar(50) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Truncar tablas antes de insertar `privilegios`
+--
+
+TRUNCATE TABLE `privilegios`;
 --
 -- Volcado de datos para la tabla `privilegios`
 --
@@ -95,6 +99,7 @@ INSERT INTO `privilegios` (`priv_id`, `priv_titulo`, `priv_descripcion`) VALUES
 -- Estructura de tabla para la tabla `ticket`
 --
 
+DROP TABLE IF EXISTS `ticket`;
 CREATE TABLE `ticket` (
   `ticket_id` int(11) NOT NULL,
   `ticket_titulo` varchar(100) DEFAULT NULL,
@@ -107,43 +112,23 @@ CREATE TABLE `ticket` (
   `ticket_fecha_actualizado` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Volcado de datos para la tabla `ticket`
---
-
-INSERT INTO `ticket` (`ticket_id`, `ticket_titulo`, `user_id`, `tecnico_id`, `gsoporte_id`, `ticket_descripcion`, `ticket_estado_id`, `ticket_fecha_creacion`, `ticket_fecha_actualizado`) VALUES
-(1, NULL, NULL, NULL, NULL, NULL, 1, '2019-06-24 00:30:13', '2019-06-24 00:30:13'),
-(2, 'SOPORTE DWH', 4, 2, 1, 'SOPORTE DWH', 1, '2019-06-24 00:30:19', '2019-06-24 03:08:36'),
-(3, NULL, NULL, NULL, NULL, NULL, 1, '2019-06-24 00:30:19', '2019-06-24 00:30:19'),
-(4, NULL, NULL, NULL, NULL, NULL, 1, '2019-06-24 01:27:38', '2019-06-24 01:27:38'),
-(5, 'SOPORTE DWH', 4, 4, 1, 'SOPORTE DWH', 2, '2019-06-24 01:27:46', '2019-06-24 02:02:56'),
-(6, NULL, NULL, NULL, NULL, NULL, 1, '2019-06-24 01:27:46', '2019-06-24 01:27:46'),
-(7, NULL, NULL, NULL, NULL, NULL, 1, '2019-06-24 01:29:30', '2019-06-24 01:29:30'),
-(8, NULL, NULL, NULL, NULL, NULL, 1, '2019-06-24 03:32:47', '2019-06-24 03:32:47'),
-(9, 'SOPORTE DWH BIG DATA', 1, NULL, 2, 'SOPORTE DWH BIG DATA', 1, '2019-06-24 03:33:07', '2019-06-24 03:33:07'),
-(10, NULL, NULL, NULL, NULL, NULL, 1, '2019-06-24 03:33:07', '2019-06-24 03:33:07'),
-(11, NULL, NULL, NULL, NULL, NULL, 1, '2019-06-24 03:33:30', '2019-06-24 03:33:30'),
-(12, 'SOPORTE DWH BIG DATA', 1, NULL, 2, 'SOPORTE DWH BIG DATA', 1, '2019-06-24 03:33:34', '2019-06-24 03:33:34'),
-(13, NULL, NULL, NULL, NULL, NULL, 1, '2019-06-24 03:33:34', '2019-06-24 03:33:34'),
-(14, NULL, NULL, NULL, NULL, NULL, 1, '2019-06-24 03:47:53', '2019-06-24 03:47:53'),
-(15, 'SOPORTE TI - BIG DATA', 4, NULL, 2, 'SOPORTE TI - BIG DATA', 1, '2019-06-24 03:48:05', '2019-06-24 03:48:05'),
-(16, NULL, NULL, NULL, NULL, NULL, 1, '2019-06-24 03:48:05', '2019-06-24 03:48:05'),
-(17, NULL, NULL, NULL, NULL, NULL, 1, '2019-06-24 03:48:07', '2019-06-24 03:48:07'),
-(18, NULL, NULL, NULL, NULL, NULL, 1, '2019-06-24 04:04:24', '2019-06-24 04:04:24'),
-(19, 'SOPORTE DWH - Probando Usuario', 7, NULL, 1, 'SOPORTE DWH - Probando Usuario', 1, '2019-06-24 04:04:36', '2019-06-24 04:04:36'),
-(20, NULL, NULL, NULL, NULL, NULL, 1, '2019-06-24 04:04:36', '2019-06-24 04:04:36');
-
 -- --------------------------------------------------------
 
 --
 -- Estructura de tabla para la tabla `ticket_estado`
 --
 
+DROP TABLE IF EXISTS `ticket_estado`;
 CREATE TABLE `ticket_estado` (
   `ticket_estado_id` int(11) NOT NULL,
   `ticket_estado_titulo` varchar(10) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Truncar tablas antes de insertar `ticket_estado`
+--
+
+TRUNCATE TABLE `ticket_estado`;
 --
 -- Volcado de datos para la tabla `ticket_estado`
 --
@@ -155,9 +140,32 @@ INSERT INTO `ticket_estado` (`ticket_estado_id`, `ticket_estado_titulo`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `ticket_historico`
+--
+
+DROP TABLE IF EXISTS `ticket_historico`;
+CREATE TABLE `ticket_historico` (
+  `tickethist_id` int(11) NOT NULL,
+  `ticket_id` int(11) NOT NULL,
+  `ticket_titulo` varchar(100) DEFAULT NULL,
+  `user_id` int(11) DEFAULT NULL,
+  `tecnico_id` int(11) DEFAULT NULL,
+  `gsoporte_id` int(11) DEFAULT NULL,
+  `ticket_descripcion` varchar(255) DEFAULT NULL,
+  `ticket_estado_id` int(1) NOT NULL,
+  `ticket_fecha_creacion` datetime NOT NULL,
+  `ticket_fecha_actualizado` datetime NOT NULL,
+  `user_id_mod` int(11) DEFAULT NULL,
+  `fecha_mod` datetime NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `usuarios`
 --
 
+DROP TABLE IF EXISTS `usuarios`;
 CREATE TABLE `usuarios` (
   `user_id` int(11) NOT NULL,
   `user_nombre` varchar(50) NOT NULL,
@@ -168,18 +176,47 @@ CREATE TABLE `usuarios` (
   `user_telefono` varchar(15) NOT NULL,
   `user_web_empresa` varchar(50) NOT NULL,
   `user_cargo` varchar(50) NOT NULL,
-  `user_fecha_creacion` date NOT NULL DEFAULT current_timestamp(),
+  `user_fecha_creacion` datetime NOT NULL DEFAULT current_timestamp(),
   `priv_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Truncar tablas antes de insertar `usuarios`
+--
+
+TRUNCATE TABLE `usuarios`;
 --
 -- Volcado de datos para la tabla `usuarios`
 --
 
 INSERT INTO `usuarios` (`user_id`, `user_nombre`, `user_correo`, `user_password`, `user_empresa`, `user_direccion`, `user_telefono`, `user_web_empresa`, `user_cargo`, `user_fecha_creacion`, `priv_id`) VALUES
-(1, 'Administrador', 'admin@admin.com', '*6BB4837EB74329105EE4568DDA7DC67ED2CA2AD9', 'Eware Consulting', 'Amunategui 20, Santiago', '+56996630457', 'www.eware.com', 'Consultor Informático', '2019-07-07', 1),
-(2, 'Tecnico', 'tecnico@tecnico.com', '*6BB4837EB74329105EE4568DDA7DC67ED2CA2AD9', 'Carcom', 'Quilicura 1234, Santiago', '+56912345678', 'www.carcom.com', 'Soporte Informático', '2019-07-07', 2),
-(3, 'Usuario', 'usuario@usuario.com', '*6BB4837EB74329105EE4568DDA7DC67ED2CA2AD9', 'Junaeb Consulting', 'Bandera 2331, Santiago', '+56996612547', 'www.junaeb.com', 'Administrador DBA', '2019-07-01', 3);
+(1, 'Administrador', 'admin@admin.com', '*6BB4837EB74329105EE4568DDA7DC67ED2CA2AD9', 'Eware Consulting', 'Amunategui 20, Santiago', '+56996630457', 'www.eware.com', 'Consultor Informático', '2019-07-07 00:00:00', 1),
+(2, 'TecnicoABCD', 'tecnico@tecnico.com', '*6BB4837EB74329105EE4568DDA7DC67ED2CA2AD9', 'Carcom', 'Quilicura 1234, Santiago', '+56912345678', 'www.carcom.com', 'Soporte Informático', '2019-07-07 00:00:00', 2),
+(3, 'UsuarioABCDE', 'usuario@usuario.com', '*6BB4837EB74329105EE4568DDA7DC67ED2CA2AD9', 'Junaeb Consulting', 'Bandera 2331, Santiago', '+56996612547', 'www.junaeb.com', 'Administrador DBA', '2019-07-01 00:00:00', 3);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `usuarios_historico`
+--
+
+DROP TABLE IF EXISTS `usuarios_historico`;
+CREATE TABLE `usuarios_historico` (
+  `userhist_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `user_nombre` varchar(50) NOT NULL,
+  `user_correo` varchar(255) NOT NULL,
+  `user_password` varchar(255) NOT NULL,
+  `user_empresa` varchar(50) NOT NULL,
+  `user_direccion` varchar(50) NOT NULL,
+  `user_telefono` varchar(15) NOT NULL,
+  `user_web_empresa` varchar(50) NOT NULL,
+  `user_cargo` varchar(50) NOT NULL,
+  `user_fecha_creacion` date NOT NULL,
+  `priv_id` int(11) NOT NULL,
+  `user_id_mod` int(11) DEFAULT NULL,
+  `fecha_mod` datetime NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Índices para tablas volcadas
@@ -190,6 +227,12 @@ INSERT INTO `usuarios` (`user_id`, `user_nombre`, `user_correo`, `user_password`
 --
 ALTER TABLE `gruposoporte`
   ADD PRIMARY KEY (`gsoporte_id`);
+
+--
+-- Indices de la tabla `gruposoporte_historico`
+--
+ALTER TABLE `gruposoporte_historico`
+  ADD PRIMARY KEY (`gsoportehist_id`);
 
 --
 -- Indices de la tabla `gruposoporte_usuarios`
@@ -217,10 +260,22 @@ ALTER TABLE `ticket_estado`
   ADD PRIMARY KEY (`ticket_estado_id`);
 
 --
+-- Indices de la tabla `ticket_historico`
+--
+ALTER TABLE `ticket_historico`
+  ADD PRIMARY KEY (`tickethist_id`);
+
+--
 -- Indices de la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
   ADD PRIMARY KEY (`user_id`);
+
+--
+-- Indices de la tabla `usuarios_historico`
+--
+ALTER TABLE `usuarios_historico`
+  ADD PRIMARY KEY (`userhist_id`);
 
 --
 -- AUTO_INCREMENT de las tablas volcadas
@@ -230,19 +285,25 @@ ALTER TABLE `usuarios`
 -- AUTO_INCREMENT de la tabla `gruposoporte`
 --
 ALTER TABLE `gruposoporte`
-  MODIFY `gsoporte_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `gsoporte_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `gruposoporte_historico`
+--
+ALTER TABLE `gruposoporte_historico`
+  MODIFY `gsoportehist_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `gruposoporte_usuarios`
 --
 ALTER TABLE `gruposoporte_usuarios`
-  MODIFY `gsoporte_usuarios_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
+  MODIFY `gsoporte_usuarios_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `ticket`
 --
 ALTER TABLE `ticket`
-  MODIFY `ticket_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `ticket_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `ticket_estado`
@@ -251,10 +312,22 @@ ALTER TABLE `ticket_estado`
   MODIFY `ticket_estado_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
+-- AUTO_INCREMENT de la tabla `ticket_historico`
+--
+ALTER TABLE `ticket_historico`
+  MODIFY `tickethist_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT de la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
   MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT de la tabla `usuarios_historico`
+--
+ALTER TABLE `usuarios_historico`
+  MODIFY `userhist_id` int(11) NOT NULL AUTO_INCREMENT;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

@@ -26,28 +26,35 @@ if ($id_existe > 0) {
 
         // // Dropdown tecnicos
         $query_detalle = "SELECT 
+                            LPAD(th.ticket_id, 10, '0') ticket_id,
                             mu.user_nombre user_mod,
-                            uh.user_nombre,
-                            uh.user_correo,
-                            uh.user_password,
-                            uh.user_empresa,
-                            uh.user_direccion,
-                            uh.user_telefono,
-                            uh.user_web_empresa,
-                            uh.user_cargo,
-                            uh.user_fecha_creacion,
-                            p.priv_titulo,
-                            uh.fecha_mod
+                            th.ticket_titulo,
+                            th.ticket_descripcion,
+                            gs.gsoporte_titulo,
+                            te.ticket_estado_titulo,
+                            u.user_nombre,
+                            th.ticket_fecha_creacion,
+                            th.ticket_fecha_actualizado,
+                            IFNULL(tec.user_nombre, 'NO ASIGNADO') tecnico_nombre,
+                            fecha_mod
                         FROM
-                            usuarios_historico uh
-                        INNER JOIN
-                            usuarios u ON u.user_id = uh.user_id_mod
-                        INNER JOIN
-                            usuarios mu ON mu.user_id = uh.user_id_mod
-                        INNER JOIN
-                            privilegios p ON p.priv_id = uh.priv_id
+                            ticket t
+                                INNER JOIN
+                            ticket_historico th ON t.ticket_id = th.ticket_id
+                                INNER JOIN
+                            gruposoporte gs ON th.gsoporte_id = gs.gsoporte_id
+                                INNER JOIN
+                            usuarios mu ON mu.user_id = th.user_id_mod
+                                INNER JOIN
+                            ticket_estado te ON te.ticket_estado_id = th.ticket_estado_id
+                                INNER JOIN
+                            gruposoporte_usuarios gsu ON gsu.gsoporte_id = th.gsoporte_id
+                                INNER JOIN
+                            usuarios u ON u.user_id = gsu.user_id
+                                LEFT OUTER JOIN
+                            usuarios tec ON tec.user_id = t.tecnico_id
                         WHERE
-                            uh.user_id = '$usuario_id'
+                            th.ticket_id = '$usuario_id'
                         ORDER BY fecha_mod DESC;";
 
         $row_detalle = mysqli_query($link, $query_detalle);
@@ -106,15 +113,15 @@ include_once 'menu/header.php'
                                     <thead>
                                         <tr>
                                             <th class="text-center">Modificador</th>
-                                            <th class="text-center">Nombre</th>
-                                            <th class="text-center">Web Empresa</th>
-                                            <th class="text-center">Direccion</th>
-                                            <th class="text-center">Telefono</th>
-                                            <th class="text-center">Cargo</th>
-                                            <th class="text-center">Correo Electronico</th>
-                                            <th class="text-center">Fecha Modificación</th>
-                                            <th class="text-center">Tipo de Privilegio</th>
-
+                                            <th class="text-center">Número Ticket</th>
+                                            <th class="text-center">Nombre Ticket</th>
+                                            <th class="text-center">Descripcion</th>
+                                            <th class="text-center">Grupo Resolutor</th>
+                                            <th class="text-center">Estado Ticket</th>
+                                            <th class="text-center">Dueño Ticket</th>
+                                            <th class="text-center">Resolutor Asignado</th>
+                                            <th class="text-center">Fecha Creación</th>
+                                            <th class="text-center">Fecha Última Acción</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -129,33 +136,36 @@ include_once 'menu/header.php'
                                                         <?php echo $row['user_mod']; ?>
                                                     </td>
                                                     <td class="pt-3-half">
+                                                        <?php echo PREFIJO_ORDEN_TRABAJO . $row['ticket_id']; ?>
+                                                    </td>
+                                                    <td class="pt-3-half">
+                                                        <?php echo $row['ticket_titulo']; ?>
+                                                    </td>
+                                                    <td class="pt-3-half">
+                                                        <?php echo $row['ticket_descripcion']; ?>
+                                                    </td>
+                                                    <td class="pt-3-half">
+                                                        <?php echo $row['gsoporte_titulo']; ?>
+                                                    </td>
+                                                    <td class="pt-3-half">
+                                                        <?php echo $row['ticket_estado_titulo']; ?>
+                                                    </td>
+                                                    <td class="pt-3-half">
                                                         <?php echo $row['user_nombre']; ?>
                                                     </td>
                                                     <td class="pt-3-half">
-                                                        <?php echo $row['user_web_empresa']; ?>
+                                                        <?php echo $row['tecnico_nombre']; ?>
                                                     </td>
                                                     <td class="pt-3-half">
-                                                        <?php echo $row['user_direccion']; ?>
+                                                        <?php echo $row['ticket_fecha_creacion']; ?>
                                                     </td>
                                                     <td class="pt-3-half">
-                                                        <?php echo $row['user_telefono']; ?>
-                                                    </td>
-                                                    <td class="pt-3-half">
-                                                        <?php echo $row['user_cargo']; ?>
-                                                    </td>
-                                                    <td class="pt-3-half">
-                                                        <?php echo $row['user_correo']; ?>
-                                                    </td>
-                                                    <td class="pt-3-half">
-                                                        <?php echo $row['fecha_mod']; ?>
-                                                    </td>
-                                                    <td class="pt-3-half">
-                                                        <?php echo $row['priv_titulo']; ?>
+                                                        <?php echo $row['ticket_fecha_actualizado']; ?>
                                                     </td>
                                                     <td>
                                                         <!-- <a href="auditoria_usuarios_detalle.php?id=<?php echo $row['user_id']; ?>" style="text-decoration: none">
-                                                                                                            <i class="ace-icon fa fa-file-text-o bigger-230 text-pimary"> </i>
-                                                                                                        </a> -->
+                                                                                                                                    <i class="ace-icon fa fa-file-text-o bigger-230 text-pimary"> </i>
+                                                                                                                                </a> -->
 
                                                     <?php
                                                     }

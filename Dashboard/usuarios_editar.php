@@ -44,27 +44,41 @@ if ($password->num_rows != 0) {
         $user_telefono = limpiar($_POST['user_telefono']);
         $user_web_empresa = limpiar($_POST['user_web_empresa']);
         $user_priv_id = limpiar($_POST['user_priv_id']);
+        $user_id_mod = limpiar($_COOKIE['user_id']);
 
         // Insertar en HISTORICO
 
         $query_historico = "INSERT INTO usuarios_historico
-        SELECT 	
-            NULL,
-            user_id,
-            user_nombre,
-            user_correo,
-			user_password,
-            user_empresa,
-            user_direccion,
-            user_telefono,
-            user_web_empresa,
-            user_cargo,
-            user_fecha_creacion,            
-            priv_id 
-        FROM
-            usuarios
-        WHERE
-            user_id = '$id';";
+                            (
+                            userhist_id, 
+                            user_id, 
+                            user_nombre, 
+                            user_correo, 
+                            user_password, 
+                            user_empresa, 
+                            user_direccion, 
+                            user_telefono, 
+                            user_web_empresa, 
+                            user_cargo, 
+                            user_fecha_creacion, 
+                            priv_id, 
+                            user_id_mod) 
+                        SELECT 
+                            NULL, 
+                            user_id, 
+                            user_nombre, 
+                            user_correo, 
+                            user_password, 
+                            user_empresa, 
+                            user_direccion, 
+                            user_telefono, 
+                            user_web_empresa, 
+                            user_cargo, 
+                            user_fecha_creacion, 
+                            priv_id, 
+                            (SELECT '$user_id_mod') user_id_mod
+                        FROM usuarios 
+                        WHERE user_id = '$id';";
 
         mysqli_query($link, $query_historico);
 
@@ -95,27 +109,6 @@ if ($password->num_rows != 0) {
 
         mysqli_query($link, $query_correo);
         $registrado = true;
-
-        // Insertar en Auditoria
-
-        $query_auditoria = "INSERT INTO auditoria
-        (
-        auditoria_id,
-        modificador_id,
-        user_id,
-        ticket_id,
-        gsoporte_id
-        )
-        VALUES
-        (
-        NULL,
-        " . $_COOKIE['user_id'] . ",
-        '$id',
-        NULL,
-        NULL
-        );";
-
-        mysqli_query($link, $query_auditoria);
     }
 
     $id2 = "SELECT 

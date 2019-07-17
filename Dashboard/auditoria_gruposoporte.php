@@ -16,10 +16,24 @@ if (
 $link = Conectarse();
 
 // Dropdown tecnicos
-$gruposoporte = "SELECT * 
-FROM gruposoporte
-WHERE length(gsoporte_titulo) > 0
-ORDER BY gsoporte_id ASC;";
+$gruposoporte = "SELECT 
+mu.user_nombre user_nombre_mod,
+gh.gsoporte_id,
+gh.gsoporte_titulo,
+gh.gsoporte_descripcion,
+gh.fecha_mod
+FROM
+gruposoporte_historico gh
+    INNER JOIN
+usuarios mu ON mu.user_id = gh.user_id_mod
+WHERE
+gh.gsoportehist_id IN (SELECT 
+        MAX(gsoportehist_id)
+    FROM
+        gruposoporte_historico z
+    GROUP BY gsoporte_id
+    ORDER BY fecha_mod DESC)
+ORDER BY fecha_mod DESC;";
 
 $lista_gruposoporte = mysqli_query($link, $gruposoporte);
 
@@ -48,8 +62,10 @@ include_once 'menu/header.php'
                         <table class="table table-bordered table-responsive-md table-striped text-center">
                             <thead>
                                 <tr>
+                                    <th class="text-center">Modificador</th>
                                     <th class="text-center">Nombre Grupo Soporte</th>
-                                    <th class="text-center">Descripcion</th>
+                                    <th class="text-center">Descripción</th>
+                                    <th class="text-center">Fecha Modificación</th>
                                     <th class="text-center">Opciones</th>
                                 </tr>
                             </thead>
@@ -61,24 +77,21 @@ include_once 'menu/header.php'
                                         ?>
                                         <tr>
                                             <td class="pt-3-half">
+                                                <?php echo $row['user_nombre_mod']; ?>
+                                            </td>
+                                            <td class="pt-3-half">
                                                 <?php echo $row['gsoporte_titulo']; ?>
                                             </td>
                                             <td class="pt-3-half">
                                                 <?php echo $row['gsoporte_descripcion']; ?>
                                             </td>
+                                            <td class="pt-3-half">
+                                                <?php echo $row['fecha_mod']; ?>
                                             </td>
                                             <td>
-                                                <a href="./gruposoporte_editar.php?id=<?php
-                                                                                        echo $row['gsoporte_id'];
-                                                                                        ?>" style="text-decoration:none">
-                                                    <i class="ace-icon fa fa-pencil-square-o bigger-230" style="color:#f0ad4e"> </i>
+                                                <a href="auditoria_gsoporte_detalle.php?id=<?php echo $row['gsoporte_id']; ?>" style="text-decoration: none">
+                                                    <i class="ace-icon fa fa-file-text-o bigger-230 text-pimary"> </i>
                                                 </a>
-                                                <a href="./gruposoporte_eliminar.php?id=<?php
-                                                                                        echo $row['gsoporte_id'];
-                                                                                        ?>" style="text-decoration:none">
-                                                    <i class="ace-icon fa fa-trash-o bigger-230" style="color:#d9534f"> </i>
-                                                </a>
-
                                             <?php
                                             }
                                         }

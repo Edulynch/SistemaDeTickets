@@ -26,29 +26,18 @@ if ($id_existe > 0) {
 
         // // Dropdown tecnicos
         $query_detalle = "SELECT 
-                            mu.user_nombre user_mod,
-                            uh.user_nombre,
-                            uh.user_correo,
-                            uh.user_password,
-                            uh.user_empresa,
-                            uh.user_direccion,
-                            uh.user_telefono,
-                            uh.user_web_empresa,
-                            uh.user_cargo,
-                            uh.user_fecha_creacion,
-                            p.priv_titulo,
-                            uh.fecha_mod
-                        FROM
-                            usuarios_historico uh
-                        INNER JOIN
-                            usuarios u ON u.user_id = uh.user_id_mod
-                        INNER JOIN
-                            usuarios mu ON mu.user_id = uh.user_id_mod
-                        INNER JOIN
-                            privilegios p ON p.priv_id = uh.priv_id
-                        WHERE
-                            uh.user_id = '$usuario_id'
-                        ORDER BY fecha_mod DESC;";
+        mu.user_nombre user_nombre_mod,
+        gh.gsoporte_id,
+        gh.gsoporte_titulo,
+        gh.gsoporte_descripcion,
+        gh.fecha_mod
+        FROM
+        gruposoporte_historico gh
+            INNER JOIN
+        usuarios mu ON mu.user_id = gh.user_id_mod
+        WHERE
+            gh.gsoporte_id = '$usuario_id'
+        ORDER BY fecha_mod DESC;";
 
         $row_detalle = mysqli_query($link, $query_detalle);
     } else {
@@ -105,16 +94,11 @@ include_once 'menu/header.php'
                                 <table class="table table-bordered table-responsive-md table-striped text-center">
                                     <thead>
                                         <tr>
+                                        <tr>
                                             <th class="text-center">Modificador</th>
-                                            <th class="text-center">Nombre</th>
-                                            <th class="text-center">Web Empresa</th>
-                                            <th class="text-center">Direccion</th>
-                                            <th class="text-center">Telefono</th>
-                                            <th class="text-center">Cargo</th>
-                                            <th class="text-center">Correo Electronico</th>
-                                            <th class="text-center">Fecha Modificación</th>
-                                            <th class="text-center">Tipo de Privilegio</th>
-
+                                            <th class="text-center">Nombre Grupo Soporte</th>
+                                            <th class="text-center">Descripción</th>
+                                            <th class="text-center">Fecha Última Acción</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -126,41 +110,23 @@ include_once 'menu/header.php'
                                                 ?>
                                                 <tr>
                                                     <td class="pt-3-half">
-                                                        <?php echo $row['user_mod']; ?>
+                                                        <?php echo $row['user_nombre_mod']; ?>
                                                     </td>
                                                     <td class="pt-3-half">
-                                                        <?php echo $row['user_nombre']; ?>
+                                                        <?php echo $row['gsoporte_titulo']; ?>
                                                     </td>
                                                     <td class="pt-3-half">
-                                                        <?php echo $row['user_web_empresa']; ?>
-                                                    </td>
-                                                    <td class="pt-3-half">
-                                                        <?php echo $row['user_direccion']; ?>
-                                                    </td>
-                                                    <td class="pt-3-half">
-                                                        <?php echo $row['user_telefono']; ?>
-                                                    </td>
-                                                    <td class="pt-3-half">
-                                                        <?php echo $row['user_cargo']; ?>
-                                                    </td>
-                                                    <td class="pt-3-half">
-                                                        <?php echo $row['user_correo']; ?>
+                                                        <?php echo $row['gsoporte_descripcion']; ?>
                                                     </td>
                                                     <td class="pt-3-half">
                                                         <?php echo $row['fecha_mod']; ?>
                                                     </td>
-                                                    <td class="pt-3-half">
-                                                        <?php echo $row['priv_titulo']; ?>
-                                                    </td>
-                                                    <td>
-                                                        <!-- <a href="auditoria_usuarios_detalle.php?id=<?php echo $row['user_id']; ?>" style="text-decoration: none">
-                                                                                                            <i class="ace-icon fa fa-file-text-o bigger-230 text-pimary"> </i>
-                                                                                                        </a> -->
 
-                                                    <?php
-                                                    }
+
+                                                <?php
                                                 }
-                                                ?>
+                                            }
+                                            ?>
                                         </tr>
                                         </td>
                                         </tr>

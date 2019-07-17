@@ -38,16 +38,21 @@ if ($id_existe > 0) {
     if (isset($_GET['id']) && !empty($_GET['id']) && !empty($row['gsoporte_id'])) {
 
         $gruposoporte_id = limpiar($_GET['id']);
+        $user_id_mod = limpiar($_COOKIE['user_id']);
 
         // Insertar en HISTORICO
 
-        $query_historico = "INSERT INTO gruposoporte_historico
+        $query_historico = "INSERT INTO gruposoporte_historico (
+                            gsoporte_id, 
+                            gsoporte_titulo, 
+                            gsoporte_descripcion, 
+                            user_id_mod
+                            )
                             SELECT 	
-                                NULL,
                                 gsoporte_id,
                                 gsoporte_titulo,
                                 gsoporte_descripcion,
-                                NULL 
+                                (SELECT '$user_id_mod') user_id_mod
                             FROM
                                 gruposoporte
                             WHERE
@@ -81,27 +86,6 @@ if ($id_existe > 0) {
                     $ticket = mysqli_query($link, $query);
 
                     $grupo_editado = true;
-
-                    // Insertar en Auditoria
-
-                    $query_auditoria = "INSERT INTO auditoria
-                                        (
-                                        auditoria_id,
-                                        modificador_id,
-                                        user_id,
-                                        ticket_id,
-                                        gsoporte_id
-                                        )
-                                        VALUES
-                                        (
-                                        NULL,
-                                        " . $_COOKIE['user_id'] . ",
-                                        NULL,
-                                        NULL,
-                                        '$id_existe'
-                                        );";
-
-                    mysqli_query($link, $query_auditoria);
                 }
             } else {
                 if (isset($_POST['gsoporte_form2'])) {
@@ -328,8 +312,8 @@ include_once 'menu/header.php'
                                                     </td>
                                                     <td>
                                                         <!-- <a href="#" style="text-decoration:none">
-                                                                                                                                                                    <i class="ace-icon fa fa-pencil-square-o bigger-230" style="color:#f0ad4e"> </i>
-                                                                                                                                                                </a> -->
+                                                                                                                                                                                                    <i class="ace-icon fa fa-pencil-square-o bigger-230" style="color:#f0ad4e"> </i>
+                                                                                                                                                                                                </a> -->
                                                         <a href="./gruposoporte_editar_eliminar.php?id=<?php
                                                                                                         echo $row['gsoporte_id'] . "&user=" . $row['user_id'];
                                                                                                         ?>" style="text-decoration:none">

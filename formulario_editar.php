@@ -25,7 +25,43 @@ if (isset($_SERVER['REQUEST_METHOD']) && $_SERVER['REQUEST_METHOD'] === 'POST') 
     $ticket_estado_id = limpiar($_POST['ticket_estado_id']);
     $user_id = $_COOKIE['user_id'];
     $ticket_gsoporte_id = limpiar($_POST['ticket_gsoporte_id']);
+
+
+
     $ticket_descripcion = limpiar($_POST['ticket_descripcion']);
+    $user_id_mod = limpiar($_COOKIE['user_id']);
+
+    // Insertar en HISTORICO
+
+    $query_historico = "INSERT INTO ticket_historico (
+                                    ticket_id, 
+                                    ticket_titulo, 
+                                    user_id, 
+                                    tecnico_id, 
+                                    gsoporte_id, 
+                                    ticket_descripcion, 
+                                    ticket_estado_id, 
+                                    ticket_fecha_creacion, 
+                                    ticket_fecha_actualizado,
+                                    user_id_mod
+                                )
+                                SELECT 	
+                                    ticket_id, 
+                                    ticket_titulo, 
+                                    user_id, 
+                                    tecnico_id, 
+                                    gsoporte_id, 
+                                    ticket_descripcion, 
+                                    ticket_estado_id, 
+                                    ticket_fecha_creacion, 
+                                    ticket_fecha_actualizado, 
+                                    (SELECT '$user_id_mod') user_id_mod
+                                FROM
+                                    ticket
+                                WHERE
+                                    ticket_id = '$id';";
+
+    mysqli_query($link, $query_historico);
 
     $query = "UPDATE ticket
                 SET ticket_titulo = '$ticket_titulo',
@@ -143,7 +179,8 @@ $lista_ticket_estado = mysqli_query($link, $ticket_estado);
                             </div>
                         </div>
                     </div>
-                    <form method="POST" id="formulario_form" action="formulario_editar.php?id=<?php echo $row[0]; ?>">
+                    <form method="POST" id="formulario_form" action="formulario_editar.php?id=<?php echo $row[0]; ?>"
+                    onsubmit="document.getElementById('ticket_gsoporte_id').disabled = false;">
                         <div class="form-row">
                             <div class="name">Titulo</div>
                             <div class="value">
@@ -155,7 +192,7 @@ $lista_ticket_estado = mysqli_query($link, $ticket_estado);
                             <div class="name">Grupo Resolutor</div>
                             <div class="input-group">
                                 <div class="col-auto my-1">
-                                    <select name="ticket_gsoporte_id" class="custom-select" <?php
+                                    <select name="ticket_gsoporte_id" id="ticket_gsoporte_id" class="custom-select" <?php
                                                                                             if ($_COOKIE['priv_id'] != 1) {
                                                                                                 echo "disabled";
                                                                                             }
