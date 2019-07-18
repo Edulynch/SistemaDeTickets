@@ -153,8 +153,6 @@ $estado_ticket = "SELECT ticket_estado_id, ticket_estado_titulo FROM ticket_esta
 
 $lista_estado_ticket = mysqli_query($link, $estado_ticket);
 
-$ticket1 = Substr($ticket,1,50);
-
 include_once 'menu/header.php'
 
 ?>
@@ -325,10 +323,10 @@ include_once 'menu/header.php'
                     </div>
                 </div>
                 <!-- Editable table -->
-                <form action="auditoria_ticket.php" method="post" id="form3" name="form3">
+                <form action="exportar_to_csv.php" method="post" id="form3" name="form3">
                     <input type="text" name="archivo" value="tickets_auditoria.csv" hidden>
                     <input type="text" name="tipo_reporteria" value="auditoria_tickets" hidden>
-                    <input type="text" name="querySelect" value="<?php echo $ticket1; ?>" hidden>
+                    <input type="text" name="querySelect" value="<?php echo $ticket; ?>" hidden>
                     <button type="submit" class="btn btn-success col-sm-1" id="submit-form3" name="submit-form3">
                         <i class="fa fa-download"></i>
                         Exportar
@@ -343,8 +341,6 @@ include_once 'menu/header.php'
     </div><!-- /.row -->
 
     <?php
-
-    echo "auditoria = " . $_POST['querySelect'];
 
     include_once 'menu/footer.php'
 
