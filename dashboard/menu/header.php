@@ -160,7 +160,7 @@
 
                     <ul class="submenu">
                         <li class="">
-                            <a href="/formulario.php">
+                            <a href="../formulario.php">
                                 <i class="menu-icon fa fa-plus"></i>
                                 Registrar
                             </a>

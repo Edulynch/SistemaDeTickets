@@ -163,7 +163,7 @@ $lista_ticket_estado = mysqli_query($link, $ticket_estado);
 
 </head>
 
-<body class="bg-dark">
+<body class="bg-blue">
     <div class="p-t-15">
         <div class="wrapper wrapper--w900">
             <div class="card card-6">
@@ -179,12 +179,15 @@ $lista_ticket_estado = mysqli_query($link, $ticket_estado);
                             </div>
                         </div>
                     </div>
-                    <form method="POST" id="formulario_form" action="formulario_editar.php?id=<?php echo $row[0]; ?>"
-                    onsubmit="document.getElementById('ticket_gsoporte_id').disabled = false;">
+                    <form method="POST" id="formulario_form" action="formulario_editar.php?id=<?php echo $row[0]; ?>" onsubmit="document.getElementById('ticket_gsoporte_id').disabled = false;" onsubmit="document.getElementById('ticket_titulo').disabled = false;">
                         <div class="form-row">
                             <div class="name">Titulo</div>
                             <div class="value">
-                                <input class="input--style-6" type="text" name="ticket_titulo" value="<?php echo $row[1]; ?>">
+                                <input class="input--style-6" type="text" name="ticket_titulo" id="ticket_titulo" <?php
+                                                                                                                    if ($_COOKIE['priv_id'] == 3) {
+                                                                                                                        echo "disabled";
+                                                                                                                    }
+                                                                                                                    ?> value="<?php echo $row[1]; ?>">
                             </div>
                         </div>
 
@@ -193,10 +196,10 @@ $lista_ticket_estado = mysqli_query($link, $ticket_estado);
                             <div class="input-group">
                                 <div class="col-auto my-1">
                                     <select name="ticket_gsoporte_id" id="ticket_gsoporte_id" class="custom-select" <?php
-                                                                                            if ($_COOKIE['priv_id'] != 1) {
-                                                                                                echo "disabled";
-                                                                                            }
-                                                                                            ?> onchange="myFunction()" id="dropdown">
+                                                                                                                    if ($_COOKIE['priv_id'] == 3) {
+                                                                                                                        echo "disabled";
+                                                                                                                    }
+                                                                                                                    ?> onchange="myFunction()" id="dropdown">
                                         <option value="">Seleccionar un Grupo</option>
                                         <?php
                                         while ($gruposoporte = mysqli_fetch_assoc($lista_gsoporte)) {
