@@ -18,12 +18,14 @@ $link = Conectarse();
 // Dropdown tecnicos
 $gruposoporte = "SELECT 
 mu.user_nombre user_nombre_mod,
-gh.gsoporte_id,
-gh.gsoporte_titulo,
-gh.gsoporte_descripcion,
+gs.gsoporte_id,
+gs.gsoporte_titulo,
+gs.gsoporte_descripcion,
 gh.fecha_mod
 FROM
-gruposoporte_historico gh
+gruposoporte gs
+    INNER JOIN
+gruposoporte_historico gh ON gs.gsoporte_id = gh.gsoporte_id
     INNER JOIN
 usuarios mu ON mu.user_id = gh.user_id_mod
 WHERE
