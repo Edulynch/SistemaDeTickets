@@ -42,7 +42,7 @@ FROM
         INNER JOIN
     usuarios mu ON mu.user_id = th.user_id_mod
         INNER JOIN
-    ticket_estado te ON te.ticket_estado_id = th.ticket_estado_id
+    ticket_estado te ON te.ticket_estado_id = t.ticket_estado_id
         INNER JOIN
     gruposoporte_usuarios gsu ON gsu.gsoporte_id = th.gsoporte_id
         INNER JOIN
@@ -90,7 +90,7 @@ WHERE
         //QUERY - FECHA SELECCIONADA
         $ticket_estado = limpiar($_POST['ticket_estado']);
 
-        $ticket .= " AND th.ticket_estado_id = $ticket_estado";
+        $ticket .= " AND t.ticket_estado_id = $ticket_estado";
 
         $filtro_exitoso = true;
     }
@@ -120,7 +120,7 @@ FROM
         INNER JOIN
     usuarios mu ON mu.user_id = th.user_id_mod
         INNER JOIN
-    ticket_estado te ON te.ticket_estado_id = th.ticket_estado_id
+    ticket_estado te ON te.ticket_estado_id = t.ticket_estado_id
         INNER JOIN
     gruposoporte_usuarios gsu ON gsu.gsoporte_id = th.gsoporte_id
         INNER JOIN
@@ -152,6 +152,8 @@ $lista_gsoporte = mysqli_query($link, $gsoporte);
 $estado_ticket = "SELECT ticket_estado_id, ticket_estado_titulo FROM ticket_estado;";
 
 $lista_estado_ticket = mysqli_query($link, $estado_ticket);
+
+$ticket1 = Substr($ticket,1,50);
 
 include_once 'menu/header.php'
 
@@ -323,10 +325,10 @@ include_once 'menu/header.php'
                     </div>
                 </div>
                 <!-- Editable table -->
-                <form action="exportar_to_csv.php" method="post" id="form3" name="form3">
-                    <input type="text" name="archivo" value="tickets_por_grupo.csv" hidden>
-                    <input type="text" name="tipo_reporteria" value="tickets" hidden>
-                    <input type="text" name="querySelect" value="<?php echo $ticket; ?>" hidden>
+                <form action="auditoria_ticket.php" method="post" id="form3" name="form3">
+                    <input type="text" name="archivo" value="tickets_auditoria.csv" hidden>
+                    <input type="text" name="tipo_reporteria" value="auditoria_tickets" hidden>
+                    <input type="text" name="querySelect" value="<?php echo $ticket1; ?>" hidden>
                     <button type="submit" class="btn btn-success col-sm-1" id="submit-form3" name="submit-form3">
                         <i class="fa fa-download"></i>
                         Exportar
@@ -341,6 +343,8 @@ include_once 'menu/header.php'
     </div><!-- /.row -->
 
     <?php
+
+    echo "auditoria = " . $_POST['querySelect'];
 
     include_once 'menu/footer.php'
 

@@ -25,24 +25,28 @@ if ($tipo_reporteria == "usuario") {
         'ID_USUARIO',
         'NOMBRE_USUARIO',
         'CORREO_USUARIO',
+        'PASSWORD_USUARIO',
         'EMPRESA_USUARIO',
         'DIRECCION_USUARIO',
         'TELEFONO_USUARIO',
+        'WEB_EMPRESA_USUARIO',
         'CARGO_USUARIO',
         'CREACION_USUARIO',
-        'PRIVILEGIO',
-        'DESC_PRIVILEGIO'
+        'ID_PRIVILEGIO',
+        'TITULO_PRIVILEGIO',
+        'DESC_PRIVILEGIO',
+
     );
 }
 
 if ($tipo_reporteria == "tickets") {
     $cabecera = array(
         'ID_TICKET',
-        'NOMBRE_TICKET',
+        'TIULO_TICKET',
         'DESC_TICKET',
         'GRUPO_SOPORTE',
         'TECNICO_ASIGNADO',
-        'TITULO_ESTADO',
+        'ESTADO_TICKET',
         'NOMBRE_USUARIO',
         'CREACION_TICKET',
         'ACTUALIZACION_TICKET'
@@ -52,15 +56,36 @@ if ($tipo_reporteria == "tickets") {
 if ($tipo_reporteria == "auditoria_usuarios") {
     $cabecera = array(
         'MODIFICADOR',
+        'ID_USUARIO',
         'NOMBRE_USUARIO',
+        'CORREO_USUARIO',
+        'PASSWORD_USUARIO',
         'EMPRESA_USUARIO',
-        'WEB_EMPRESA_USUARIO',
         'DIRECCION_USUARIO',
         'TELEFONO_USUARIO',
+        'WEB_EMPRESA_USUARIO',
         'CARGO_USUARIO',
+        'CREACION_USUARIO',
+        'DESC_PRIVILEGIO',
+        'MODIFICACION_USUARIO'
+    );
+}
+
+if ($tipo_reporteria == "auditoria_tickets") {
+    $cabecera = array(
+        'MODIFICADOR',
+        'ID_USUARIO',
+        'NOMBRE_USUARIO',
         'CORREO_USUARIO',
-        'MODIFICACION_USUARIO',
-        'DESC_PRIVILEGIO'
+        'PASSWORD_USUARIO',
+        'EMPRESA_USUARIO',
+        'DIRECCION_USUARIO',
+        'TELEFONO_USUARIO',
+        'WEB_EMPRESA_USUARIO',
+        'CARGO_USUARIO',
+        'CREACION_USUARIO',
+        'DESC_PRIVILEGIO',
+        'MODIFICACION_USUARIO'
     );
 }
 

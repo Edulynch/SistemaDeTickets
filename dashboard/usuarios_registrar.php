@@ -146,7 +146,7 @@ include_once 'menu/header.php'
 					<div class="form-group">
 						<label for="user_cargo" class="control-label col-md-3 "> Cargo<span>*</span> </label>
 						<div class="controls col-md-9">
-							<input class="input-md form-control" maxlength="15" id="user_cargo" name="user_cargo" style="margin-bottom: 10px" type="text" />
+							<input class="input-md form-control" maxlength="20" id="user_cargo" name="user_cargo" style="margin-bottom: 10px" type="text" />
 						</div>
 					</div>
 
